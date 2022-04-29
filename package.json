@@ -1,0 +1,24 @@
+{
+  "name": "im3007-worm-gym",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiacian0609/IM3007-Worm-Gym.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jiacian0609/IM3007-Worm-Gym/issues"
+  },
+  "homepage": "https://github.com/jiacian0609/IM3007-Worm-Gym#readme",
+  "dependencies": {
+    "create-react-app": "^5.0.1",
+    "express-generator": "^4.16.1",
+    "npm": "^8.8.0"
+  }
+}
