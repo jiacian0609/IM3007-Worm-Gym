@@ -84,7 +84,7 @@ const Submit = styled.button `
     text-align: center;
 `
 
-export default function HomePage() {
+export default function SignIn() {
   return (
     <Base>
         <Title>Worm Gym</Title>
