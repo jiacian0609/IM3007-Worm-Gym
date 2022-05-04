@@ -17,7 +17,7 @@ Step 5: Go to `/backend/db.js` & change the password into your Postgres password
 ```
 #### Response Data: Text
 ```
-Case 1: Username does not exists.
+Case 1: Username does not exist.
 Case 2: Wrong password.
 Case 3: Login successfully.
 ```
@@ -25,4 +25,4 @@ Case 3: Login successfully.
 # Activate Server
 Step 1: Run `npm install` if it's the first time to activate the server.  
 Step 2: Run `npm start`.  
-The server is currently built on `localhost:3000`.
+The server is currently built on `localhost:8000`.

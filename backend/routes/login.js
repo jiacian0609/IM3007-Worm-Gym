@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
         const user = await pool.query('SELECT * FROM "WormGym".user_info WHERE username = $1', [username]);
         
         if (user.rows[0] === undefined) {
-            res.send('Username does not exists.');
+            res.send('Username does not exist.');
         } else if (password !== user.rows[0].password) {
             res.send('Wrong password.');
         } else {
