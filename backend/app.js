@@ -2,11 +2,14 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var logger = require('morgan');
 
+//加Router
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signupRouter = require('./routes/signup');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -19,10 +22,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
+//加API
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use('/users', usersRouter);
-app.use('/', signupRouter);#這邊路徑有點不知道是不是對的
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,6 +46,12 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+//views
+app.get('/login', function(req, res) {
+	res.render('../views/login.html');
+  console.log("GET")
 });
 
 module.exports = app;

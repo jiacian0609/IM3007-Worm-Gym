@@ -3,11 +3,11 @@ var router = express.Router();
 const pool = require("../db");
 
 // bring in user model
-let User = require('../models/user') //我們怎麼好像沒有models
+// let User = require('../models/user') //我們怎麼好像沒有models
 
 // sign up form
 router.get('/signup', function(req, res){
-    res.render('signup')
+    res.send('signup')
 });
 
 //sign up process
