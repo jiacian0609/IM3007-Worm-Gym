@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({
 
 //加API
 app.use('/', indexRouter);
+app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 
@@ -46,12 +47,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-//views
-app.get('/login', function(req, res) {
-	res.render('../views/login.html');
-  console.log("GET")
 });
 
 module.exports = app;

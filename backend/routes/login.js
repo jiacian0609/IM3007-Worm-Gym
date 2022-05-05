@@ -18,26 +18,28 @@ router.post('/', async (req, res) => {
         //Check whether the username has signed up
         const user = await pool.query('SELECT * FROM "WormGym".user_info WHERE username = $1', [username]);
         await new Promise((resolve, reject) => {
+            console.log(user.rows)
 			if (user.rows[0] === undefined) {
                 return res.send('Username does not exist.');
             } else {
                 encryptedPassword = user.rows[0].password
             }
+            resolve()
 		});
 
         //Compare password
-		if (!(await bcrypt.compare(password, encryptedPassword))) {
-			return res.send("Password is wrong :(");
-		};
+		//if (!(await bcrypt.compare(password, encryptedPassword))) {
+		//	return res.send("Password is wrong :(");
+		//};
 
         //Create token
 		token = await jwt.sign(
 			{
-				Uid: userID,
+				Uid: user.rows[0].user_id,
 				Username: username,
-				Email: email
+				Email: user.rows[0].email
 			},
-			process.env.TOKEN_KEY,
+			"b7b16ad9db0ca7c5705cba37840e4ec310740c62beea61cfd9bdcee0720797a6c8bb1b3ffc0d781601fb77dbdaa899acfd08ac560aec19f2d18bb3b6e25beb7a",
 			{
 				algorithm: 'HS256',
 				expiresIn: "2h"
