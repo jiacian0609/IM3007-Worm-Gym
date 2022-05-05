@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
         //Check whether the username has signed up
         const user = await pool.query('SELECT * FROM "WormGym".user_info WHERE username = $1', [username]);
         await new Promise((resolve, reject) => {
-            console.log(user.rows)
+            //console.log(user.rows)
 			if (user.rows[0] === undefined) {
                 return res.send('Username does not exist.');
             } else {
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
 
 		//Store token in cookie
 		res.cookie('JWT', token, { httpOnly: true, secure: true })
-        
+        res.send(token)
         /*
         let message = "";
         if (user.rows[0] === undefined) {
