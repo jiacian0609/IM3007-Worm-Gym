@@ -5,10 +5,29 @@ const Base = styled.div `
     width: 2880px;
     height: 1594px;
 
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: cover;
+    overflow: hidden;
+    position: relative;
+`
+
+const Background = styled.img `
+    width: 100%;
+    height: 100%;
+
+    content: ' ';
+    display: block;
+    position: absolute;
+        left: 0;
+        top: 0;
+
+    opacity: 0.6;
     background-image: url("images/cover_1.png");
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: cover;
+`
+
+const Content = styled.div `
+    position: relative;
 `
 
 const Title = styled.div `
@@ -25,9 +44,8 @@ const Title = styled.div `
     line-height: 240px;
     text-align: center;
 
-    color: #89F500;
-
-    -webkit-text-stroke: 1px #2400FF;
+    color: #0053B4;
+    // -webkit-text-stroke: 1px #2400FF;
 `
 
 const SignInBox = styled.div `
@@ -76,25 +94,29 @@ const Submit = styled.button `
 
     border: none;
     border-radius: 20px;
-    background-color: #35D11B;
+    background-color: #0053B4;
     
     font-family: 'Caramel';
     font-style: normal;
     font-size: 60px;
+    color: #ffffff;
     text-align: center;
 `
 
 export default function SignIn() {
   return (
     <Base>
-        <Title>Worm Gym</Title>
-        <SignInBox>
-            <InputText>會員帳號</InputText><br/>
-            <InputBar />
-            <InputText>會員密碼</InputText><br/>
-            <InputBar />
-            <Submit>確認</Submit>
-        </SignInBox>
+        <Background src="images/cover_1.png" />
+        <Content>
+            <Title>Worm Gym</Title>
+            <SignInBox>
+                <InputText>會員帳號</InputText><br/>
+                <InputBar />
+                <InputText>會員密碼</InputText><br/>
+                <InputBar />
+                <Submit>確認</Submit>
+            </SignInBox>
+        </Content>
     </Base>
   )
 }

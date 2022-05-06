@@ -7,13 +7,29 @@ const Base = styled.div `
 
     padding: 0 150px 0 150px;
 
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("images/cover_2.jpg");
+    overflow: hidden;
+    position: relative;
+`
 
-    display: inline-block;
-    text-align: center;
+const Background = styled.img `
+    width: 100%;
+    height: 100%;
+
+    content: ' ';
+    display: block;
+    position: absolute;
+        left: 0;
+        top: 0;
+
+    opacity: 0.4;
+    background-image: url("images/cover_2.jpg");
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: cover;
+`
+
+const Content = styled.div `
+    position: relative;
 `
 
 const Title = styled.div `
@@ -30,9 +46,7 @@ const Title = styled.div `
     line-height: 240px;
     text-align: center;
 
-    color: #89F500;
-
-    -webkit-text-stroke: 1px #2400FF;
+    color: #0053B4;
 `
 
 const Box = styled.button `
@@ -43,7 +57,7 @@ const Box = styled.button `
     margin: 0 45px 0 45px;
 
     background-color: ${props => props.color};
-    border: none;
+    border: solid 5px #ffffff;
     border-radius: 100px;
 `
 
@@ -74,19 +88,22 @@ const Text = styled.div `
 export default function Home() {
   return (
     <Base>
-        <Title>Worm Gym</Title>
-        <Box color="#8294D3">
-            <Picture img="images/data_icon.png"/>
-            <Text>INBODY 身體數據</Text>
-        </Box>
-        <Box color="#9FA2BC">
-            <Picture img="images/schedule_icon.png"/>
-            <Text>健身紀錄</Text>
-        </Box>
-        <Box color="#ACE3EB">
-            <Picture img="images/sport_icon.png"/>
-            <Text>訓練菜單</Text>
-        </Box>
+        <Background />
+        <Content>
+            <Title>Worm Gym</Title>
+            <Box color="#8294D3">
+                <Picture img="images/data_icon.png"/>
+                <Text>INBODY 身體數據</Text>
+            </Box>
+            <Box color="#9FA2BC">
+                <Picture img="images/schedule_icon.png"/>
+                <Text>健身紀錄</Text>
+            </Box>
+            <Box color="#ACE3EB">
+                <Picture img="images/sport_icon.png"/>
+                <Text>訓練菜單</Text>
+            </Box>
+        </Content>
     </Base>
   )
 }
