@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 var menuRouter = require('./routes/menu');
 
 var app = express();
@@ -32,6 +33,7 @@ app.use(bodyParser.urlencoded({
 app.use('/', indexRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 app.use('/users', usersRouter);
 app.use('/menu', menuRouter);
 

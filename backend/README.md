@@ -6,7 +6,22 @@ Step 3: Right click on the database, select `Restore...`.
 Step 4: Select `wormGym_custom.sql` as the restoring file.  
 Step 5: Go to `/backend/db.js` & change the password into your Postgres password.
 ## APIs
-### 1. /login
+### 1. /signup
+#### Method: POST
+#### Request Data: JSON
+```
+{
+    "username": "userFOUR",
+    "password": "44444444",
+    "email": "b08000004@gmail.com"
+}
+```
+#### Response Data: Text
+```
+Sign up successfully.
+```
+
+### 2. /login
 #### Method: POST
 #### Request Data: JSON
 ```
@@ -15,48 +30,19 @@ Step 5: Go to `/backend/db.js` & change the password into your Postgres password
     "password": "11111111"
 }
 ```
-#### Response Data: JSON
+#### Response Data: Text
 ```
 Case 1: Username does not exist.
-{
-    "message": "Username does not exist.",
-    "username": "username"
-}
-
-Case 2: Wrong password.
-{
-    "message": "Wrong password.",
-    "username": "userONE"
-}
-
+Case 2: Password is wrong :(
 Case 3: Login successfully.
-{
-    "message": "Login successfully.",
-    "username": "userONE",
-    "login_id": "03c940bc-83b8-4142-88a8-da555661c346"
-}
 ```
-Note: `login_id` needs to be recorded at client side.
 
-### 2. /logout
-#### Method: POST
-#### Request Data: JSON
+### 3. /logout
+#### Method: GET
+#### Response Data: Text
 ```
-{
-    "login_id": "03c940bc-83b8-4142-88a8-da555661c346"
-}
-```
-#### Request Data: JSON
-```
-Case 1: login_id is not in the online list.
-{
-    "message": "login_id error"
-}
-
-Case 2: Logout successfully.
-{
-    "message": "Logout successfully."
-}
+Case 1: Logout successfully.
+Case 2: other error messages
 ```
 # Activate Server
 Step 1: Run `npm install` if it's the first time to activate the server.  

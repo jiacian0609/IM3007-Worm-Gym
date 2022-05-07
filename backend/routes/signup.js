@@ -18,7 +18,7 @@ router.post('/', async function (req, res) {
 	var encryptedPassword = await bcrypt.hash(password, 10);
 
 	//Insert data into DB
-	await pool.query('INSERT INTO "WormGym".user_info("user_id", "username", "password", "email") VALUES (7, $1, $2, $3)', [username, password, email]);
+	await pool.query('INSERT INTO "WormGym".user_info("username", "password", "email") VALUES ($1, $2, $3)', [username, encryptedPassword, email]);
 
 	//Create token
 	var userID = await pool.query('SELECT user_id FROM "WormGym".user_info WHERE username = $1', [username]);
@@ -38,6 +38,8 @@ router.post('/', async function (req, res) {
 	//Store token in cookie
 	res.cookie('jwt', token, { httpOnly: true, secure: true });
 	//res.send(token)
+
+	res.send("Sign up successfully.");
 	
 	/* Check input correctness
 	req.checkBody('username', 'user name is required').Notempty()
