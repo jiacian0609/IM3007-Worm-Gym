@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Base = styled.div `
@@ -202,7 +203,7 @@ function MonthButton() {
 };
 
 
-export default function Home() {
+export default function Menu() {
   return (
     <Base>
         <Background />
@@ -210,10 +211,12 @@ export default function Home() {
             <Title>Worm Gym</Title>
             <Bar>
                 <MenuText>訓練菜單</MenuText>
-                <SelectBox>
-                    <SelectText>2022.05</SelectText>
-                    <SelectButton>V</SelectButton>
-                </SelectBox>
+                <Link to={ `/menu/2022-05` } style={{ textDecoration: 'none' }}>
+                    <SelectBox>
+                        <SelectText>2022.05</SelectText>
+                        <SelectButton>V</SelectButton>
+                    </SelectBox>
+                </Link>
                 <Submit>確認</Submit>
             </Bar>
             <Row>
