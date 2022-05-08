@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
+var cors = require('cors')
 
 //加Router
 var indexRouter = require('./routes/index');
@@ -28,6 +29,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(cors())
 
 //加API
 app.use('/', indexRouter);

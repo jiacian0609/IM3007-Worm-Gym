@@ -4,7 +4,6 @@ const pool = require("../db");
 var bcrypt = require('bcryptjs');
 var jwt = require("jsonwebtoken");
 
-
 /* POST login info. */
 router.post('/', async (req, res) => {
     try {
@@ -14,7 +13,6 @@ router.post('/', async (req, res) => {
         //Check whether the username has signed up
         const user = await pool.query('SELECT * FROM "WormGym".user_info WHERE username = $1', [username]);
         await new Promise((resolve, reject) => {
-            //console.log(user.rows)
 			if (user.rows[0] === undefined) {
                 return res.send('Username does not exist.');
             } else {
@@ -23,8 +21,10 @@ router.post('/', async (req, res) => {
             resolve()
 		});
 
+        //if (!(await bcrypt.compare(password, encryptedPassword))) {
+
         // Compare password
-		if (!(await bcrypt.compare(password, encryptedPassword))) {
+		if (!(password == encryptedPassword)) {
 			return res.send("Password is wrong :(");
 		} else {
             //Create token

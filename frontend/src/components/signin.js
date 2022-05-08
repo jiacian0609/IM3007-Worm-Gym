@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios'
 
 const Base = styled.div `
     width: 2880px;
@@ -104,17 +105,33 @@ const Submit = styled.button `
 `
 
 export default function SignIn() {
-  return (
+    function handleSignIn (Username, Password) {
+        console.log(Username)
+        axios.post("http://localhost:8000/login", {
+        username: Username,
+        password: Password
+        })
+        .then( (response) => {
+            if (response.data === "Login successfully.") {
+                window.location.href = "http://localhost:3000/Home"
+            } else {
+				window.alert(response.data)
+			}
+        })
+        .catch( (error) => console.log(error))
+    }
+
+    return (
     <Base>
         <Background src="images/cover_1.png" />
         <Content>
             <Title>Worm Gym</Title>
             <SignInBox>
                 <InputText>會員帳號</InputText><br/>
-                <InputBar />
+                <InputBar id="Username"/>
                 <InputText>會員密碼</InputText><br/>
-                <InputBar />
-                <Submit>確認</Submit>
+                <InputBar id="Password"/>
+                <Submit onClick={()=> handleSignIn(document.getElementById('Username').value, document.getElementById('Password').value)}>確認</Submit>
             </SignInBox>
         </Content>
     </Base>
