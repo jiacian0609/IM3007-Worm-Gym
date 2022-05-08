@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import DatePicker from 'sassy-datepicker';
+import axios from 'axios';
 
 const Base = styled.div `
     width: 2880px;
@@ -69,14 +70,17 @@ const Text = styled.span `
     text-align: left;
 `
 
-function Task() {
+function Task(items) {
+    console.log(items)
     return (
         <div style={{ display: 'flex', margin: '50px' }}>
             <Img src='../images/gym_01.png' />
             <Text>
                 啞鈴肩推<br/>
                 --------------<br/>
-                左右各30下
+                重量：{ items.items.weight } KG<br/>
+                次數：{ items.items.reps } 次<br/>
+                組數：{ items.items.sets } 組 
             </Text>
         </div>
     );
@@ -95,8 +99,20 @@ function Calendar() {
 };
 
 export default function MonthlyMenu() {
-    const month = useParams().month;
+    const time = useParams().month;
 
+    const [year, setYear] = useState(time.split("-")[0])
+    const [month, setMonth] = useState(time.split("-")[1])
+    const [week, setWeek] = useState(time.split("-")[2])
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        axios.get("http://localhost:8000/menu/" + year + "-" + month + "-" + week)
+        .then( (response) => setData(response.data))
+        .catch( (error) => console.log(error))
+    }, [year, month, week])
+    //console.log(data)   
     return (
       <Base>
         <Content>
@@ -106,9 +122,7 @@ export default function MonthlyMenu() {
                 <StyledCalendar> 
                     <Calendar />
                 </StyledCalendar>
-                <Task />
-                <Task />
-                <Task />
+                {data?.map(items => <Task items={ items } key={ items.program_id }/>)}
             </div>
             <Bar />
         </Content>

@@ -105,15 +105,15 @@ const Submit = styled.button `
 `
 
 export default function SignIn() {
-    function handleSignIn (Username, Password) {
-        console.log(Username)
+    function handleSignIn (username, password) {
+        //console.log(username)
         axios.post("http://localhost:8000/login", {
-        username: Username,
-        password: Password
+            "username": username,
+            "password": password
         })
         .then( (response) => {
             if (response.data === "Login successfully.") {
-                window.location.href = "http://localhost:3000/Home"
+                window.location.href = "http://localhost:3000/home"
             } else {
 				window.alert(response.data)
 			}
@@ -128,10 +128,10 @@ export default function SignIn() {
             <Title>Worm Gym</Title>
             <SignInBox>
                 <InputText>會員帳號</InputText><br/>
-                <InputBar id="Username"/>
+                <InputBar id="username"/>
                 <InputText>會員密碼</InputText><br/>
-                <InputBar id="Password"/>
-                <Submit onClick={()=> handleSignIn(document.getElementById('Username').value, document.getElementById('Password').value)}>確認</Submit>
+                <InputBar id="password"/>
+                <Submit onClick={()=> handleSignIn(document.getElementById('username').value, document.getElementById('password').value)}>確認</Submit>
             </SignInBox>
         </Content>
     </Base>

@@ -84,9 +84,9 @@ const Text = styled.div `
     text-align: center;
 `
 
-
 export default function Home() {
-  return (
+    //JWT authentication
+    return (
     <Base>
         <Background />
         <Content>
@@ -105,5 +105,5 @@ export default function Home() {
             </Box>
         </Content>
     </Base>
-  )
+    )
 }

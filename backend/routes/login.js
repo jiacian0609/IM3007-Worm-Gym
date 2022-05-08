@@ -42,8 +42,7 @@ router.post('/', async (req, res) => {
             );
 
             // Store token in cookie
-            res.cookie('JWT', token, { httpOnly: true, secure: true })
-            //res.send(token)
+            res.cookie('JWT', token, { httpOnly: true, secure: false })
             
             res.send('Login successfully.');
         }
