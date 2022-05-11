@@ -46,37 +46,56 @@ const Bar = styled.div `
 `
 
 const StyledCalendar = styled.div `
-    width: 500px;
+    width: 600px;
     height 500px;
 
     margin: 200px;
 `
 
-const Img = styled.img `
+const Img = styled.span `
     width: 200px;
     height: 200px;
 
     border-radius: 50%;
+
     background-color: #27CE24;
+    background-image: url("${props => props.src}");
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 `
 
 const Text = styled.span `
     width: 300px;
-    height: 100px;
+    height: 200px;
 
-    margin: 35px;
+    margin: 0 0 0 35px;
 
-    font-size: 35px;
+    font-size: 34px;
     text-align: left;
+`
+
+const Row = styled.div `
+    width: 1400px;
+    height: 300px;
+    margin: 20px;
+    display: flex;
 `
 
 function Task(items) {
     console.log(items)
+
+    let url;
+    if (items.items.equip_id < 10)
+        url = '../images/gym_0' + items.items.equip_id + '.png';
+    else
+        url = '../images/gym_' + items.items.equip_id + '.png';
+
     return (
-        <div style={{ display: 'flex', margin: '50px' }}>
-            <Img src='../images/gym_01.png' />
+        <div style={{ display: 'flex', margin: '50px 200px 50px 50px' }}>
+            <Img src={ url } />
             <Text>
-                啞鈴肩推<br/>
+                { items.items.program_id }<br/>
                 --------------<br/>
                 重量：{ items.items.weight } KG<br/>
                 次數：{ items.items.reps } 次<br/>
@@ -113,16 +132,21 @@ export default function MonthlyMenu() {
         .catch( (error) => console.log(error))
     }, [year, month, week])
     //console.log(data)   
+
     return (
       <Base>
         <Content>
             <Title>Worm Gym</Title>
             <Bar />
-            <div style={{display: 'flex' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 <StyledCalendar> 
                     <Calendar />
                 </StyledCalendar>
-                {data?.map(items => <Task items={ items } key={ items.program_id }/>)}
+                <div style={{display: 'inline', height: '1060px'}}>
+                    <Row>{data.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+                    <Row>{data.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+                    <Row>{data.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+                </div>
             </div>
             <Bar />
         </Content>

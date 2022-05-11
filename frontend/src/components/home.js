@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Base = styled.div `
@@ -99,10 +100,12 @@ export default function Home() {
                 <Picture img="images/schedule_icon.png"/>
                 <Text>健身紀錄</Text>
             </Box>
-            <Box color="#ACE3EB">
-                <Picture img="images/sport_icon.png"/>
-                <Text>訓練菜單</Text>
-            </Box>
+            <Link to={ `/menu` } style={{ textDecoration: 'none' }}>
+                <Box color="#ACE3EB">
+                    <Picture img="images/sport_icon.png"/>
+                    <Text>訓練菜單</Text>
+                </Box>
+            </Link>
         </Content>
     </Base>
     )

@@ -13,7 +13,7 @@ var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var menuRouter = require('./routes/menu');
-var inbody_recordRouter = require('/routes/inbody_record');
+var inbody_recordRouter = require('./routes/inbody_record');
 var finishRateRouter = require('./routes/finish-rate');
 
 var app = express();
