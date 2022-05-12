@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Menu from './components/Menu';
 import MonthlyMenu from './components/MonthlyMenu';
 import Inbody from './components/Inbody';
+import Record from './components/Record';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/menu/:month" element={<MonthlyMenu />} />
                     <Route path="/inbody" element={<Inbody />} />
+                    <Route path="/record" element={<Record />} />
                 </Routes>
             </div>
         </Router>

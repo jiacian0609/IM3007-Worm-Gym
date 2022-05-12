@@ -98,10 +98,12 @@ export default function Home() {
                         <Text>INBODY 身體數據</Text>
                     </Box>
                 </Link>
-                <Box color="#9FA2BC">
-                    <Picture img="/images/schedule_icon.png"/>
-                    <Text>健身紀錄</Text>
-                </Box>
+                <Link to={ `/record` } style={{ textDecoration: 'none' }}>
+                    <Box color="#9FA2BC">
+                        <Picture img="/images/schedule_icon.png"/>
+                        <Text>健身紀錄</Text>
+                    </Box>
+                </Link>
                 <Link to={ `/menu` } style={{ textDecoration: 'none' }}>
                     <Box color="#ACE3EB">
                         <Picture img="/images/sport_icon.png"/>
