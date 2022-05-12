@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Table, Tag, Space } from 'antd';
 
 const Base = styled.div `
     width: 2880px;
@@ -24,7 +23,7 @@ const Background = styled.img `
         top: 0;
 
     opacity: 0.8;
-    background-image: url("images/vector_3.png");
+    background-image: url("./images/vector_3.png");
     background-repeat: no-repeat;
     // background-position: 50% 0;
     background-size: cover;
@@ -153,79 +152,6 @@ const Info = styled.div `
     font-size: 55px;
 `
 
-const rows = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a>{text}</a>,
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
-  
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-
 export default function Inbody() {
   return (
     <Base>
@@ -254,7 +180,6 @@ export default function Inbody() {
                     檢測時間：2022.04.21  10:23
                 </Info>
             </div>
-            <Table rows={rows} dataSource={data} />
         </Content>
     </Base>
   )

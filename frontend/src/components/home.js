@@ -23,7 +23,7 @@ const Background = styled.img `
         top: 0;
 
     opacity: 0.4;
-    background-image: url("images/cover_2.jpg");
+    background-image: url("./images/cover_2.jpg");
     background-repeat: no-repeat;
     background-position: 50% 0;
     background-size: cover;

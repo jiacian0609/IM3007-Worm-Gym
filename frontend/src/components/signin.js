@@ -21,7 +21,7 @@ const Background = styled.img `
         top: 0;
 
     opacity: 0.6;
-    background-image: url("images/cover_1.png");
+    background-image: url("./images/cover_1.png");
     background-repeat: no-repeat;
     background-position: 50% 0;
     background-size: cover;
@@ -113,7 +113,7 @@ export default function SignIn() {
         })
         .then( (response) => {
             if (response.data === "Login successfully.") {
-                window.location.href = "http://localhost:3000/home"
+                window.location.href = "./home"
             } else {
 				window.alert(response.data)
 			}
