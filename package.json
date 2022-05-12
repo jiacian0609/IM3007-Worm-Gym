@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jiacian0609/IM3007-Worm-Gym#readme",
   "dependencies": {
+    "antd": "^4.20.4",
     "cors": "^2.8.5",
     "create-react-app": "^5.0.1",
     "express-generator": "^4.16.1",

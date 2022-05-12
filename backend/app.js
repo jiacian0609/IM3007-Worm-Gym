@@ -15,6 +15,7 @@ var logoutRouter = require('./routes/logout');
 var menuRouter = require('./routes/menu');
 var inbody_recordRouter = require('./routes/inbody_record');
 var finishRateRouter = require('./routes/finish-rate');
+var recordRouter = require('./routes/record');
 
 var app = express();
 
@@ -31,7 +32,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(cors())
+app.use(cors({credentials:true}))
 
 //加API
 app.use('/', indexRouter);
@@ -42,6 +43,7 @@ app.use('/users', usersRouter);
 app.use('/menu', menuRouter);
 app.use('/inbody_record', inbody_recordRouter);
 app.use('/finish-rate', finishRateRouter);
+app.use('/record', recordRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
