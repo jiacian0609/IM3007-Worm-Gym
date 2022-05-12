@@ -22,11 +22,14 @@ router.post('/', async (req, res) => {
 		});
 
         //if (!(await bcrypt.compare(password, encryptedPassword))) {
-
-        // Compare password
-		if (!(password == encryptedPassword)) {
-			return res.send("Password is wrong :(");
-		} else {
+        await new Promise((resolve, reject) => {
+            // Compare password
+            if (!(password == encryptedPassword))
+                return res.send("Password is wrong :(");
+            resolve()
+        });
+        
+        await new Promise(async (resolve, reject) => {
             //Create token
             token = await jwt.sign(
                 {
@@ -40,12 +43,19 @@ router.post('/', async (req, res) => {
                     expiresIn: "2h"
                 }
             );
+            resolve()
+        });
 
+        await new Promise((resolve, reject) => {
             // Store token in cookie
             res.cookie('JWT', token, { httpOnly: true, secure: false })
-            
-            res.send('Login successfully.');
-        }
+            resolve()
+        });
+
+        await new Promise((resolve, reject) => {
+            res.send('Login successfully.')
+            resolve()
+        });
     } catch (err) {
       console.error(err.message);
     }
