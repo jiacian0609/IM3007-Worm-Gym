@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Table, Tag, Space } from 'antd';
 
 const Base = styled.div `
     width: 2880px;
@@ -152,79 +153,6 @@ const Info = styled.div `
     font-size: 55px;
 `
 
-const rows = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a>{text}</a>,
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
-  
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-
 //get API的模板，給你參考，記得import axios，加油:D
 /*
 axios.get("http://localhost:8000/inbody_record", {
@@ -237,6 +165,45 @@ axios.get("http://localhost:8000/inbody_record", {
 })
 .catch( (error) => console.log(error))
 */
+
+const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      render: text => <a>{text}</a>,
+    },
+    {
+      title: 'Cash Assets',
+      className: 'column-money',
+      dataIndex: 'money',
+      align: 'right',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+    },
+  ];
+  
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      money: '￥300,000.00',
+      address: 'New York No. 1 Lake Park',
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      money: '￥1,256,000.00',
+      address: 'London No. 1 Lake Park',
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      money: '￥120,000.00',
+      address: 'Sidney No. 1 Lake Park',
+    },
+  ];
 
 export default function Inbody() {
   return (
@@ -267,6 +234,13 @@ export default function Inbody() {
                 </Info>
             </div>
         </Content>
+        <Table
+    columns={columns}
+    dataSource={data}
+    bordered
+    title={() => 'Header'}
+    footer={() => 'Footer'}
+  />
     </Base>
   )
 }
