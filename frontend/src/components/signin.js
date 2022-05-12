@@ -106,16 +106,18 @@ const Submit = styled.button `
 
 export default function SignIn() {
 	function handleSignIn (username, password) {
-		//console.log(username)
-		axios.post("http://localhost:8000/login", {
-			"username": username,
-			"password": password
-		})
+		axios.post("http://localhost:8000/login", 
+			{
+				"username": username,
+				"password": password
+			},
+		)
 		.then( (response) => {
-			if (response.data === "Login successfully.") {
+			if (response.data.message === "Login successfully.") {
+				localStorage.setItem('JWT', response.data.JWT)
 				window.location.href = "http://localhost:3000/home"
 			} else {
-				window.alert(response.data)
+				window.alert(response.data.message)
 			}
 		})
 		.catch( (error) => console.log(error))

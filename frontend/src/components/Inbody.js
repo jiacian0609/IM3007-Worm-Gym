@@ -226,6 +226,19 @@ const rows = [
     },
   ];
 
+//get API的模板，給你參考，記得import axios，加油:D
+/*
+axios.get("http://localhost:8000/inbody_record", {
+    headers: {
+      'Authorization': `${localStorage.getItem('JWT')}`
+    }
+})
+.then( (response) => {
+    console.log(response)
+})
+.catch( (error) => console.log(error))
+*/
+
 export default function Inbody() {
   return (
     <Base>

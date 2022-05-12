@@ -47,13 +47,7 @@ router.post('/', async (req, res) => {
         });
 
         await new Promise((resolve, reject) => {
-            // Store token in cookie
-            res.cookie('JWT', token, { httpOnly: true, secure: false })
-            resolve()
-        });
-
-        await new Promise((resolve, reject) => {
-            res.send('Login successfully.')
+            res.send({'message': 'Login successfully.', 'JWT': token})
             resolve()
         });
     } catch (err) {
