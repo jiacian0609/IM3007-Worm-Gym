@@ -92,10 +92,12 @@ export default function Home() {
         <Background />
         <Content>
             <Title>Worm Gym</Title>
-            <Box color="#8294D3">
-                <Picture img="images/data_icon.png"/>
-                <Text>INBODY 身體數據</Text>
-            </Box>
+            <Link to={ `/inbody` } style={{ textDecoration: 'none' }}>
+                <Box color="#8294D3">
+                    <Picture img="images/data_icon.png"/>
+                    <Text>INBODY 身體數據</Text>
+                </Box>
+            </Link>
             <Box color="#9FA2BC">
                 <Picture img="images/schedule_icon.png"/>
                 <Text>健身紀錄</Text>

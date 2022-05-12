@@ -5,6 +5,7 @@ import SignIn from './components/Signin';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import MonthlyMenu from './components/MonthlyMenu';
+import Inbody from './components/Inbody';
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/menu/:month" element={<MonthlyMenu />} />
+                    <Route path="/inbody" element={<Inbody />} />
                 </Routes>
             </div>
         </Router>
