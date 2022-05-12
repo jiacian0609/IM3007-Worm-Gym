@@ -1,13 +1,13 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios'
+import axios from 'axios';
 
 const Base = styled.div `
-	width: 2880px;
-	height: 1594px;
+	width: 100%;
+	height: 100%;
 
 	overflow: hidden;
-	position: relative;
+	position: absolute;
 `
 
 const Background = styled.img `
@@ -112,8 +112,8 @@ export default function SignIn() {
             "password": password
         })
         .then( (response) => {
-            if (response.data === "Login successfully.") {
-                window.location.href = "./home"
+            if (response.data.message === "Login successfully.") {
+                window.location.href = "/home"
             } else {
 				window.alert(response.data)
 			}
@@ -123,7 +123,7 @@ export default function SignIn() {
 
 	return (
 	<Base>
-		<Background src="images/cover_1.png" />
+		<Background src="/images/cover_1.png" />
 		<Content>
 			<Title>Worm Gym</Title>
 			<SignInBox>
