@@ -86,6 +86,22 @@ const Row = styled.div `
     justify-content: space-around;
 `
 
+const Submit = styled.button `
+    width: 140px;
+    height: 80px;
+
+    padding: 2px;
+    margin: 20px 150px 20px;
+
+    background: #35D11B;
+    border: 3px solid #35D11B;
+    border-radius: 8px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+`
+
 function Task(items) {
     console.log(items)
 
@@ -174,6 +190,7 @@ export default function Record() {
                                 onChange={(e) => setWeight(e.target.value)}
                             />
                         </div>
+                        <Submit>確認</Submit>
                     </div>
                 </div>
             </div>
