@@ -14,7 +14,7 @@ const Background = styled.img `
     width: 100%;
     height: 100%;
 
-    content: ' ';
+    content: '';
     display: block;
     position: absolute;
         left: 0;
@@ -23,7 +23,7 @@ const Background = styled.img `
     opacity: 0.4;
     background-image: url("/images/cover_5.png");
     background-repeat: no-repeat;
-    background-position: 50% 0;
+    background-position: 50% ;
     background-size: cover;
 `
 
@@ -146,7 +146,7 @@ export default function Record() {
                     <StyledCalendar></StyledCalendar>
                 </div>
                 <div style={{ display: 'flex' }}>
-                    <div style={{ display: 'block' }}>
+                    <div style={{ display: 'block', height: '1000px' }}>
                         <Row>{tasks.slice(0, 4)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
                         <Row>{tasks.slice(4, 8)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
                         <Row>{tasks.slice(8, 12)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
