@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import '../css/menu.css';
 
 const Base = styled.div `
     width: 2880px;
@@ -23,7 +24,7 @@ const Background = styled.img `
         top: 0;
 
     opacity: 0.8;
-    background-image: url("./images/cover_3.png");
+    background-image: url("/images/cover_3.png");
     background-repeat: no-repeat;
     // background-position: 50% 0;
     background-size: cover;
@@ -212,10 +213,11 @@ export default function Menu() {
             <Bar>
                 <MenuText>訓練菜單</MenuText>
                 <Link to={ `/menu/2022-05` } style={{ textDecoration: 'none' }}>
-                    <SelectBox>
-                        <SelectText>2022.05</SelectText>
-                        <SelectButton>V</SelectButton>
-                    </SelectBox>
+                    <div className="month">
+                        <select className="month-selector" defaultValue="2022-05">
+                            <option value="2022-05">2022-05</option>
+                        </select>
+                    </div>
                 </Link>
                 <Submit>確認</Submit>
             </Bar>
