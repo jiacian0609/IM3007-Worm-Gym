@@ -10,6 +10,23 @@ const Base = styled.div `
     position: absolute;
 `
 
+const Background = styled.img `
+    width: 100%;
+    height: 100%;
+
+    content: ' ';
+    display: block;
+    position: absolute;
+        left: 0;
+        top: 0;
+
+    opacity: 0.4;
+    background-image: url("/images/cover_5.png");
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: cover;
+`
+
 const Content = styled.div `
     position: relative;
 `
@@ -105,6 +122,7 @@ export default function Record() {
 
     return (
     <Base>
+        <Background />
         <Content>
             <Title>Worm Gym</Title>
             <div style={{ display: 'flex', alignItems: 'center' }}>
