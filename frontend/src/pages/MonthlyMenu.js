@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import DatePicker from 'sassy-datepicker';
 import axios from 'axios';
+import Header from '../components/Header';
 
-<<<<<<< HEAD
 const months = {
 	Jan: '01',
 	Feb: '02',
@@ -19,9 +19,6 @@ const months = {
 	Nov: '11',
 	Dec: '12',
   }
-=======
-import Header from '../components/Header';
->>>>>>> c817ce864fba9cca37c164981ecb6707835b5c80
 
 const Base = styled.div `
 	width: 2880px;
@@ -37,7 +34,6 @@ const Content = styled.div `
 	position: relative;
 `
 
-<<<<<<< HEAD
 const Title = styled.div `
 	width: 700px;
 	height: 180px;
@@ -55,8 +51,6 @@ const Title = styled.div `
 	color: #0053B4;
 `
 
-=======
->>>>>>> c817ce864fba9cca37c164981ecb6707835b5c80
 const Bar = styled.div ` 
 	width: 1650;
 	height: 40px;
