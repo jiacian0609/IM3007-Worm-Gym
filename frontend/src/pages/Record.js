@@ -2,7 +2,9 @@ import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+
 import '../css/record.css';
+import Header from '../components/Header';
 
 const Base = styled.div `
     width: 100%;
@@ -29,23 +31,6 @@ const Background = styled.img `
 
 const Content = styled.div `
     position: relative;
-`
-
-const Title = styled.div `
-    width: 100%;
-    height: 266px;
-
-    padding: 20px 0 10px 150px;
-    margin: 0 0 0 43px;
-
-    font-family: 'Caramel';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 128px;
-    line-height: 240px;
-    text-align: left;
-
-    color: #0053B4;
 `
 
 const StyledCalendar = styled.div `
@@ -134,13 +119,13 @@ export default function Record() {
 
     const [weight, setWeight] = useState();
     const [set, setSet] = useState();
-    const [time, setTime] = useState();
+    const [unit, setUnit] = useState();
 
     return (
     <Base>
+        <Header />
         <Background />
         <Content>
-            <Title>Worm Gym</Title>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ display: 'block', alignItems: 'center' }}>
                     <StyledCalendar></StyledCalendar>
@@ -179,15 +164,15 @@ export default function Record() {
                             <input
                                 className="form__field-input"
                                 value={ set }
-                                onChange={(e) => setWeight(e.target.value)}
+                                onChange={(e) => setSet(e.target.value)}
                             />
                         </div>
                         <div className="form__field">
-                            <div className="form__field-name">次數</div>
+                            <div className="form__field-name">單位</div>
                             <input
                                 className="form__field-input"
-                                value={ time }
-                                onChange={(e) => setWeight(e.target.value)}
+                                value={ unit }
+                                onChange={(e) => setUnit(e.target.value)}
                             />
                         </div>
                         <Submit>確認</Submit>

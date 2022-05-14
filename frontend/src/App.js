@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import SignIn from './components/Signin';
-import Home from './components/Home';
-import Menu from './components/Menu';
-import MonthlyMenu from './components/MonthlyMenu';
-import Inbody from './components/Inbody';
-import Record from './components/Record';
+import SignIn from './pages/Signin';
+import Home from './pages/Home';
+import Menu from './pages/Menu';
+import MonthlyMenu from './pages/MonthlyMenu';
+import Inbody from './pages/Inbody';
+import Record from './pages/Record';
 
 function App() {
     return (
