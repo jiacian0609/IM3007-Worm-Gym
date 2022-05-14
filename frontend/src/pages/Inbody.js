@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Table, Tag, Space } from 'antd';
 
+import Header from '../components/Header';
+
 const Base = styled.div `
     width: 2880px;
     height: 1594px;
@@ -22,6 +24,7 @@ const Background = styled.img `
     position: absolute;
         left: 0;
         top: 0;
+        z-index: -1;
 
     opacity: 0.8;
     background-image: url("./images/vector_3.png");
@@ -32,23 +35,6 @@ const Background = styled.img `
 
 const Content = styled.div `
     position: relative;
-`
-
-const Title = styled.div `
-    width: 1000px;
-    height: 266px;
-
-    padding: 20px 0 10px 150px;
-    margin: 0 0 0 43px;
-
-    font-family: 'Caramel';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 128px;
-    line-height: 240px;
-    text-align: left;
-
-    color: #0053B4;
 `
 
 const Bar = styled.div ` 
@@ -208,9 +194,9 @@ const columns = [
 export default function Inbody() {
   return (
     <Base>
+      <Header />
         <Background />
         <Content>
-            <Title>Worm Gym</Title>
             <Bar>
                 <InbodyText>Inbody 身體數據</InbodyText>
                 <Link to={ `/menu/2022-05` } style={{ textDecoration: 'none' }}>

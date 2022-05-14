@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import '../css/menu.css';
 
+import Header from '../components/Header';
+
 const Base = styled.div `
     width: 2880px;
     height: 1594px;
@@ -22,6 +24,7 @@ const Background = styled.img `
     position: absolute;
         left: 0;
         top: 0;
+        z-index: -1;
 
     opacity: 0.8;
     background-image: url("/images/cover_3.png");
@@ -207,9 +210,9 @@ function MonthButton() {
 export default function Menu() {
   return (
     <Base>
+        <Header />
         <Background />
         <Content>
-            <Title>Worm Gym</Title>
             <Bar>
                 <MenuText>訓練菜單</MenuText>
                 <Link to={ `/menu/2022-05` } style={{ textDecoration: 'none' }}>

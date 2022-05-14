@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import DatePicker from 'sassy-datepicker';
 import axios from 'axios';
 
+import Header from '../components/Header';
+
 const Base = styled.div `
     width: 2880px;
     height: 1594px;
@@ -16,23 +18,6 @@ const Base = styled.div `
 
 const Content = styled.div `
     position: relative;
-`
-
-const Title = styled.div `
-    width: 700px;
-    height: 180px;
-
-    padding: 0 0 10px 40px;
-    margin: 0 0 30px 43px;
-
-    font-family: 'Caramel';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 128px;
-    line-height: 240px;
-    text-align: left;
-
-    color: #0053B4;
 `
 
 const Bar = styled.div ` 
@@ -135,8 +120,8 @@ export default function MonthlyMenu() {
 
     return (
       <Base>
+        <Header />
         <Content>
-            <Title>Worm Gym</Title>
             <Bar />
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <StyledCalendar> 
