@@ -37,23 +37,6 @@ const Content = styled.div `
     position: relative;
 `
 
-const Title = styled.div `
-    width: 1000px;
-    height: 266px;
-
-    padding: 20px 0 10px 150px;
-    margin: 0 0 0 43px;
-
-    font-family: 'Caramel';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 128px;
-    line-height: 240px;
-    text-align: left;
-
-    color: #0053B4;
-`
-
 const Bar = styled.div ` 
     width: 1650;
     height: 120px;

@@ -36,7 +36,7 @@ const Title = styled.div `
     width: 1000px;
     height: 266px;
 
-    padding: 150px 0 120px;
+    padding: 100px 0 120px;
     margin: 0 auto;
 
     font-family: 'Caramel';
@@ -84,8 +84,29 @@ const Text = styled.div `
     text-align: center;
 `
 
+const Submit = styled.button `
+    width: 140px;
+    height: 80px;
+
+    padding: 2px;
+    margin: 50px 0 20px;
+
+    background: #35D11B;
+    border: 3px solid #35D11B;
+    border-radius: 8px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+`
+
 export default function Home() {
     //JWT authentication
+    const clickSubmit = function() {
+        localStorage.clear();
+        window.location.href = "/"
+    }
+
     return (
     <Base>
         <Background />
@@ -110,6 +131,9 @@ export default function Home() {
                         <Text>訓練菜單</Text>
                     </Box>
                 </Link>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Submit onClick={() => clickSubmit()}>登出</Submit>
             </div>
         </Content>
     </Base>
