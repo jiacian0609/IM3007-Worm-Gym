@@ -21,6 +21,7 @@ const Background = styled.img `
     position: absolute;
         left: 0;
         top: 0;
+        z-index: -1;
 
     opacity: 0.4;
     background-image: url("/images/cover_5.png");
@@ -89,16 +90,9 @@ const Submit = styled.button `
 
 function Task(items) {
     console.log(items)
-
-    let url;
-    if (items.items.id < 10)
-        url = '../images/gym_0' + items.items.id + '.png';
-    else
-        url = '../images/gym_' + items.items.id + '.png';
-
     return (
         <div style={{ display: 'block', alignItems: 'center' }}>
-            <Img src={ url } />
+            <Img src={ '../images/gym_' + items.items.id + '.png' } />
             <Text>{ items.items.name }</Text>
         </div>
     );

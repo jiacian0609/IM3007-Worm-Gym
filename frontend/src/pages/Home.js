@@ -33,20 +33,14 @@ const Content = styled.div `
 `
 
 const Title = styled.div `
-    width: 1000px;
-    height: 266px;
+    width: 1200px;
+    height: 270px;
 
-    padding: 150px 0 120px;
-    margin: 0 auto;
+    margin: 100px auto 100px;
 
-    font-family: 'Caramel';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 200px;
-    line-height: 240px;
-    text-align: center;
-
-    color: #0053B4;
+    background-image: url("/images/WormGym.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 `
 
 const Box = styled.button `
@@ -84,13 +78,34 @@ const Text = styled.div `
     text-align: center;
 `
 
+const Submit = styled.button `
+    width: 140px;
+    height: 80px;
+
+    padding: 2px;
+    margin: 50px 0 20px;
+
+    background: #35D11B;
+    border: 3px solid #35D11B;
+    border-radius: 8px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+`
+
 export default function Home() {
     //JWT authentication
+    const clickSubmit = function() {
+        localStorage.clear();
+        window.location.href = "/"
+    }
+
     return (
     <Base>
         <Background />
         <Content>
-            <Title>Worm Gym</Title>
+            <Title />
             <div style={{display: 'flex', margin: '0 auto', width: '2450px'}}>
                 <Link to={ `/inbody` } style={{ textDecoration: 'none' }}>
                     <Box color="#8294D3">
@@ -110,6 +125,9 @@ export default function Home() {
                         <Text>訓練菜單</Text>
                     </Box>
                 </Link>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Submit onClick={() => clickSubmit()}>登出</Submit>
             </div>
         </Content>
     </Base>
