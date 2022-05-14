@@ -113,6 +113,7 @@ export default function SignIn() {
         })
         .then( (response) => {
             if (response.data.message === "Login successfully.") {
+				window.localStorage.setItem('JWT', response.data.JWT)
                 window.location.href = "/home"
             } else {
 				window.alert(response.data)

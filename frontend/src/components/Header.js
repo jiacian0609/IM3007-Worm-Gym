@@ -2,20 +2,15 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Title = styled.div `
-    width: 1000px;
-    height: 220px;
+    width: 800px;
+    height: 200px;
 
     margin-left: 120px;
+    margin-top: 80px;
     align-items: center;
 
-    font-family: 'Caramel';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 128px;
-    line-height: 240px;
-    text-align: left;
-
-    color: #0053B4;
+    background-image: url("/images/WormGym.png");
+    background-repeat: no-repeat;
 `
 
 const Home = styled.button `
@@ -36,7 +31,7 @@ const Home = styled.button `
 export default function Header() {
     return (
         <div style={{ display: 'flex' }}>
-            <Title>Worm Gym</Title>
+            <Title />
             <Link to="/home">
                 <Home />
             </Link>
