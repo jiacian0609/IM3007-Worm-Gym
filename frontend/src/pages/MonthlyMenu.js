@@ -30,27 +30,6 @@ const Base = styled.div `
 	position: relative;
 `
 
-const Content = styled.div `
-	position: relative;
-`
-
-const Title = styled.div `
-	width: 700px;
-	height: 180px;
-
-	padding: 0 0 10px 40px;
-	margin: 0 0 30px 43px;
-
-	font-family: 'Caramel';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 128px;
-	line-height: 240px;
-	text-align: left;
-
-	color: #0053B4;
-`
-
 const Bar = styled.div ` 
 	width: 1650;
 	height: 40px;
@@ -170,25 +149,23 @@ export default function MonthlyMenu() {
 
 	return (
 	  <Base>
-		<Content>
-			<Title>Worm Gym</Title>
-			<Bar />
-			<div style={{ display: 'flex', alignItems: 'center' }}>
-				<StyledCalendar> 
-					<Calendar setDate={setDate}/>
-				</StyledCalendar>
-				<div style={{ display: 'block', width: '140px', margin: '0 0 700px'}}>
-					<Day>Day 1</Day>
-					<Day>Day 2</Day>
-				</div>
-				<div style={{display: 'inline', height: '1060px'}}>
-					<Row>{data.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-					<Row>{data.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-					<Row>{data.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-				</div>
+	  	<Header />
+		<Bar />
+		<div style={{ display: 'flex', alignItems: 'center' }}>
+			<StyledCalendar> 
+				<Calendar setDate={setDate}/>
+			</StyledCalendar>
+			<div style={{ display: 'block', width: '140px', margin: '0 0 700px'}}>
+				<Day>Day 1</Day>
+				<Day>Day 2</Day>
 			</div>
-			<Bar />
-		</Content>
+			<div style={{display: 'inline', height: '1060px'}}>
+				<Row>{data.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+				<Row>{data.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+				<Row>{data.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+			</div>
+		</div>
+		<Bar />
 	  </Base>
 	)
 }
