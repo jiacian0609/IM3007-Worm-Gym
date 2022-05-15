@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import '../css/menu.css';
 
 import Header from '../components/Header';
@@ -59,46 +59,6 @@ const MenuText = styled.div `
     color: #FFFFFF;
 `
 
-const SelectBox = styled.div `
-    width: 300px;
-    height: 46px;
-
-    padding: 10px;
-    margin: 26px 50px 26px 0;
-
-    border: 4px solid #FFFFFF;
-
-    display: flex;
-`
-
-const SelectText = styled.div `
-    width: 85%;
-
-    font-family: 'Fira Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-    text-align: center;
-    line-height: 48px;
-
-    color: #DFDFDF;
-`
-
-const SelectButton = styled.button `
-    background-color: inherit;
-    border: none;
-
-    margin: 0;
-    padding: 0;
-
-    // font-family: 'Fira Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-
-    color: #FFFFFF;
-`
-
 const Submit = styled.button `
     width: 140px;
     height: 80px;
@@ -122,6 +82,7 @@ const Row = styled.div `
     padding: 115px 0 115px;
 
     display: flex;
+    justify-content: center;
 `
 
 const Box = styled.button `
@@ -178,41 +139,59 @@ const RateNum = styled.span `
     color: #0053B4;
 `
 
-function MonthButton() {
+function MonthButton(data) {
+    console.log(data.data);
     return (
         <Box>
-            <Year>2022</Year>
-            <Month>02</Month>
+            <Year>{ data.data.year }</Year>
+            <Month>{ data.data.month }</Month>
             <RateText>達成率：</RateText>
-            <RateNum>100%</RateNum>
+            <RateNum>{ data.data.finish_rate }</RateNum>
         </Box>
     );
 };
 
 
 export default function Menu() {
-  return (
-    <Base>
-        <Header />
-        <Background />
-        <Content>
-            <Bar>
-                <MenuText>訓練菜單</MenuText>
-                <Link to={ `/menu/2022-05` } style={{ textDecoration: 'none' }}>
+    const [data, setData] = useState();
+
+	useEffect(() => {
+		axios.get("http://localhost:8000/finish-rate", {
+			headers: {
+			  'Authorization': `${localStorage.getItem('JWT')}`
+			}
+		})
+		.then( (response) => setData(response.data))
+		.catch( (error) => console.log(error))
+	}, []);
+
+    console.log('data: ', data);
+
+    const selectMonth = function(month) {
+        // window.location.href = "./menu/" + month;
+    };
+
+    return (
+        <Base>
+            <Header />
+            <Background />
+            <Content>
+                <Bar>
+                    <MenuText>訓練菜單</MenuText>
                     <div className="month">
-                        <select className="month-selector" defaultValue="2022-05">
-                            <option value="2022-05">2022-05</option>
+                        <select className="month-selector" id="month" defaultValue="2022-05">
+                            {data.map(items => <option value={items.year + '-0' + items.month} key={items.year + items.month}>{items.year + '-0' + items.month}</option>)}
                         </select>
                     </div>
-                </Link>
-                <Submit>確認</Submit>
-            </Bar>
-            <Row>
-                <MonthButton />
-                <MonthButton />
-                <MonthButton />
-            </Row>
-        </Content>
-    </Base>
-  )
+                    <Submit onClick={() => selectMonth(document.getElementById("month").value)}>確認</Submit>
+                </Bar>
+                <Row>
+                    {data.map(items => <MonthButton data={items} key={items.year + items.month}/>)}
+                </Row>
+            </Content>
+        </Base>
+    )
 }
+
+// {data.map(items => <option value={items.year + '-0' + items.month} key={items.year + items.month}>{items.year + '-0' + items.month}</option>)}
+// {data.map(items => <MonthButton data={items} key={items.year + items.month}/>)}
