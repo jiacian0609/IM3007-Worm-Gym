@@ -83,9 +83,9 @@ const Img = styled.span `
 
 const Text = styled.span `
 	width: 300px;
-	height: 200px;
+	height: 180px;
 
-	margin: 0 0 0 35px;
+	margin: 15px 0 0 35px;
 
 	font-size: 34px;
 	text-align: left;
@@ -98,23 +98,32 @@ const Row = styled.div `
 	display: flex;
 `
 
+const Day = styled.button `
+	width: 140px;
+	height: 80px;
+
+	padding: 2px;
+	margin: 20px 0;
+
+	background: #35D11B;
+	border: 3px solid #35D11B;
+	border-radius: 8px;
+
+	font-style: normal;
+	font-weight: 400;
+	font-size: 40px;
+`
+
 function Task(items) {
 	console.log(items)
 
-	let url;
-	if (items.items.equip_id < 10)
-		url = '../images/gym_0' + items.items.equip_id + '.png';
-	else
-		url = '../images/gym_' + items.items.equip_id + '.png';
-
 	return (
 		<div style={{ display: 'flex', margin: '50px 200px 50px 50px' }}>
-			<Img src={ url } />
+			<Img src={ '../images/gym_' + items.items.equip_id + '.png' } />
 			<Text>
-				{ items.items.program_id }<br/>
+				{ items.items.equip_id }<br/>
 				--------------<br/>
-				重量：{ items.items.weight } KG<br/>
-				次數：{ items.items.reps } 次<br/>
+				次數：{ items.items.reps } <br/>
 				組數：{ items.items.sets } 組 
 			</Text>
 		</div>
@@ -168,6 +177,10 @@ export default function MonthlyMenu() {
 				<StyledCalendar> 
 					<Calendar setDate={setDate}/>
 				</StyledCalendar>
+				<div style={{ display: 'block', width: '140px', margin: '0 0 700px'}}>
+					<Day>Day 1</Day>
+					<Day>Day 2</Day>
+				</div>
 				<div style={{display: 'inline', height: '1060px'}}>
 					<Row>{data.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
 					<Row>{data.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
