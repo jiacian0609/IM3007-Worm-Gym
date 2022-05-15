@@ -95,12 +95,17 @@ const Day = styled.button `
 
 function Task(items) {
 	console.log(items)
+	const equips = [{id: 1, name: '橢圓機'}, {id: 2, name: '跑步機'}, {id: 3, name: '飛輪車'}, {id: 4, name: '雙槓抬腿機'},
+        {id: 5, name: '蝴蝶夾胸機'}, {id: 6, name: '直立式腳踏車'}, {id: 7, name: '臥式腳踏車'}, {id: 8, name: '划船機'},
+        {id: 9, name: '滾輪'}, {id: 10, name: '夾胸器'}, {id: 11, name: '啞鈴彎舉'}, {id: 12, name: '負重深蹲'},
+        {id: 13, name: '側腹旋'}, {id: 14, name: '腿推機'}, {id: 15, name: '滑輪下拉機'}, {id: 16, name: '啞鈴肩推'},
+        {id: 17, name: '啞鈴反握手腕彎舉'}, {id: 18, name: '舉槓臥推'}, {id: 19, name: '捲腹'}, {id: 20, name: '引體向上'}];
 
 	return (
 		<div style={{ display: 'flex', margin: '50px 200px 50px 50px' }}>
 			<Img src={ '../images/gym_' + items.items.equip_id + '.png' } />
 			<Text>
-				{ items.items.equip_id }<br/>
+				{ equips[items.items.equip_id - 1].name }<br/>
 				--------------<br/>
 				次數：{ items.items.reps } <br/>
 				組數：{ items.items.sets } 組 

@@ -105,7 +105,7 @@ function Task(items) {
 </select>*/
 
 export default function Record() {
-    let tasks = [{id: 1, name: '橢圓機'}, {id: 2, name: '跑步機'}, {id: 3, name: '飛輪車'}, {id: 4, name: '雙槓抬腿機'},
+    const equips = [{id: 1, name: '橢圓機'}, {id: 2, name: '跑步機'}, {id: 3, name: '飛輪車'}, {id: 4, name: '雙槓抬腿機'},
         {id: 5, name: '蝴蝶夾胸機'}, {id: 6, name: '直立式腳踏車'}, {id: 7, name: '臥式腳踏車'}, {id: 8, name: '划船機'},
         {id: 9, name: '滾輪'}, {id: 10, name: '夾胸器'}, {id: 11, name: '啞鈴彎舉'}, {id: 12, name: '負重深蹲'},
         {id: 13, name: '側腹旋'}, {id: 14, name: '腿推機'}, {id: 15, name: '滑輪下拉機'}, {id: 16, name: '啞鈴肩推'},
@@ -126,11 +126,11 @@ export default function Record() {
                 </div>
                 <div style={{ display: 'flex' }}>
                     <div style={{ display: 'block', height: '1000px' }}>
-                        <Row>{tasks.slice(0, 4)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-                        <Row>{tasks.slice(4, 8)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-                        <Row>{tasks.slice(8, 12)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-                        <Row>{tasks.slice(12, 16)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-                        <Row>{tasks.slice(16, 20)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
+                        <Row>{equips.slice(0, 4)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
+                        <Row>{equips.slice(4, 8)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
+                        <Row>{equips.slice(8, 12)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
+                        <Row>{equips.slice(12, 16)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
+                        <Row>{equips.slice(16, 20)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
                     </div>
                     <div className="form">
                         <div style={{ display: 'flex', alignItems: 'center' }}>
