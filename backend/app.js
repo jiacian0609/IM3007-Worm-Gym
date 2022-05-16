@@ -16,6 +16,7 @@ var menuRouter = require('./routes/menu');
 var inbody_recordRouter = require('./routes/inbody_record');
 var finishRateRouter = require('./routes/finish-rate');
 var recordRouter = require('./routes/record');
+var getRecordRouter = require('./routes/getRecord');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/menu', menuRouter);
 app.use('/inbody_record', inbody_recordRouter);
 app.use('/finish-rate', finishRateRouter);
 app.use('/record', recordRouter);
+app.use('/getRecord', getRecordRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
