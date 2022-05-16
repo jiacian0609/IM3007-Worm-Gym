@@ -42,6 +42,9 @@ router.get('/', async (req, res) => {
 
             // write into output array
             month_list[i].finish_rate = rate;
+            if (month_list[i].month.length == 1) {
+                month_list[i].month = '0' + month_list[i].month;
+            }
         }
 
         res.send(month_list);
