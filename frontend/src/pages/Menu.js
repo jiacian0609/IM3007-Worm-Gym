@@ -180,7 +180,7 @@ export default function Menu() {
                     <MenuText>訓練菜單</MenuText>
                     <div className="month">
                         <select className="month-selector" id="month" defaultValue="2022-05">
-                            {data?.map(items => <option value={items.year + '-0' + items.month} key={items.year + items.month}>{items.year + '-0' + items.month}</option>)}
+                            {data?.map(items => <option value={items.year + '-' + items.month} key={items.year + items.month}>{items.year + '-' + items.month}</option>)}
                         </select>
                     </div>
                     <Submit onClick={() => selectMonth(document.getElementById("month").value)}>確認</Submit>
