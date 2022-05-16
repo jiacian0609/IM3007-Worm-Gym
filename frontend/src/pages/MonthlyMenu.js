@@ -94,7 +94,7 @@ const Day = styled.button `
 `
 
 function Task(items) {
-	console.log(items)
+	//console.log(items)
 	const equips = [{id: 1, name: '橢圓機'}, {id: 2, name: '跑步機'}, {id: 3, name: '飛輪車'}, {id: 4, name: '雙槓抬腿機'},
         {id: 5, name: '蝴蝶夾胸機'}, {id: 6, name: '直立式腳踏車'}, {id: 7, name: '臥式腳踏車'}, {id: 8, name: '划船機'},
         {id: 9, name: '滾輪'}, {id: 10, name: '夾胸器'}, {id: 11, name: '啞鈴彎舉'}, {id: 12, name: '負重深蹲'},
@@ -139,7 +139,10 @@ function Calendar(props) {
 
 export default function MonthlyMenu() {
 	const [date, setDate] = useState(useParams().month)
-	const [data, setData] = useState([])
+	const [days, setDays] = useState([])
+	const [day, setDay] = useState(1)
+	const [allData, setAllData] = useState([])
+	const [dayData, setDayData] = useState([])
 
 	useEffect(() => {
 		axios.get("http://localhost:8000/menu/" + date, {
@@ -147,10 +150,25 @@ export default function MonthlyMenu() {
 			  'Authorization': `${localStorage.getItem('JWT')}`
 			}
 		})
-		.then( (response) => setData(response.data))
+		.then( (response) => {
+			setAllData(response.data)
+			setDayData(response.data.slice(0, 6))
+			setDay(1)
+			setDays([])
+			var newDays = []
+			for (let index = 0; index < response.data.length; index+=6) {
+				newDays.push(response.data[index].Day)
+				if (index === response.data.length - 6) setDays(newDays)
+			}
+		})
 		.catch( (error) => console.log(error))
+		//console.log(date)
 	}, [date])
-	//console.log(data)   
+
+	useEffect(() => {
+		setDayData(allData.slice((day - 1) * 6, day * 6))
+		//console.log(allData.slice((day - 1) * 6, day * 6))
+	}, [day])
 
 	return (
 	  <Base>
@@ -161,13 +179,12 @@ export default function MonthlyMenu() {
 				<Calendar setDate={setDate}/>
 			</StyledCalendar>
 			<div style={{ display: 'block', width: '140px', margin: '0 0 700px'}}>
-				<Day>Day 1</Day>
-				<Day>Day 2</Day>
+				{days?.map(day => <Day key={ day } onClick={() => setDay(day)}>Day {day}</Day>)}
 			</div>
 			<div style={{display: 'inline', height: '1060px'}}>
-				<Row>{data.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-				<Row>{data.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-				<Row>{data.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+				<Row>{dayData.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+				<Row>{dayData.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+				<Row>{dayData.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
 			</div>
 		</div>
 		<Bar />

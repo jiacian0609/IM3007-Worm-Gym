@@ -168,7 +168,7 @@ export default function Menu() {
     console.log('data: ', data);
 
     const selectMonth = function(month) {
-        // window.location.href = "./menu/" + month;
+        window.location.href = "./menu/" + month;
     };
 
     return (
@@ -180,13 +180,13 @@ export default function Menu() {
                     <MenuText>訓練菜單</MenuText>
                     <div className="month">
                         <select className="month-selector" id="month" defaultValue="2022-05">
-                            {data.map(items => <option value={items.year + '-0' + items.month} key={items.year + items.month}>{items.year + '-0' + items.month}</option>)}
+                            {data?.map(items => <option value={items.year + '-0' + items.month} key={items.year + items.month}>{items.year + '-0' + items.month}</option>)}
                         </select>
                     </div>
                     <Submit onClick={() => selectMonth(document.getElementById("month").value)}>確認</Submit>
                 </Bar>
                 <Row>
-                    {data.map(items => <MonthButton data={items} key={items.year + items.month}/>)}
+                    {data?.map(items => <MonthButton data={items} key={items.year + items.month}/>)}
                 </Row>
             </Content>
         </Base>
