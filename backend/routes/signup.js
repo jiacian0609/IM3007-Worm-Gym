@@ -18,7 +18,7 @@ router.post('/', async function (req, res) {
 	var encryptedPassword = await bcrypt.hash(password, 10);
 
 	//Insert data into DB
-	await pool.query('INSERT INTO "WormGym".user_info("username", "password", "email") VALUES ($1, $2, $3)', [username, encryptedPassword, email]);
+	await pool.query('INSERT INTO "WormGym".user_info("username", "password", "email") VALUES ($1, $2, $3)', [username, password, email]);
 
 	//Create token
 	var userID = await pool.query('SELECT user_id FROM "WormGym".user_info WHERE username = $1', [username]);
