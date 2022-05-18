@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
         const user = await pool.query('SELECT * FROM "WormGym".user_info WHERE username = $1', [username]);
         await new Promise((resolve, reject) => {
 			if (user.rows[0] === undefined) {
-                return res.send('Username does not exist.');
+                return res.status(404).send('Username does not exist.');
             } else {
                 encryptedPassword = user.rows[0].password;
             }
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         await new Promise((resolve, reject) => {
             // Compare password
             if (!(password == encryptedPassword))
-                return res.send("Password is wrong :(");
+                return res.status(403).send("Password is wrong :(");
             resolve()
         });
         

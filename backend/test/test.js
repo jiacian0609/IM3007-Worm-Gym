@@ -25,20 +25,68 @@ describe("POST /signup", () => {
             [req.username, req.password, req.email]);
     });
 
-    it("Should return a message", (done) => {
+    it("Return a message", (done) => {
         chai.request(server).post("/signup").send(req)
             .end((err, res) => {
                 res.should.have.status(200);
                 expect(res.text).to.equal("Sign up successfully.");
-            done();
+                done();
             });
     });
 
-    it("Should store information into database", async () => {
+    it("Store information into database", async () => {
         const user = await pool.query(`
             SELECT * FROM "WormGym".user_info 
             WHERE username = $1 AND password = $2 AND email = $3`,
             [req.username, req.password, req.email]);
         expect(user.rowCount).to.greaterThan(0);
+    });
+});
+
+describe('POST /login', () => {
+    it("Case 1: username doesn't exist", (done) => {
+        const req1 = {
+            username: "username",
+            password: "password"
+        };
+
+        chai.request(server).post('/login').send(req1)
+            .end((err, res) => {
+                res.should.have.status(404);
+                expect(res.text).to.equal("Username does not exist.");
+                done();
+            });
+    });
+
+    it("Case 2: wrong password", (done) => {
+        const req2 = {
+            username: "userONE",
+            password: "password"
+        };
+
+        chai.request(server).post('/login').send(req2)
+            .end((err, res) => {
+                res.should.have.status(403);
+                expect(res.text).to.equal("Password is wrong :(");
+                done();
+            });
+    });
+
+    
+    it("Case 3: successfully log in", (done) => {
+        const req3 = {
+            username: "userONE",
+            password: "11111111"
+        };
+
+        chai.request(server).post('/login').send(req3)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.to.be.a('object');
+                res.body.should.have.property('message');
+                res.body.should.have.property('JWT');
+                expect(res.body.message).to.equal('Login successfully.');
+                done();
+            });
     });
 });
