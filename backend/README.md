@@ -1,6 +1,6 @@
 # Database Setting
 Step 1: Open pgAdmin app & login as user `postgres`.  
-Step 2: Create a database named `wormGym`.
+Step 2: Create a database named `wormGym`.  
 Step 3: Right click on the database, select `Restore...`.  
 Step 4: Select `wormGym_custom.sql` as the restoring file.  
 Step 5: Create another database named `wormGym_test` and restore with the same file.  
