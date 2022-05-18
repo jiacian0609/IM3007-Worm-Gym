@@ -9,6 +9,7 @@ const pool = require('../db');
 
 chai.use(chaiHttp);
 
+let jwtToken = "";
 
 describe("POST /signup", () => {
     const req = {
@@ -43,50 +44,68 @@ describe("POST /signup", () => {
     });
 });
 
-describe('POST /login', () => {
-    it("Case 1: username doesn't exist", (done) => {
-        const req1 = {
-            username: "username",
-            password: "password"
-        };
-
-        chai.request(server).post('/login').send(req1)
-            .end((err, res) => {
-                res.should.have.status(404);
-                expect(res.text).to.equal("Username does not exist.");
-                done();
-            });
-    });
-
-    it("Case 2: wrong password", (done) => {
-        const req2 = {
-            username: "userONE",
-            password: "password"
-        };
-
-        chai.request(server).post('/login').send(req2)
-            .end((err, res) => {
-                res.should.have.status(403);
-                expect(res.text).to.equal("Password is wrong :(");
-                done();
-            });
-    });
-
+describe("POST /login", () => {
+    describe("Case 1: username doesn't exist", () => {
+        it("Return a message", (done) => {
+            const req1 = {
+                username: "username",
+                password: "password"
+            };
     
-    it("Case 3: successfully log in", (done) => {
-        const req3 = {
-            username: "userONE",
-            password: "11111111"
-        };
+            chai.request(server).post('/login').send(req1)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    expect(res.text).to.equal("Username does not exist.");
+                    done();
+                });
+        });
+    });
+    
+    describe("Case 2: wrong password", () => {
+        it("Return a message", (done) => {
+            const req2 = {
+                username: "userONE",
+                password: "password"
+            };
+    
+            chai.request(server).post('/login').send(req2)
+                .end((err, res) => {
+                    res.should.have.status(403);
+                    expect(res.text).to.equal("Password is wrong :(");
+                    done();
+                });
+        });
+    });
+    
+    describe("Case 3: successfully log in", () => {
+        it("Return a message & JWT token", (done) => {
+            const req3 = {
+                username: "userONE",
+                password: "11111111"
+            };
+    
+            chai.request(server).post('/login').send(req3)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.to.be.a('object');
+                    res.body.should.have.property('message');
+                    res.body.should.have.property('JWT');
+                    expect(res.body.message).to.equal('Login successfully.');
 
-        chai.request(server).post('/login').send(req3)
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.to.be.a('object');
-                res.body.should.have.property('message');
-                res.body.should.have.property('JWT');
-                expect(res.body.message).to.equal('Login successfully.');
-                done();
-            });
+                    jwtToken = res.body.JWT;
+                    done();
+                });
+        });
+    });
+});
+
+describe("GET /logout", () => {
+    it("Return a message", (done) => {
+        chai.request(server).get('/logout')
+        .end((err, res) => {
+            res.should.have.status(200);
+            expect(res.text).to.equal('Logout successfully.');
+            done();
+        });
     });
 });
