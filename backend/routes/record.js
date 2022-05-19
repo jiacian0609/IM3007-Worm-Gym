@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 	
 	// Insert record into database
 	await pool.query(
-		'INSERT INTO "WormGym"."fitness_record" (user_id, equip_id, weight, reps, sets, date, day) VALUES($1, $2, $3, $4, $5, $6, $7)'
+		'INSERT INTO "WormGym"."fitness_record" (user_id, equip_id, weight, reps, sets, date, "Day") VALUES($1, $2, $3, $4, $5, $6, $7)'
 		, [user_id, equip_id, weight, reps, sets, date, day]
 	);
 	
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
 			
 			if (input_date >= pd && input_date <= pd_end) {
 				sd = pd;
-				console.log(sd);
+				//console.log(sd);
 				break;
 			}
 		}
