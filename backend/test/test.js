@@ -99,7 +99,7 @@ describe("POST /login", () => {
             chai.request(server).post('/login').send(req3)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.to.be.a('object');
+                    res.body.should.be.a('object');
                     res.body.should.have.property('message');
                     res.body.should.have.property('JWT');
                     expect(res.body.message).to.equal('Login successfully.');
@@ -158,24 +158,6 @@ describe("POST /record", () => {
             WHERE equip_id = $1 AND weight = $2 AND reps = $3 AND sets = $4 AND date = $5 AND "Day" = $6`,
             [req2.equip_id, req2.weight, req2.reps, req2.sets, req2.date, req2.day]);
         before_r2Cnt = before_r2.rowCount;
-    });
-
-    after(async () => {
-        // run after all tests in this describe block
-        await pool.query(`
-            DELETE FROM "WormGym".fitness_record
-            WHERE equip_id = $1 AND weight = $2 AND reps = $3 AND sets = $4 AND date = $5 AND "Day" = $6`,
-            [req1.equip_id, req1.weight, req1.reps, req1.sets, req1.date, req1.day]);
-
-        await pool.query(`
-            DELETE FROM "WormGym".fitness_record
-            WHERE equip_id = $1 AND weight = $2 AND reps = $3 AND sets = $4 AND date = $5 AND "Day" = $6`,
-            [req2.equip_id, req2.weight, req2.reps, req2.sets, req2.date, req2.day]);
-        
-        await pool.query(`
-            UPDATE "WormGym".fitness_program SET finish=false
-            WHERE equip_id = $1 AND date = $2 AND "Day" = $3`,
-            [req2.equip_id, req2.date, req2.day]);
     });
 
     describe("Case 1: day = free", () => {
@@ -246,5 +228,66 @@ describe("POST /record", () => {
             expect(p.rows[0].finish).to.equal(true);
         });
     });
+
+    after(async () => {
+        // run after all tests in this describe block
+        await pool.query(`
+            DELETE FROM "WormGym".fitness_record
+            WHERE equip_id = $1 AND weight = $2 AND reps = $3 AND sets = $4 AND date = $5 AND "Day" = $6`,
+            [req1.equip_id, req1.weight, req1.reps, req1.sets, req1.date, req1.day]);
+
+        await pool.query(`
+            DELETE FROM "WormGym".fitness_record
+            WHERE equip_id = $1 AND weight = $2 AND reps = $3 AND sets = $4 AND date = $5 AND "Day" = $6`,
+            [req2.equip_id, req2.weight, req2.reps, req2.sets, req2.date, req2.day]);
+        
+        await pool.query(`
+            UPDATE "WormGym".fitness_program SET finish=false
+            WHERE equip_id = $1 AND date = $2 AND "Day" = $3`,
+            [req2.equip_id, req2.date, req2.day]);
+    });
 });
 
+
+// finish-rate api
+describe("GET /finish-rate", () => {
+    let rates = undefined;
+    it("Return an array", (done) => {
+        // login to get token
+        chai.request(server)
+        .post('/login').send({username: 'userONE', password: '11111111'})
+        .end((err, res1) => {
+            // token
+            const token = res1.body.JWT;
+
+            chai.request(server)
+                .get('/finish-rate')
+                .set({'Authorization': token})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    expect(res.body.length).equal(3);
+
+                    rates = res.body;
+                    done();
+                });
+        });
+    });
+
+    it("Contain year, month, and finish_rate property", (done) => {
+        for (let i = 0; i < rates.length; i++) {
+            rates[i].should.be.a('object');
+            rates[i].should.have.property('year');
+            rates[i].should.have.property('month');
+            rates[i].should.have.property('finish_rate');
+            expect(rates[i].year).to.equal('2022');
+        }
+        expect(rates[0].month).to.equal('03');
+        expect(rates[1].month).to.equal('04');
+        expect(rates[2].month).to.equal('05');
+        expect(rates[0].finish_rate).to.equal('100%');
+        expect(rates[1].finish_rate).to.equal('75%');
+        expect(rates[2].finish_rate).to.equal('62.5%');
+        done();
+    });
+});
