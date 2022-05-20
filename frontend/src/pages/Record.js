@@ -89,7 +89,7 @@ const Submit = styled.button `
 `
 
 function Task(items) {
-    console.log(items)
+    //console.log(items)
     return (
         <div style={{ display: 'block', alignItems: 'center' }}>
             <Img src={ '../images/gym_' + items.items.id + '.png' } />
@@ -114,6 +114,18 @@ export default function Record() {
     const [weight, setWeight] = useState();
     const [set, setSet] = useState();
     const [unit, setUnit] = useState();
+
+    useEffect(() => {
+		axios.get("http://localhost:8000/getRecord/2022-05-01/2", {
+			headers: {
+			  'Authorization': `${localStorage.getItem('JWT')}`
+			}
+		})
+		.then( (response) => {
+			console.log("response:", response.data)
+		})
+		.catch( (error) => console.log(error))
+	}, [])
 
     return (
     <Base>
