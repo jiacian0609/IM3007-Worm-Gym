@@ -5,8 +5,8 @@ var jwt = require("jsonwebtoken");
 
 router.get('/:date/:day', async function (req, res) {
 	//Parameters
-	//const JWT = req.headers.authorization
-	const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVaWQiOjEsIlVzZXJuYW1lIjoidXNlck9ORSIsIkVtYWlsIjoiYjA4MDAwMDAxQGdvb2dsZS5jb20iLCJpYXQiOjE2NTMwNTk1OTgsImV4cCI6MTY1MzA2Njc5OH0.yfOmhTRx8DN6d8kVCdEm0ISMjfXeXF7eAC2NxvoSPFA"
+	const JWT = req.headers.authorization
+	//const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVaWQiOjEsIlVzZXJuYW1lIjoidXNlck9ORSIsIkVtYWlsIjoiYjA4MDAwMDAxQGdvb2dsZS5jb20iLCJpYXQiOjE2NTMwNjc0MjQsImV4cCI6MTY1MzA3NDYyNH0.YKaOGiUNPTzaCYuMa9y1hW7DIHlRI0hhOUgXAVBGlqg"
 	const payload = jwt.verify(JWT, "b7b16ad9db0ca7c5705cba37840e4ec310740c62beea61cfd9bdcee0720797a6c8bb1b3ffc0d781601fb77dbdaa899acfd08ac560aec19f2d18bb3b6e25beb7a");
 	const user_id = payload.Uid;
 	const date = req.params.date
@@ -66,8 +66,26 @@ router.get('/:date/:day', async function (req, res) {
 		res.send(recordByDate)
 	}
 	else {
-		const record = await pool.query('SELECT * FROM "WormGym".fitness_record WHERE "user_id" = $1 and "date" BETWEEN $2 and $3 and "Day" = $4', [user_id, startDate, endDate, 'free']);
-		res.send(menu.rows)
+		// Get training record from database
+		const record = await pool.query('SELECT * FROM "WormGym".fitness_record WHERE "user_id" = $1 and "date" BETWEEN $2 and $3 and "Day" = $4', [user_id, startDate, endDate, day]);
+
+		// Update training record
+		for (let index = 0; index < record.rows.length; index++) {
+			recordByDate[record.rows[index].equip_id - 1].weight = record.rows[index].weight
+			recordByDate[record.rows[index].equip_id - 1].sets = record.rows[index].sets
+			recordByDate[record.rows[index].equip_id - 1].reps = record.rows[index].reps
+			recordByDate[record.rows[index].equip_id - 1].status = "finished"
+		}
+
+		// Get unfinished training menu from database
+		const unfinishedMenu = await pool.query('SELECT * FROM "WormGym".fitness_program WHERE user_id = $1 and date = $2 and "Day" = $3 and finish = false', [user_id, startDate, day]);
+
+		// Update training record
+		for (let index = 0; index < unfinishedMenu.rows.length; index++) 
+			recordByDate[unfinishedMenu.rows[index].equip_id - 1].status = "unfinished"
+		
+		// Send response to frontend		
+		res.send(recordByDate)
 	}
 })
 
