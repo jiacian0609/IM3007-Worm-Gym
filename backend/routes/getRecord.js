@@ -81,8 +81,11 @@ router.get('/:date/:day', async function (req, res) {
 		const unfinishedMenu = await pool.query('SELECT * FROM "WormGym".fitness_program WHERE user_id = $1 and date = $2 and "Day" = $3 and finish = false', [user_id, startDate, day]);
 
 		// Update training record
-		for (let index = 0; index < unfinishedMenu.rows.length; index++) 
+		for (let index = 0; index < unfinishedMenu.rows.length; index++) {
+			recordByDate[unfinishedMenu.rows[index].equip_id - 1].sets = unfinishedMenu.rows[index].sets
+			recordByDate[unfinishedMenu.rows[index].equip_id - 1].reps = unfinishedMenu.rows[index].reps
 			recordByDate[unfinishedMenu.rows[index].equip_id - 1].status = "unfinished"
+		}
 		
 		// Send response to frontend		
 		res.send(recordByDate)

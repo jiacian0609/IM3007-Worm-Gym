@@ -218,7 +218,7 @@ export default function Record() {
 		})
 		.then( (response) => {
 			console.log(date + "/" + day)
-			//console.log("response:", response.data)
+			console.log("response:", response.data)
 			setRecord(response.data)
 		})
 		.catch( (error) => console.log(error))
