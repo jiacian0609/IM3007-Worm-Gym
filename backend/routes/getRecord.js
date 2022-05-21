@@ -28,26 +28,26 @@ router.get('/:date/:day', async function (req, res) {
 	}
 	process.env.TZ = "UTC8";
 	// response to frontend
-	var recordByDate = [{equip_id: 1, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 2, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 3, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 4, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 5, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 6, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 7, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 8, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 9, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 10, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 11, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 12, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 13, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 14, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 15, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 16, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 17, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 18, weight: 0, sets: 0, reps: 0, status: 'optional'},
-						{equip_id: 19, weight: 0, sets: 0, reps: 0, status: 'optional'}, 
-						{equip_id: 20, weight: 0, sets: 0, reps: 0, status: 'optional'}]
+	var recordByDate = [{equip_id: 1, name: '橢圓機', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 2, name: '跑步機', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 3, name: '飛輪車', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 4, name: '雙槓抬腿機', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 5, name: '蝴蝶夾胸機', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 6, name: '直立式腳踏車', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 7, name: '臥式腳踏車', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 8, name: '划船機', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 9, name: '滾輪', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 10, name: '夾胸器', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 11, name: '啞鈴彎舉', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 12, name: '負重深蹲', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 13, name: '側腹旋', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 14, name: '腿推機', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 15, name: '滑輪下拉機', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 16, name: '啞鈴肩推', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 17, name: '啞鈴反握手腕彎舉', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 18, name: '舉槓臥推', weight: 0, sets: 0, reps: 0, status: 'optional'},
+						{equip_id: 19, name: '捲腹', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
+						{equip_id: 20, name: '引體向上', weight: 0, sets: 0, reps: 0, status: 'optional'}]
 	
 	if (day == 'free') {
 		// Get training record from database
