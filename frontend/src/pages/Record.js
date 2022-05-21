@@ -50,7 +50,7 @@ const Img = styled.div `
 	margin: 0 auto;
 	border-radius: 50%;
 
-	background-color: #27CE24;
+	background-color: ${props => props.color};
 	background-image: url("${props => props.src}");
 	background-size: 70%;
 	background-repeat: no-repeat;
@@ -104,14 +104,31 @@ const months = {
 	Dec: '12',
   }
 
-function Task(items) {
-	//console.log(items)
-	return (
-		<div style={{ display: 'block', alignItems: 'center' }}>
-			<Img src={ '../images/gym_' + items.items.id + '.png' } />
-			<Text>{ items.items.name }</Text>
-		</div>
-	);
+function Task(props) {
+	//console.log(props.item)
+	if (props.item.status === 'finished') {
+		return (
+			<div style={{ display: 'block', alignItems: 'center' }}>
+				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'#00DB00'}/>
+				<Text>{ props.item.name }</Text>
+			</div>
+		);
+	} else if (props.item.status === 'unfinished') {
+		return (
+			<div style={{ display: 'block', alignItems: 'center' }}>
+				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'red'} />
+				<Text>{ props.item.name }</Text>
+			</div>
+		);
+	} else if (props.item.status === 'optional') {
+		return (
+			<div style={{ display: 'block', alignItems: 'center' }}>
+				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'gray'} />
+				<Text>{ props.item.name }</Text>
+			</div>
+		);
+	}
+	
 };
 
 function Calendar(props) {
@@ -143,12 +160,6 @@ function Calendar(props) {
 </select>*/
 
 export default function Record() {
-	const equips = [{id: 1, name: '橢圓機'}, {id: 2, name: '跑步機'}, {id: 3, name: '飛輪車'}, {id: 4, name: '雙槓抬腿機'},
-		{id: 5, name: '蝴蝶夾胸機'}, {id: 6, name: '直立式腳踏車'}, {id: 7, name: '臥式腳踏車'}, {id: 8, name: '划船機'},
-		{id: 9, name: '滾輪'}, {id: 10, name: '夾胸器'}, {id: 11, name: '啞鈴彎舉'}, {id: 12, name: '負重深蹲'},
-		{id: 13, name: '側腹旋'}, {id: 14, name: '腿推機'}, {id: 15, name: '滑輪下拉機'}, {id: 16, name: '啞鈴肩推'},
-		{id: 17, name: '啞鈴反握手腕彎舉'}, {id: 18, name: '舉槓臥推'}, {id: 19, name: '捲腹'}, {id: 20, name: '引體向上'}];
-
 	const [weight, setWeight] = useState();
 	const [set, setSet] = useState();
 	const [unit, setUnit] = useState();
@@ -156,6 +167,7 @@ export default function Record() {
 	const [startDate, setStartDate] = useState();
 	const [day, setDay] = useState('free');
 	const [days, setDays] = useState([]);
+	const [record, setRecord] = useState([]);
 
 	useEffect(() => {
 		// Default startDate
@@ -205,7 +217,9 @@ export default function Record() {
 			}
 		})
 		.then( (response) => {
-			console.log("response:", response.data)
+			console.log(date + "/" + day)
+			//console.log("response:", response.data)
+			setRecord(response.data)
 		})
 		.catch( (error) => console.log(error))
 	}, [date, day])
@@ -223,11 +237,11 @@ export default function Record() {
 				</div>
 				<div style={{ display: 'flex' }}>
 					<div style={{ display: 'block', height: '1000px' }}>
-						<Row>{equips.slice(0, 4)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-						<Row>{equips.slice(4, 8)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-						<Row>{equips.slice(8, 12)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-						<Row>{equips.slice(12, 16)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
-						<Row>{equips.slice(16, 20)?.map(items => <Task items={ items } key={ items.id }/>)}</Row>
+						<Row>{record.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
+						<Row>{record.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
+						<Row>{record.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
+						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
+						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
 					</div>
 					<div className="form">
 						<div style={{ display: 'flex', alignItems: 'center' }}>
