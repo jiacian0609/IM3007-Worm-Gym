@@ -108,21 +108,57 @@ function Task(props) {
 	//console.log(props.item)
 	if (props.item.status === 'finished') {
 		return (
-			<div style={{ display: 'block', alignItems: 'center' }}>
+			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }}
+				 onClick={() => {
+					props.setEquip(props.item.equip_id)
+					if (props.item.sets !== 0)
+						props.setDefaultSets(props.item.sets)
+					else
+						props.setDefaultSets('')
+					if (props.item.reps !== 0)
+						props.setDefaultReps(props.item.reps)
+					else
+						props.setDefaultReps('')
+				 }}
+			>
 				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'#00DB00'}/>
 				<Text>{ props.item.name }</Text>
 			</div>
 		);
 	} else if (props.item.status === 'unfinished') {
 		return (
-			<div style={{ display: 'block', alignItems: 'center' }}>
+			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }}
+				 onClick={() => {
+					props.setEquip(props.item.equip_id)
+					if (props.item.sets !== 0)
+						props.setDefaultSets(props.item.sets)
+					else
+						props.setDefaultSets('')
+					if (props.item.reps !== 0)
+						props.setDefaultReps(props.item.reps)
+					else
+						props.setDefaultReps('')
+				}}
+			>
 				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'red'} />
 				<Text>{ props.item.name }</Text>
 			</div>
 		);
 	} else if (props.item.status === 'optional') {
 		return (
-			<div style={{ display: 'block', alignItems: 'center' }}>
+			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }}
+				onClick={() => {
+					props.setEquip(props.item.equip_id)
+					if (props.item.sets !== 0)
+						props.setDefaultSets(props.item.sets)
+					else
+						props.setDefaultSets('')
+					if (props.item.reps !== 0)
+						props.setDefaultReps(props.item.reps)
+					else
+						props.setDefaultReps('')
+				}}
+			>
 				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'gray'} />
 				<Text>{ props.item.name }</Text>
 			</div>
@@ -168,6 +204,9 @@ export default function Record() {
 	const [day, setDay] = useState('free');
 	const [days, setDays] = useState([]);
 	const [record, setRecord] = useState([]);
+	const [equip, setEquip] = useState();
+	const [defaultSets, setDefaultSets] = useState('請輸入');
+	const [defaultReps, setDefaultReps] = useState('');
 
 	useEffect(() => {
 		// Default startDate
@@ -220,9 +259,19 @@ export default function Record() {
 			console.log(date + "/" + day)
 			console.log("response:", response.data)
 			setRecord(response.data)
+			//console.log(record)
 		})
 		.catch( (error) => console.log(error))
 	}, [date, day])
+
+	// Add record to database
+	function addRecord() {
+		console.log(equip)
+		console.log(record[equip - 1])
+		console.log(weight)
+		console.log(set)
+		console.log(unit)
+	}
 
 	return (
 	<Base>
@@ -237,11 +286,11 @@ export default function Record() {
 				</div>
 				<div style={{ display: 'flex' }}>
 					<div style={{ display: 'block', height: '1000px' }}>
-						<Row>{record.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
-						<Row>{record.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
-						<Row>{record.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
-						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
-						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id }/>)}</Row>
+						<Row>{record.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
+						<Row>{record.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
+						<Row>{record.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
+						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
+						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
 					</div>
 					<div className="form">
 						<div style={{ display: 'flex', alignItems: 'center' }}>
@@ -261,23 +310,25 @@ export default function Record() {
 								onChange={(e) => setWeight(e.target.value)}
 							/>
 						</div>
-						<div className="form__field">
+						<div className="form__field" key={defaultSets || 'sets'}>
 							<div className="form__field-name">組數</div>
 							<input
 								className="form__field-input"
+								defaultValue={ defaultSets || ''}
 								value={ set }
 								onChange={(e) => setSet(e.target.value)}
 							/>
 						</div>
-						<div className="form__field">
+						<div className="form__field" key={defaultReps || 'reps'}>
 							<div className="form__field-name">單位</div>
 							<input
 								className="form__field-input"
+								defaultValue={ defaultReps || ''}
 								value={ unit }
 								onChange={(e) => setUnit(e.target.value)}
 							/>
 						</div>
-						<Submit>確認</Submit>
+						<Submit onClick={addRecord}>確認</Submit>
 					</div>
 				</div>
 			</div>
