@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
                                                 SELECT max(IR.date)
                                                 From "WormGym"."Inbody_record" as IR
                                                 where IR.user_id = $1)`, [user_id]);
-    console.log(inbody_record.rows)
+    //console.log(inbody_record.rows)
 
     //Send inbody record to frontend
     res.send(inbody_record.rows)
