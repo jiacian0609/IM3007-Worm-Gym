@@ -1,59 +1,76 @@
 .planTitle {
-    font-size: 60px;
-    text-align: left;
+	font-size: 60px;
+	text-align: left;
 }
 
 .day {
-    height: 70px;
-    width: 100px;
+	height: 70px;
+	width: 100px;
 
-    padding: 10px 10px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 50px;
-    line-height: 70px;
-    background-color: inherit;
+	padding: 10px 10px 20px;
+	flex-direction: column;
+	align-items: flex-start;
+	font-size: 50px;
+	line-height: 70px;
+	background-color: inherit;
 }
 
 .day-selector {
-    margin-left: 0;
-    margin-top: 10px;
+	margin-left: 0;
+	margin-top: 10px;
 
-    font-size: 50px;
+	font-size: 50px;
 }
 
 .form {
-    justify-content: center;
-    align-items: center;
-    display: inline;
-    padding: 400px 80px;
+	justify-content: center;
+	align-items: center;
+	display: inline;
+	padding: 400px 80px;
 }
 
 .form__field {
-    width: 500px;
+	width: 500px;
 
-    margin: 20px 0;
+	margin: 20px 0;
    
-    line-height: 50px;
-    font-size: 40px;
+	line-height: 50px;
+	font-size: 40px;
 
-    display: flex;
-    align-items: flex-start;
+	display: flex;
+	align-items: flex-start;
 }
 
 .form__field-name {
-    width: 100px;
-    line-height: 70px;
-    font-size: 40px;
-    color: #000000;
+	width: 100px;
+	line-height: 70px;
+	font-size: 40px;
+	color: #000000;
 }
 
 .form__field-input {
-    width: 300px;
-    height: 50px;
-    margin-left: 0;
-    padding: 10px;
-    border: solid 1px #000000;
-    border-radius: 20px;
-    font-size: 35px;
+	width: 300px;
+	height: 50px;
+	margin-left: 0;
+	padding: 10px;
+	border: solid 1px #000000;
+	border-radius: 20px;
+	font-size: 35px;
+}
+
+.sdp {
+	width: 90%;
+	height: 650px;
+	font-size: 45px;
+
+	margin-top: 200px;
+	padding-top: 30px;
+}
+
+.sdp--square-btn {
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+
+	margin-top: 40px;
 }

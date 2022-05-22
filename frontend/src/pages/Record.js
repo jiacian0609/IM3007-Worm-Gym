@@ -213,6 +213,7 @@ function RecordInput(props) {
 		})
         .then( (response) => {
             console.log(response)
+			window.location.reload()
 		})
 		.catch( (error) => console.log(error))
 	}
@@ -247,7 +248,6 @@ function RecordInput(props) {
 						disabled={true}
 					/>
 				</div>
-				<Submit onClick={addRecord}>確認</Submit>
 			</div>
 		);
 	} else if (props.record[props.equip - 1].status === 'unfinished') {
