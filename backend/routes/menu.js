@@ -13,7 +13,7 @@ router.get('/:time', async function (req, res) {
         var payload = jwt.verify(JWT, "b7b16ad9db0ca7c5705cba37840e4ec310740c62beea61cfd9bdcee0720797a6c8bb1b3ffc0d781601fb77dbdaa899acfd08ac560aec19f2d18bb3b6e25beb7a");
         var user_id = payload.Uid;
         var date = req.params.time
-        console.log(date)
+        //console.log(date)
         process.env.TZ = "UTC8";
 
         // Get training menu from database
