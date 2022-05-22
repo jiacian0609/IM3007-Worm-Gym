@@ -161,8 +161,6 @@ function Calendar(props) {
 		else
 			props.setStartDate(year + '-' + month + '-22')
 		props.setDate(year + '-' + month + '-' + date)
-		props.setDefaultSets('')
-		props.setDefaultReps('')
 	};
   
 	return (
@@ -171,24 +169,18 @@ function Calendar(props) {
 };
 
 function RecordInput(props) {
-	const [weightInput, setWeightInput] = useState('');
-	const [setsInput, setSetsInput] = useState('');
-	const [repsInput, setRepsInput] = useState('');
-
+	// Check whether the data is fetched
 	if (props.equip === undefined || props.equip === 0 || props.record === [])
 		return (
 			<div></div>
 		)
 
-	console.log(props.record[props.equip - 1].status)
-	console.log(props.record)
-
 	// Add record to database
 	function addRecord() {
 		console.log(props.equip)
-		//console.log(weight)
-		//console.log(set)
-		//console.log(unit)
+		//console.log(weightInput)
+		//console.log(setsInput)
+		//console.log(repsInput)
 		/* axios.post("http://localhost:8000/login", {
             "username": username,
             "password": password
@@ -204,40 +196,102 @@ function RecordInput(props) {
 		.catch( (error) => console.log(error)) */
 	}
 
-	return (
-		<div>
-			<div className="form__field">
-				<div className="form__field-name">重量</div>
-				<input
-					className="form__field-input"
-					value={ weightInput }
-					onChange={(e) => {
-						setWeightInput(e.target.value)
-						console.log("weight:", e.target.value)
-					}}
-				/>
+	if (props.record[props.equip - 1].status === 'finished') {
+		return (
+			<div>
+				<div className="form__field">
+					<div className="form__field-name">重量</div>
+					<input
+						key={props.record[props.equip - 1].weight}
+						className="form__field-input"
+						defaultValue={props.record[props.equip - 1].weight}
+						disabled={true}
+					/>
+				</div>
+				<div className="form__field">
+					<div className="form__field-name">組數</div>
+					<input
+						key={props.record[props.equip - 1].sets}
+						className="form__field-input"
+						defaultValue={props.record[props.equip - 1].sets}
+						disabled={true}
+					/>
+				</div>
+				<div className="form__field" >
+					<div className="form__field-name">單位</div>
+					<input
+						key={props.record[props.equip - 1].reps}
+						className="form__field-input"
+						defaultValue={props.record[props.equip - 1].reps}
+						disabled={true}
+					/>
+				</div>
+				<Submit onClick={addRecord}>確認</Submit>
 			</div>
-			<div className="form__field">
-				<div className="form__field-name">組數</div>
-				<input
-					className="form__field-input"
-					key='sets'
-					defaultValue='1'
-					value={ setsInput }
-					onChange={(e) => setSetsInput(e.target.value)}
-				/>
+		);
+	} else if (props.record[props.equip - 1].status === 'unfinished') {
+		return (
+			<div>
+				<div className="form__field">
+					<div className="form__field-name">重量</div>
+					<input
+						className="form__field-input"
+						value={ props.weightInput }
+						onChange={(e) => props.setWeightInput(e.target.value)}
+					/>
+				</div>
+				<div className="form__field">
+					<div className="form__field-name">組數</div>
+					<input
+						key={props.record[props.equip - 1].sets}
+						className="form__field-input"
+						defaultValue={props.record[props.equip - 1].sets}
+						disabled={true}
+					/>
+				</div>
+				<div className="form__field" >
+					<div className="form__field-name">單位</div>
+					<input
+						key={props.record[props.equip - 1].reps}
+						className="form__field-input"
+						defaultValue={props.record[props.equip - 1].reps}
+						disabled={true}
+					/>
+				</div>
+				<Submit onClick={addRecord}>確認</Submit>
 			</div>
-			<div className="form__field" >
-				<div className="form__field-name">單位</div>
-				<input
-					className="form__field-input"
-					value={ repsInput }
-					onChange={(e) => setRepsInput(e.target.value)}
-				/>
+		);
+	} else if (props.record[props.equip - 1].status === 'optional') {
+		return (
+			<div>
+				<div className="form__field">
+					<div className="form__field-name">重量</div>
+					<input
+						className="form__field-input"
+						value={ props.weightInput }
+						onChange={(e) => props.setWeightInput(e.target.value)}
+					/>
+				</div>
+				<div className="form__field">
+					<div className="form__field-name">組數</div>
+					<input
+						className="form__field-input"
+						value={ props.setsInput }
+						onChange={(e) => props.setSetsInput(e.target.value)}
+					/>
+				</div>
+				<div className="form__field" >
+					<div className="form__field-name">單位</div>
+					<input
+						className="form__field-input"
+						value={ props.repsInput }
+						onChange={(e) => props.setRepsInput(e.target.value)}
+					/>
+				</div>
+				<Submit onClick={addRecord}>確認</Submit>
 			</div>
-			<Submit onClick={addRecord}>確認</Submit>
-		</div>
-	);
+		);
+	}
 };
 
 // choose day
@@ -253,9 +307,9 @@ export default function Record() {
 	const [days, setDays] = useState([]);
 	const [record, setRecord] = useState([]);
 	const [equip, setEquip] = useState(0);
-	const [defaultWeight, setDefaultWeight] = useState('');
-	const [defaultSets, setDefaultSets] = useState('');
-	const [defaultReps, setDefaultReps] = useState('');
+	const [weightInput, setWeightInput] = useState('');
+	const [setsInput, setSetsInput] = useState('');
+	const [repsInput, setRepsInput] = useState('');
 
 	useEffect(() => {
 		// Default startDate
@@ -318,27 +372,14 @@ export default function Record() {
 		if (equip === 0)
 			return
 		if (record[equip - 1].status === 'finished') {
-			setDefaultWeight(record[equip - 1].weight)
-			setDefaultSets(record[equip - 1].sets)
-			setDefaultReps(record[equip - 1].reps)
 		} else if (record[equip - 1].status === 'unfinished') {
-			setDefaultWeight('')
-			setDefaultSets(record[equip - 1].sets)
-			setDefaultReps(record[equip - 1].reps)
+			setWeightInput('')
 		} else {
-			setDefaultWeight('')
-			setDefaultSets('')
-			setDefaultReps('')
+			setWeightInput('')
+			setSetsInput('')
+			setRepsInput('')
 		}
-		 console.log(equip)
-		console.log(record[equip - 1].weight)
-		console.log(record[equip - 1].sets)
-		console.log(record[equip - 1].reps)
-		//setDefaultReps(record[equip - 1].reps)
-		//console.log(defaultReps) 
 	}, [equip, record]) 
-
-	
 
 	return (
 	<Base>
@@ -348,16 +389,16 @@ export default function Record() {
 			<div style={{ display: 'flex', alignItems: 'center' }}>
 				<div style={{ display: 'block', alignItems: 'center' }}>
 					<StyledCalendar>
-						<Calendar setDate={setDate} setStartDate={setStartDate} setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>
+						<Calendar setDate={setDate} setStartDate={setStartDate}/>
 					</StyledCalendar>
 				</div>
 				<div style={{ display: 'flex' }}>
 					<div style={{ display: 'block', height: '1000px' }}>
-						<Row>{record.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
-						<Row>{record.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
-						<Row>{record.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
-						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
-						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip } setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>)}</Row>
+						<Row>{record.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
 					<div className="form">
 						<div style={{ display: 'flex', alignItems: 'center' }}>
@@ -369,7 +410,7 @@ export default function Record() {
 								</select>
 							</div>
 						</div>
-						<RecordInput equip={equip} record={record}/>
+						<RecordInput equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
 					</div>
 				</div>
 			</div>
@@ -377,45 +418,3 @@ export default function Record() {
 	</Base>
 	);
 }
-
-/* <div className="form">
-						<div style={{ display: 'flex', alignItems: 'center' }}>
-							<div className='planTitle'>今日計畫</div>
-							<div className="day">
-								<select className="day-selector" defaultValue="free" onChange={(e) => setDay(e.target.value)}>
-									{days?.map(day => <option key={day} value={day}>Day {day}</option>)}
-									<option value="free">Free</option>
-								</select>
-							</div>
-						</div>
-						<div className="form__field" key={"weight:" + defaultWeight}>
-							<div className="form__field-name">重量</div>
-							<input
-								className="form__field-input"
-								defaultValue={ defaultWeight }
-								value={ weight }
-								onChange={(e) => setWeight(e.target.value)}
-							/>
-						</div>
-						<div className="form__field">
-							<div className="form__field-name">組數</div>
-							<input
-								className="form__field-input"
-								key='sets'
-								defaultValue='1'
-								value={ set }
-								onChange={(e) => setSet(e.target.value)}
-							/>
-						</div>
-						<div className="form__field" >
-							<div className="form__field-name">單位</div>
-							<input
-								className="form__field-input"
-								key={"reps:" + defaultReps}
-								defaultValue={ defaultReps || '1'}
-								value={ unit }
-								onChange={(e) => setUnit(e.target.value)}
-							/>
-						</div>
-						<Submit onClick={addRecord}>確認</Submit>
-					</div> */
