@@ -39,7 +39,7 @@ const StyledCalendar = styled.div `
 	width: 800px;
 	height: 1000px;
 
-	margin: 50px 100px 50px 200px;
+	margin: 50px 250px 50px 200px;
 	// background-color: #e2e2e2;
 `
 
@@ -431,7 +431,7 @@ export default function Record() {
 						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
-					<div className="form" style={{ height: '520px'}}>
+					<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
 						<div style={{ display: 'flex', alignItems: 'center'}}>
 							<div className='planTitle'>今日計畫</div>
 							<div className="day">

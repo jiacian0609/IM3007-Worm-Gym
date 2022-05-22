@@ -140,9 +140,9 @@ const RateNum = styled.span `
 `
 
 function MonthButton(data) {
-    console.log(data.data);
+    // console.log(data.data);
     return (
-        <Box>
+        <Box onClick={() => data.selectMonth(data.data.year + '-' + data.data.month)}>
             <Year>{ data.data.year }</Year>
             <Month>{ data.data.month }</Month>
             <RateText>達成率：</RateText>
@@ -176,6 +176,7 @@ export default function Menu() {
     console.log('data: ', data);
 
     const selectMonth = function(month) {
+        console.log(month)
         window.location.href = "./menu/" + month;
     };
 
@@ -194,7 +195,13 @@ export default function Menu() {
                     <Submit onClick={() => selectMonth(document.getElementById("month").value)}>確認</Submit>
                 </Bar>
                 <Row>
-                    {data?.map(items => <MonthButton data={items} key={items.year + items.month}/>)}
+                    {data?.map(items => 
+                        <MonthButton
+                            data={items}
+                            selectMonth={selectMonth}
+                            key={items.year + items.month}
+                        />
+                    )}
                 </Row>
             </Content>
         </Base>

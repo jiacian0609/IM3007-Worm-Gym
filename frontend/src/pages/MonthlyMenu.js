@@ -25,8 +25,6 @@ const Base = styled.div `
 	width: 2880px;
 	height: 1594px;
 
-	// padding: 0 150px 0 150px;
-
 	overflow: hidden;
 	position: relative;
 `
@@ -185,7 +183,7 @@ export default function MonthlyMenu() {
 		<Bar />
 		<div style={{ display: 'flex', alignItems: 'center' }}>
 			<StyledCalendar> 
-				<Calendar setDate={setDate}/>
+				<Calendar className='sdp' setDate={setDate}/>
 			</StyledCalendar>
 			<div style={{ display: 'block', width: '140px', margin: '0 0 700px'}}>
 				{days?.map(day => <Day key={ day } onClick={() => setDay(day)}>Day {day}</Day>)}
