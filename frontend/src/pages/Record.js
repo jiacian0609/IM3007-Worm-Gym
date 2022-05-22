@@ -32,7 +32,7 @@ const Background = styled.img `
 `
 
 const Content = styled.div `
-	position: relative;
+	// position: relative;
 `
 
 const StyledCalendar = styled.div `
@@ -40,7 +40,7 @@ const StyledCalendar = styled.div `
 	height: 1000px;
 
 	margin: 50px 100px 50px 200px;
-	background-color: #e2e2e2;
+	// background-color: #e2e2e2;
 `
 
 const Img = styled.div `
@@ -418,21 +418,21 @@ export default function Record() {
 		<Background />
 		<Content>
 			<div style={{ display: 'flex', alignItems: 'center' }}>
-				<div style={{ display: 'block', alignItems: 'center' }}>
+				<div style={{ display: 'block' }}>
 					<StyledCalendar>
 						<Calendar setDate={setDate} setStartDate={setStartDate}/>
 					</StyledCalendar>
 				</div>
 				<div style={{ display: 'flex' }}>
-					<div style={{ display: 'block', height: '1000px' }}>
+					<div style={{ display: 'block' }}>
 						<Row>{record.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
-					<div className="form">
-						<div style={{ display: 'flex', alignItems: 'center' }}>
+					<div className="form" style={{ height: '520px'}}>
+						<div style={{ display: 'flex', alignItems: 'center'}}>
 							<div className='planTitle'>今日計畫</div>
 							<div className="day">
 								<select className="day-selector" defaultValue="free" onChange={(e) => setDay(e.target.value)}>
