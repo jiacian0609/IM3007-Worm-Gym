@@ -333,6 +333,14 @@ export default function Record() {
 	const [repsInput, setRepsInput] = useState('');
 
 	useEffect(() => {
+		//JWT authentication
+		if (window.localStorage.getItem('JWT') == null) {
+			window.alert('請先登入')
+			window.location.href = "/"
+		}
+	}, []) 
+
+	useEffect(() => {
 		// Default startDate
 		const now = new Date()
 		var nowYear = now.toString().split(" ")[3]
@@ -400,7 +408,9 @@ export default function Record() {
 			setSetsInput('')
 			setRepsInput('')
 		}
-	}, [equip, record]) 
+	}, [equip, record])
+
+
 
 	return (
 	<Base>

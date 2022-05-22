@@ -96,6 +96,12 @@ const Submit = styled.button `
 
 export default function Home() {
     //JWT authentication
+    if (window.localStorage.getItem('JWT') == null) {
+        window.alert('請先登入')
+        window.location.href = "/"
+        return
+    }
+
     const clickSubmit = function() {
         localStorage.clear();
         window.location.href = "/"

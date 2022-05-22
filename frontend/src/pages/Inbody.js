@@ -93,9 +93,16 @@ function InbodyContent(props) {
 }
 
 export default function Inbody() {
-  var payload = jwt_decode(window.localStorage.getItem('JWT'));
-  // console.log(payload)
-  var user_id = payload.Uid;
+  try { 
+    var payload = jwt_decode(window.localStorage.getItem('JWT'));
+    // console.log(payload)
+    var user_id = payload.Uid;
+  }
+  catch (error) {
+    console.log(error)
+    window.alert('請先登入')
+		window.location.href = "/"
+  }
 
   let months = [];
   if (user_id === 1)
@@ -107,7 +114,6 @@ export default function Inbody() {
 
   const [month, setMonth] = useState(months[0]);
   useEffect(() => {
-
   }, [month]);
 
   return (
