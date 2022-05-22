@@ -57,7 +57,7 @@ router.get('/:date', async function (req, res) {
 	// Set response to frontend
 	var response = {
 		day: null,
-		record: [ 
+		records: [ 
 			{equip_id: 1, name: '橢圓機', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
 			{equip_id: 2, name: '跑步機', weight: 0, sets: 0, reps: 0, status: 'optional'},
 			{equip_id: 3, name: '飛輪車', weight: 0, sets: 0, reps: 0, status: 'optional'}, 
@@ -90,10 +90,10 @@ router.get('/:date', async function (req, res) {
 		// Update training record
 		for (let index = 0; index < record.rows.length; index++) {
 			response.day = record.rows[index].Day
-			response.record[record.rows[index].equip_id - 1].weight = record.rows[index].weight
-			response.record[record.rows[index].equip_id - 1].sets = record.rows[index].sets
-			response.record[record.rows[index].equip_id - 1].reps = record.rows[index].reps
-			response.record[record.rows[index].equip_id - 1].status = "finished"
+			response.records[record.rows[index].equip_id - 1].weight = record.rows[index].weight
+			response.records[record.rows[index].equip_id - 1].sets = record.rows[index].sets
+			response.records[record.rows[index].equip_id - 1].reps = record.rows[index].reps
+			response.records[record.rows[index].equip_id - 1].status = "finished"
 		}
 		
 		// Send response to frontend
@@ -107,10 +107,10 @@ router.get('/:date', async function (req, res) {
 
 		// Update training record
 		for (let index = 0; index < record.rows.length; index++) {
-			response.record[record.rows[index].equip_id - 1].weight = record.rows[index].weight
-			response.record[record.rows[index].equip_id - 1].sets = record.rows[index].sets
-			response.record[record.rows[index].equip_id - 1].reps = record.rows[index].reps
-			response.record[record.rows[index].equip_id - 1].status = "finished"
+			response.records[record.rows[index].equip_id - 1].weight = record.rows[index].weight
+			response.records[record.rows[index].equip_id - 1].sets = record.rows[index].sets
+			response.records[record.rows[index].equip_id - 1].reps = record.rows[index].reps
+			response.records[record.rows[index].equip_id - 1].status = "finished"
 		}
 
 		// Check whether today is training day or free day
@@ -128,9 +128,9 @@ router.get('/:date', async function (req, res) {
 
 			// Update training record
 			for (let index = 0; index < unfinishedMenu.rows.length; index++) {
-				response.record[unfinishedMenu.rows[index].equip_id - 1].sets = unfinishedMenu.rows[index].sets
-				response.record[unfinishedMenu.rows[index].equip_id - 1].reps = unfinishedMenu.rows[index].reps
-				response.record[unfinishedMenu.rows[index].equip_id - 1].status = "unfinished"
+				response.records[unfinishedMenu.rows[index].equip_id - 1].sets = unfinishedMenu.rows[index].sets
+				response.records[unfinishedMenu.rows[index].equip_id - 1].reps = unfinishedMenu.rows[index].reps
+				response.records[unfinishedMenu.rows[index].equip_id - 1].status = "unfinished"
 			}
 		}
 		 

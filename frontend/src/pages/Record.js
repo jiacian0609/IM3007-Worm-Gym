@@ -102,10 +102,22 @@ const months = {
 	Oct: '10',
 	Nov: '11',
 	Dec: '12',
-  }
+}
+
+function convertTZ(date, tzString) {
+    return (new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}))).toString();   
+}
+
+function nowDate() {
+	const now = convertTZ(new Date(), "Asia/Jakarta")
+	var year = now.toString().split(" ")[3]
+	var month = months[now.toString().split(" ")[1]]
+	var date = now.toString().split(" ")[2]
+	return (year + '-' + month + '-' + date)
+}
 
 function Task(props) {
-	//console.log(props.item.status)
+	//console.log(props.item)
 	if (props.item.status === 'finished') {
 		return (
 			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }} onClick={() => props.setEquip(props.item.equip_id)}>
@@ -125,17 +137,6 @@ function Task(props) {
 			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }}
 				onClick={() => {
 					props.setEquip(props.item.equip_id)
-					/* if (props.item.sets !== 0)
-						props.setDefaultSets(props.item.sets)
-					else
-						props.setDefaultSets('')
-					if (props.item.reps !== 0)
-						props.setDefaultReps(props.item.reps)
-					else
-						props.setDefaultReps('')
-					props.setWeight('')
-					props.setSet('')
-					props.setUnit('') */
 				}}
 			>
 				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'gray'} />
@@ -152,14 +153,6 @@ function Calendar(props) {
 		var year = d.toString().split(" ")[3]
 		var month = months[d.toString().split(" ")[1]]
 		var date = d.toString().split(" ")[2]
-		if (date >= 1 && date < 8)
-			props.setStartDate(year + '-' + month + '-01')
-		else if (date >= 8 && date < 15)
-			props.setStartDate(year + '-' + month + '-08')
-		else if (date >= 15 && date < 22)
-			props.setStartDate(year + '-' + month + '-15')
-		else
-			props.setStartDate(year + '-' + month + '-22')
 		props.setDate(year + '-' + month + '-' + date)
 	};
   
@@ -211,8 +204,8 @@ function RecordInput(props) {
 			  'Authorization': `${localStorage.getItem('JWT')}`
 			}
 		})
-        .then( (response) => {
-            console.log(response)
+		.then( (response) => {
+			console.log(response)
 			window.location.reload()
 		})
 		.catch( (error) => console.log(error))
@@ -315,18 +308,13 @@ function RecordInput(props) {
 	}
 };
 
-// choose day
-/*
-<select className="shipment__item-selector" defaultValue="taiwan">
-	<option value="taiwan">臺灣及離島</option>
-</select>*/
-
 export default function Record() {
-	const [date, setDate] = useState();
-	const [startDate, setStartDate] = useState();
+	const today = nowDate()
+	const [date, setDate] = useState(nowDate());
+	//const [startDate, setStartDate] = useState();
 	const [day, setDay] = useState('free');
-	const [days, setDays] = useState([]);
-	const [record, setRecord] = useState([]);
+	//const [days, setDays] = useState([]);
+	const [record, setRecord] = useState({day: null, records: []});
 	const [equip, setEquip] = useState(0);
 	const [weightInput, setWeightInput] = useState('');
 	const [setsInput, setSetsInput] = useState('');
@@ -338,48 +326,22 @@ export default function Record() {
 			window.alert('請先登入')
 			window.location.href = "/"
 		}
-	}, []) 
+	}, [])
 
 	useEffect(() => {
-		// Default startDate
-		const now = new Date()
-		var nowYear = now.toString().split(" ")[3]
-		var nowMonth = months[now.toString().split(" ")[1]]
-		var nowDate = now.toString().split(" ")[2]
-		if (nowDate >= 1 && nowDate < 8)
-			setStartDate(nowYear + '-' + nowMonth + '-01')
-		else if (nowDate >= 8 && nowDate < 15)
-			setStartDate(nowYear + '-' + nowMonth + '-08')
-		else if (nowDate >= 15 && nowDate < 22)
-			setStartDate(nowYear + '-' + nowMonth + '-15')
-		else
-			setStartDate(nowYear + '-' + nowMonth + '-22')
-		setDate(nowYear + '-' + nowMonth + '-' + nowDate)
-	}, []) 
-
-	useEffect(() => {
-		setDay('free')
-		if (startDate === undefined) {
-			setDays([])
-		} else {
-			axios.get("http://localhost:8000/menu/" + startDate, {
-				headers: {
-				'Authorization': `${localStorage.getItem('JWT')}`
-				}
-			})
-			.then( (response) => {
-				setDays([])
-				var newDays = []
-				for (let index = 0; index < response.data.length; index+=6) {
-					newDays.push(response.data[index].Day)
-					if (index === response.data.length - 6) setDays(newDays)
-				}
-			})
-			.catch( (error) => console.log(error))
-		}
+		axios.get("http://localhost:8000/getRecord/" + date, {
+			headers: {
+			  'Authorization': `${localStorage.getItem('JWT')}`
+			}
+		})
+		.then( (response) => {
+			console.log("response:", response.data)
+			setRecord(response.data)
+		})
+		.catch( (error) => console.log(error))
 	}, [date])
 
-	useEffect(() => {
+/* 	useEffect(() => {
 		setEquip(0)
 		if (date === undefined)
 			return
@@ -408,9 +370,7 @@ export default function Record() {
 			setSetsInput('')
 			setRepsInput('')
 		}
-	}, [equip, record])
-
-
+	}, [equip, record]) */
 
 	return (
 	<Base>
@@ -420,25 +380,24 @@ export default function Record() {
 			<div style={{ display: 'flex', alignItems: 'center' }}>
 				<div style={{ display: 'block' }}>
 					<StyledCalendar>
-						<Calendar setDate={setDate} setStartDate={setStartDate}/>
+						<Calendar setDate={setDate}/>
 					</StyledCalendar>
 				</div>
 				<div style={{ display: 'flex' }}>
 					<div style={{ display: 'block' }}>
-						<Row>{record.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.records.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.records.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.records.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+						<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
 					<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
 						<div style={{ display: 'flex', alignItems: 'center'}}>
 							<div className='planTitle'>今日計畫</div>
 							<div className="day">
-								<select className="day-selector" defaultValue="free" onChange={(e) => setDay(e.target.value)}>
-									{days?.map(day => <option key={day} value={day}>Day {day}</option>)}
-									<option value="free">Free</option>
-								</select>
+								<div className="day-selector" >
+									這裡要放free/day
+								</div>
 							</div>
 						</div>
 						<RecordInput date={date} day={day} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
