@@ -400,16 +400,45 @@ describe("GET /menu", () => {
             menu[i].should.have.property('program_id');
             menu[i].should.have.property('date');
             menu[i].should.have.property('reps');
+            expect(menu[i].user_id).to.equal(1);
+            expect(menu[i].finish).to.equal(true);
+            expect(menu[i].program_id).to.equal(452 + i);
+            expect(menu[i].date).to.equal("2022-03-01T08:00:00.000Z");
+
+            if (i < 6) {
+                expect(menu[i].Day).to.equal(1);
+            } else {
+                expect(menu[i].Day).to.equal(2);
+            }
+
+            if (i % 6 == 0) {
+                expect(menu[i].equip_id).to.equal(3);
+            } else if (i % 6 == 1) {
+                expect(menu[i].equip_id).to.equal(8);
+            } else if (i % 6 == 2) {
+                expect(menu[i].equip_id).to.equal(14);
+            } else if (i % 6 == 3) {
+                expect(menu[i].equip_id).to.equal(5);
+            } else if (i % 6 == 4) {
+                expect(menu[i].equip_id).to.equal(15);
+            } else if (i % 6 == 5) {
+                expect(menu[i].equip_id).to.equal(7);
+            }
+
+            if (i % 6 == 0) {
+                expect(menu[i].sets).to.equal(1);
+            } else {
+                expect(menu[i].sets).to.equal(3);
+            }
+
+            if (i % 6 == 0) {
+                expect(menu[i].reps).to.equal('20 分鐘');
+            } else if (i % 6 == 5) {
+                expect(menu[i].reps).to.equal('20 下');
+            } else {
+                expect(menu[i].reps).to.equal('8 下');
+            }
         }
-        //這邊還沒改
-        // expect(menu[0].Day).to.equal('03');
-        // expect(menu[0].equip_id).to.equal('04');
-        // expect(menu[0].sets).to.equal('05');
-        // expect(menu[0].finish).to.equal('100%');
-        // expect(menu[0].program_id).to.equal('75%');
-        // expect(menu[0].date).to.equal('62.5%');
-        // expect(menu[0].reps).to.equal('62.5%');
         done();
-        //到這邊
     });
 });
