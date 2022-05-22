@@ -156,6 +156,14 @@ export default function Menu() {
     const [data, setData] = useState();
 
 	useEffect(() => {
+		//JWT authentication
+		if (window.localStorage.getItem('JWT') == null) {
+			window.alert('請先登入')
+			window.location.href = "/"
+		}
+	}, [])
+
+	useEffect(() => {
 		axios.get("http://localhost:8000/finish-rate", {
 			headers: {
 			  'Authorization': `${localStorage.getItem('JWT')}`

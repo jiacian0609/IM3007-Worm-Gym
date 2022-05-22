@@ -145,6 +145,14 @@ export default function MonthlyMenu() {
 	const [dayData, setDayData] = useState([])
 
 	useEffect(() => {
+		//JWT authentication
+		if (window.localStorage.getItem('JWT') == null) {
+			window.alert('請先登入')
+			window.location.href = "/"
+		}
+	}, [])
+
+	useEffect(() => {
 		axios.get("http://localhost:8000/menu/" + date, {
 			headers: {
 			  'Authorization': `${localStorage.getItem('JWT')}`
