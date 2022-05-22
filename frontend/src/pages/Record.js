@@ -177,23 +177,44 @@ function RecordInput(props) {
 
 	// Add record to database
 	function addRecord() {
-		console.log(props.equip)
-		//console.log(weightInput)
-		//console.log(setsInput)
-		//console.log(repsInput)
-		/* axios.post("http://localhost:8000/login", {
-            "username": username,
-            "password": password
-        })
-        .then( (response) => {
-            if (response.data.message === "Login successfully.") {
-				window.localStorage.setItem('JWT', response.data.JWT)
-                window.location.href = "/home"
-            } else {
-				window.alert(response.data)
+		// Set record input info
+		var weightInput = null
+		var setsInput = null
+		var repsInput = null
+		if (props.record[props.equip - 1].status === 'finished') {
+			console.log(props.equip)
+			weightInput = props.record[props.equip - 1].weight
+			setsInput = props.record[props.equip - 1].sets
+			repsInput = props.record[props.equip - 1].reps
+		} else if (props.record[props.equip - 1].status === 'unfinished') {
+			console.log(props.equip)
+			weightInput = props.weightInput
+			setsInput = props.record[props.equip - 1].sets
+			repsInput = props.record[props.equip - 1].reps
+		} else if (props.record[props.equip - 1].status === 'optional') {
+			console.log(props.equip)
+			weightInput = props.weightInput
+			setsInput = props.setsInput
+			repsInput = props.repsInput
+		}
+
+		// Call record API to insert record into database
+		axios.post("http://localhost:8000/record", {
+			"equip_id": props.equip,
+			"weight": weightInput,
+			"reps": repsInput,
+			"sets": setsInput,
+			"date": props.date,
+			"day": props.day
+		}, {
+			headers: {
+			  'Authorization': `${localStorage.getItem('JWT')}`
 			}
 		})
-		.catch( (error) => console.log(error)) */
+        .then( (response) => {
+            console.log(response)
+		})
+		.catch( (error) => console.log(error))
 	}
 
 	if (props.record[props.equip - 1].status === 'finished') {
@@ -410,7 +431,7 @@ export default function Record() {
 								</select>
 							</div>
 						</div>
-						<RecordInput equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
+						<RecordInput date={date} day={day} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
 					</div>
 				</div>
 			</div>
