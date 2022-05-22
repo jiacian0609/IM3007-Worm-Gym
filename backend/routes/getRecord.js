@@ -33,8 +33,8 @@ function nowDate() {
 router.get('/:date', async function (req, res) {
 	process.env.TZ = "UTC8"
 	//Parameters
-	//const JWT = req.headers.authorization
-	const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVaWQiOjEsIlVzZXJuYW1lIjoidXNlck9ORSIsIkVtYWlsIjoiYjA4MDAwMDAxQGdvb2dsZS5jb20iLCJpYXQiOjE2NTMyNDAyMTcsImV4cCI6MTY1MzI0NzQxN30.OhQ3IzG9hgxa3fA_dF3ylsk2wAOPrI_Zu7b4mHkiKQ8"
+	const JWT = req.headers.authorization
+	//const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVaWQiOjEsIlVzZXJuYW1lIjoidXNlck9ORSIsIkVtYWlsIjoiYjA4MDAwMDAxQGdvb2dsZS5jb20iLCJpYXQiOjE2NTMyNDAyMTcsImV4cCI6MTY1MzI0NzQxN30.OhQ3IzG9hgxa3fA_dF3ylsk2wAOPrI_Zu7b4mHkiKQ8"
 	const payload = jwt.verify(JWT, "b7b16ad9db0ca7c5705cba37840e4ec310740c62beea61cfd9bdcee0720797a6c8bb1b3ffc0d781601fb77dbdaa899acfd08ac560aec19f2d18bb3b6e25beb7a");
 	const user_id = payload.Uid;
 	const date = req.params.date
@@ -100,29 +100,42 @@ router.get('/:date', async function (req, res) {
 		res.send(response)
 	}
 	else {
+		/* Today record */
 		// Get training record from database
-		const record = await pool.query('SELECT * FROM "WormGym".fitness_record WHERE "user_id" = $1 and "date" BETWEEN $2 and $3 and "Day" = $4', [user_id, startDate, endDate, day]);
+		const record = await pool.query(`SELECT * FROM "WormGym".fitness_record
+										 WHERE "user_id" = $1 and "date" = $2`, [user_id, date]);
 
 		// Update training record
 		for (let index = 0; index < record.rows.length; index++) {
-			recordByDate[record.rows[index].equip_id - 1].weight = record.rows[index].weight
-			recordByDate[record.rows[index].equip_id - 1].sets = record.rows[index].sets
-			recordByDate[record.rows[index].equip_id - 1].reps = record.rows[index].reps
-			recordByDate[record.rows[index].equip_id - 1].status = "finished"
+			response.record[record.rows[index].equip_id - 1].weight = record.rows[index].weight
+			response.record[record.rows[index].equip_id - 1].sets = record.rows[index].sets
+			response.record[record.rows[index].equip_id - 1].reps = record.rows[index].reps
+			response.record[record.rows[index].equip_id - 1].status = "finished"
 		}
 
-		// Get unfinished training menu from database
-		const unfinishedMenu = await pool.query('SELECT * FROM "WormGym".fitness_program WHERE user_id = $1 and date = $2 and "Day" = $3 and finish = false', [user_id, startDate, day]);
+		// Check whether today is training day or free day
+		const menuCount = await pool.query('SELECT COUNT ( DISTINCT "Day" ) FROM "WormGym".fitness_program WHERE user_id = $1 and date = $2', [user_id, startDate]);
+		const recordCount = await pool.query('SELECT COUNT ( DISTINCT "Day" ) FROM "WormGym".fitness_record WHERE user_id = $1 and date >= $2 and date < $3', [user_id, startDate, date]);
+		if (menuCount.rows[0].count <= recordCount.rows[0].count)
+			response.day = 'free'
+		else if (menuCount.rows[0].count > recordCount.rows[0].count)
+			response.day = (parseInt(recordCount.rows[0].count) + 1).toString()
 
-		// Update training record
-		for (let index = 0; index < unfinishedMenu.rows.length; index++) {
-			recordByDate[unfinishedMenu.rows[index].equip_id - 1].sets = unfinishedMenu.rows[index].sets
-			recordByDate[unfinishedMenu.rows[index].equip_id - 1].reps = unfinishedMenu.rows[index].reps
-			recordByDate[unfinishedMenu.rows[index].equip_id - 1].status = "unfinished"
+		// Update unfinished record
+		if (response.day !== 'free') {
+			// Get unfinished training menu from database
+			const unfinishedMenu = await pool.query('SELECT * FROM "WormGym".fitness_program WHERE user_id = $1 and date = $2 and finish = false', [user_id, startDate]);
+
+			// Update training record
+			for (let index = 0; index < unfinishedMenu.rows.length; index++) {
+				response.record[unfinishedMenu.rows[index].equip_id - 1].sets = unfinishedMenu.rows[index].sets
+				response.record[unfinishedMenu.rows[index].equip_id - 1].reps = unfinishedMenu.rows[index].reps
+				response.record[unfinishedMenu.rows[index].equip_id - 1].status = "unfinished"
+			}
 		}
-		
+		 
 		// Send response to frontend		
-		res.send(recordByDate)
+		res.send(response)
 	}
 })
 
