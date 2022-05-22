@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import DatePicker from 'sassy-datepicker';
 import axios from 'axios';
 import Header from '../components/Header';
+import '../css/monthlyMenu.css';
 
 const months = {
 	Jan: '01',
@@ -41,10 +42,10 @@ const Bar = styled.div `
 `
 
 const StyledCalendar = styled.div `
-	width: 600px;
-	height 500px;
+	width: 700px;
+	height: 700px;
 
-	margin: 200px;
+	margin: 100px 200px;
 `
 
 const Img = styled.span `
