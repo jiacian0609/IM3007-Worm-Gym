@@ -135,10 +135,10 @@ describe("POST /record", () => {
     };
 
     const req2 = {
-        equip_id: 3,
-        weight: 0,
-        reps: '20 分鐘',
-        sets: 1,
+        equip_id: 8,
+        weight: 20,
+        reps: '8 下',
+        sets: 3,
         date: '2022-04-08',
         day: 1
     };
@@ -285,12 +285,13 @@ describe("GET /finish-rate", () => {
         expect(rates[0].month).to.equal('03');
         expect(rates[1].month).to.equal('04');
         expect(rates[2].month).to.equal('05');
-        expect(rates[0].finish_rate).to.equal('100%');
-        expect(rates[1].finish_rate).to.equal('75%');
+        expect(rates[0].finish_rate).to.equal('93.75%');
+        expect(rates[1].finish_rate).to.equal('77.08%');
         expect(rates[2].finish_rate).to.equal('62.5%');
         done();
     });
 });
+
 
 // get inbody_record api
 describe("GET /inbody_record", () => {
@@ -304,7 +305,7 @@ describe("GET /inbody_record", () => {
             const token = res1.body.JWT;
 
             chai.request(server)
-                .get('/finish-rate')
+                .get('/inbody_record')
                 .set({'Authorization': token})
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -338,19 +339,29 @@ describe("GET /inbody_record", () => {
             inbody[i].should.have.property('RLF_kg');
             inbody[i].should.have.property('BMR_kcal');
             inbody[i].should.have.property('inbody_id');
-            //expect(rates[i].year).to.equal('');
         }
-        //這邊還沒改
-        expect(inbody[0].month).to.equal('03');
-        expect(inbody[1].month).to.equal('04');
-        expect(inbody[2].month).to.equal('05');
-        expect(inbody[0].finish_rate).to.equal('100%');
-        expect(inbody[1].finish_rate).to.equal('75%');
-        expect(inbody[2].finish_rate).to.equal('62.5%');
+        expect(inbody[0].user_id).to.equal(1);
+        expect(inbody[0].date).to.equal("2021-04-14T16:00:00.000Z");
+        expect(inbody[0].weight_kg).to.equal(59.1);
+        expect(inbody[0].SMM_kg).to.equal(19.6);
+        expect(inbody[0].BFM_kg).to.equal(21.8);
+        expect(inbody[0].PBF_pct).to.equal(36.9);
+        expect(inbody[0].LHM_kg).to.equal(1.94);
+        expect(inbody[0].RHM_kg).to.equal(2.02);
+        expect(inbody[0].BM_kg).to.equal(17.7);
+        expect(inbody[0].LLM_kg).to.equal(5.02);
+        expect(inbody[0].RLM_kg).to.equal(5.2);
+        expect(inbody[0].LHF_kg).to.equal(1.6);
+        expect(inbody[0].RHF_kg).to.equal(1.5);
+        expect(inbody[0].BF_kg).to.equal(11.7);
+        expect(inbody[0].LLF_kg).to.equal(2.9);
+        expect(inbody[0].RLF_kg).to.equal(2.9);
+        expect(inbody[0].BMR_kcal).to.equal(1176);
+        expect(inbody[0].inbody_id).to.equal(10);
         done();
-        //到這邊
     });
 });
+
 
 // menu api
 describe("GET /menu", () => {
@@ -365,12 +376,12 @@ describe("GET /menu", () => {
             
             const date = '2022-03-01'
             chai.request(server)
-                .get('/menu')
+                .get('/menu/' + date)
                 .set({'Authorization': token})
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    expect(res.body.length).equal(1);
+                    expect(res.body.length).equal(12);
 
                     menu = res.body;
                     done();
@@ -389,16 +400,15 @@ describe("GET /menu", () => {
             menu[i].should.have.property('program_id');
             menu[i].should.have.property('date');
             menu[i].should.have.property('reps');
-            //expect(rates[i].year).to.equal('');
         }
         //這邊還沒改
-        expect(menu[0].Day).to.equal('03');
-        expect(menu[0].equip_id).to.equal('04');
-        expect(menu[0].sets).to.equal('05');
-        expect(menu[0].finish).to.equal('100%');
-        expect(menu[0].program_id).to.equal('75%');
-        expect(menu[0].date).to.equal('62.5%');
-        expect(menu[0].reps).to.equal('62.5%');
+        // expect(menu[0].Day).to.equal('03');
+        // expect(menu[0].equip_id).to.equal('04');
+        // expect(menu[0].sets).to.equal('05');
+        // expect(menu[0].finish).to.equal('100%');
+        // expect(menu[0].program_id).to.equal('75%');
+        // expect(menu[0].date).to.equal('62.5%');
+        // expect(menu[0].reps).to.equal('62.5%');
         done();
         //到這邊
     });
