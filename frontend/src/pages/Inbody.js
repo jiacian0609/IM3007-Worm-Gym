@@ -69,6 +69,8 @@ const Submit = styled.button `
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
+
+    cursor: pointer;
 `
 
 const StyledInbodyContent = styled.div `

@@ -27,7 +27,7 @@ const Home = styled.button `
 
     border: none;
 
-    cursor: pointer
+    cursor: pointer;
 `
 
 export default function Header() {

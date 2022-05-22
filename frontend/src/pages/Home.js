@@ -53,6 +53,8 @@ const Box = styled.button `
     background-color: ${props => props.color};
     border: solid 5px #ffffff;
     border-radius: 100px;
+
+    cursor: pointer;
 `
 
 const Picture = styled.div `
@@ -92,6 +94,8 @@ const Submit = styled.button `
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
+
+    cursor: pointer;
 `
 
 export default function Home() {

@@ -73,6 +73,8 @@ const Submit = styled.button `
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
+
+    cursor: pointer;
 `
 
 const Row = styled.div `
@@ -95,6 +97,8 @@ const Box = styled.button `
     background: rgba(0, 235, 250, 0.65);
     border: solid 20px rgba(252, 255, 121, 0.58);
     border-radius: 100px;
+
+    cursor: pointer;
 `
 
 const Year = styled.div `
