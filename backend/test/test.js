@@ -291,3 +291,115 @@ describe("GET /finish-rate", () => {
         done();
     });
 });
+
+// get inbody_record api
+describe("GET /inbody_record", () => {
+    let inbody = undefined;
+    it("Return an array", (done) => {
+        // login to get token
+        chai.request(server)
+        .post('/login').send({username: 'userONE', password: '11111111'})
+        .end((err, res1) => {
+            // token
+            const token = res1.body.JWT;
+
+            chai.request(server)
+                .get('/finish-rate')
+                .set({'Authorization': token})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    expect(res.body.length).equal(1);
+
+                    inbody = res.body;
+                    done();
+                });
+        });
+    });
+
+    it("Contain all the inbody record", (done) => {
+        for (let i = 0; i < inbody.length; i++) {
+            inbody[i].should.be.a('object');
+            inbody[i].should.have.property('user_id');
+            inbody[i].should.have.property('date');
+            inbody[i].should.have.property('weight_kg');
+            inbody[i].should.have.property('SMM_kg');
+            inbody[i].should.have.property('BFM_kg');
+            inbody[i].should.have.property('PBF_pct');
+            inbody[i].should.have.property('LHM_kg');
+            inbody[i].should.have.property('RHM_kg');
+            inbody[i].should.have.property('BM_kg');
+            inbody[i].should.have.property('LLM_kg');
+            inbody[i].should.have.property('RLM_kg');
+            inbody[i].should.have.property('LHF_kg');
+            inbody[i].should.have.property('RHF_kg');
+            inbody[i].should.have.property('BF_kg');
+            inbody[i].should.have.property('LLF_kg');
+            inbody[i].should.have.property('RLF_kg');
+            inbody[i].should.have.property('BMR_kcal');
+            inbody[i].should.have.property('inbody_id');
+            //expect(rates[i].year).to.equal('');
+        }
+        //這邊還沒改
+        expect(inbody[0].month).to.equal('03');
+        expect(inbody[1].month).to.equal('04');
+        expect(inbody[2].month).to.equal('05');
+        expect(inbody[0].finish_rate).to.equal('100%');
+        expect(inbody[1].finish_rate).to.equal('75%');
+        expect(inbody[2].finish_rate).to.equal('62.5%');
+        done();
+        //到這邊
+    });
+});
+
+// menu api
+describe("GET /menu", () => {
+    let menu = undefined;
+    it("Return an array", (done) => {
+        // login to get token
+        chai.request(server)
+        .post('/login').send({username: 'userONE', password: '11111111'})
+        .end((err, res1) => {
+            // token
+            const token = res1.body.JWT;
+            
+            const date = '2022-03-01'
+            chai.request(server)
+                .get('/menu')
+                .set({'Authorization': token})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    expect(res.body.length).equal(1);
+
+                    menu = res.body;
+                    done();
+                });
+        });
+    });
+
+    it("Contain all the inbody record", (done) => {
+        for (let i = 0; i < menu.length; i++) {
+            menu[i].should.be.a('object');
+            menu[i].should.have.property('user_id');
+            menu[i].should.have.property('Day');
+            menu[i].should.have.property('equip_id');
+            menu[i].should.have.property('sets');
+            menu[i].should.have.property('finish');
+            menu[i].should.have.property('program_id');
+            menu[i].should.have.property('date');
+            menu[i].should.have.property('reps');
+            //expect(rates[i].year).to.equal('');
+        }
+        //這邊還沒改
+        expect(menu[0].Day).to.equal('03');
+        expect(menu[0].equip_id).to.equal('04');
+        expect(menu[0].sets).to.equal('05');
+        expect(menu[0].finish).to.equal('100%');
+        expect(menu[0].program_id).to.equal('75%');
+        expect(menu[0].date).to.equal('62.5%');
+        expect(menu[0].reps).to.equal('62.5%');
+        done();
+        //到這邊
+    });
+});
