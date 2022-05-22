@@ -112,14 +112,12 @@ export default function SignIn() {
             "password": password
         })
         .then( (response) => {
-            if (response.data.message === "Login successfully.") {
-				window.localStorage.setItem('JWT', response.data.JWT)
-                window.location.href = "/home"
-            } else {
-				window.alert(response.data)
-			}
+			window.localStorage.setItem('JWT', response.data.JWT)
+            window.location.href = "/home"
 		})
-		.catch( (error) => console.log(error))
+		.catch( (error) => {
+			window.alert(error.response.data)
+		})
 	}
 
 	return (
