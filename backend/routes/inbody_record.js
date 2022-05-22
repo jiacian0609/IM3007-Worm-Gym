@@ -10,7 +10,11 @@ router.get('/', async (req, res) => {
     var user_id = payload.Uid;
 
     //get the inbody record from database
-    const inbody_record = await pool.query('SELECT * FROM "WormGym"."Inbody_record" WHERE user_id = $1', [user_id]);
+    const inbody_record = await pool.query(`SELECT * FROM "WormGym"."Inbody_record" as IR 
+                                            WHERE IR.date in (
+                                                SELECT max(IR.date)
+                                                From "WormGym"."Inbody_record" as IR
+                                                where IR.user_id = $1)`, [user_id]);
     console.log(inbody_record.rows)
 
     //Send inbody record to frontend
