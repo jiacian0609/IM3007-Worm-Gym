@@ -317,7 +317,7 @@ describe("GET /inbody_record", () => {
         });
     });
 
-    it("Contain all the inbody record", (done) => {
+    it("Contain the newest inbody record", (done) => {
         for (let i = 0; i < inbody.length; i++) {
             inbody[i].should.be.a('object');
             inbody[i].should.have.property('user_id');
@@ -378,7 +378,7 @@ describe("GET /menu", () => {
         });
     });
 
-    it("Contain all the inbody record", (done) => {
+    it("Contain the menu", (done) => {
         for (let i = 0; i < menu.length; i++) {
             menu[i].should.be.a('object');
             menu[i].should.have.property('user_id');
