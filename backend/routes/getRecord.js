@@ -59,7 +59,7 @@ router.get('/:date/:day', async function (req, res) {
 			recordByDate[record.rows[index].equip_id - 1].weight = record.rows[index].weight
 			recordByDate[record.rows[index].equip_id - 1].sets = record.rows[index].sets
 			recordByDate[record.rows[index].equip_id - 1].reps = record.rows[index].reps
-			recordByDate[record.rows[index].equip_id - 1].status = "finish"
+			recordByDate[record.rows[index].equip_id - 1].status = "finished"
 		}
 		
 		// Send response to frontend

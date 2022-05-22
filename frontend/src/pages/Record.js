@@ -105,41 +105,17 @@ const months = {
   }
 
 function Task(props) {
-	//console.log(props.item)
+	//console.log(props.item.status)
 	if (props.item.status === 'finished') {
 		return (
-			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }}
-				 onClick={() => {
-					props.setEquip(props.item.equip_id)
-					if (props.item.sets !== 0)
-						props.setDefaultSets(props.item.sets)
-					else
-						props.setDefaultSets('')
-					if (props.item.reps !== 0)
-						props.setDefaultReps(props.item.reps)
-					else
-						props.setDefaultReps('')
-				 }}
-			>
+			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }} onClick={() => props.setEquip(props.item.equip_id)}>
 				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'#00DB00'}/>
 				<Text>{ props.item.name }</Text>
 			</div>
 		);
 	} else if (props.item.status === 'unfinished') {
 		return (
-			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }}
-				 onClick={() => {
-					props.setEquip(props.item.equip_id)
-					if (props.item.sets !== 0)
-						props.setDefaultSets(props.item.sets)
-					else
-						props.setDefaultSets('')
-					if (props.item.reps !== 0)
-						props.setDefaultReps(props.item.reps)
-					else
-						props.setDefaultReps('')
-				}}
-			>
+			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }} onClick={() => props.setEquip(props.item.equip_id)}>
 				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'red'} />
 				<Text>{ props.item.name }</Text>
 			</div>
@@ -149,7 +125,7 @@ function Task(props) {
 			<div style={{ margin: '15px 10px', display: 'block', alignItems: 'center', cursor: 'pointer' }}
 				onClick={() => {
 					props.setEquip(props.item.equip_id)
-					if (props.item.sets !== 0)
+					/* if (props.item.sets !== 0)
 						props.setDefaultSets(props.item.sets)
 					else
 						props.setDefaultSets('')
@@ -157,6 +133,9 @@ function Task(props) {
 						props.setDefaultReps(props.item.reps)
 					else
 						props.setDefaultReps('')
+					props.setWeight('')
+					props.setSet('')
+					props.setUnit('') */
 				}}
 			>
 				<Img src={ '../images/gym_' + props.item.equip_id + '.png'} color={'gray'} />
@@ -182,10 +161,82 @@ function Calendar(props) {
 		else
 			props.setStartDate(year + '-' + month + '-22')
 		props.setDate(year + '-' + month + '-' + date)
+		props.setDefaultSets('')
+		props.setDefaultReps('')
 	};
   
 	return (
 		<DatePicker onChange={onChange} />
+	);
+};
+
+function RecordInput(props) {
+	const [weightInput, setWeightInput] = useState('');
+	const [setsInput, setSetsInput] = useState('');
+	const [repsInput, setRepsInput] = useState('');
+
+	if (props.equip === undefined || props.equip === 0 || props.record === [])
+		return (
+			<div></div>
+		)
+
+	console.log(props.record[props.equip - 1].status)
+	console.log(props.record)
+
+	// Add record to database
+	function addRecord() {
+		console.log(props.equip)
+		//console.log(weight)
+		//console.log(set)
+		//console.log(unit)
+		/* axios.post("http://localhost:8000/login", {
+            "username": username,
+            "password": password
+        })
+        .then( (response) => {
+            if (response.data.message === "Login successfully.") {
+				window.localStorage.setItem('JWT', response.data.JWT)
+                window.location.href = "/home"
+            } else {
+				window.alert(response.data)
+			}
+		})
+		.catch( (error) => console.log(error)) */
+	}
+
+	return (
+		<div>
+			<div className="form__field">
+				<div className="form__field-name">重量</div>
+				<input
+					className="form__field-input"
+					value={ weightInput }
+					onChange={(e) => {
+						setWeightInput(e.target.value)
+						console.log("weight:", e.target.value)
+					}}
+				/>
+			</div>
+			<div className="form__field">
+				<div className="form__field-name">組數</div>
+				<input
+					className="form__field-input"
+					key='sets'
+					defaultValue='1'
+					value={ setsInput }
+					onChange={(e) => setSetsInput(e.target.value)}
+				/>
+			</div>
+			<div className="form__field" >
+				<div className="form__field-name">單位</div>
+				<input
+					className="form__field-input"
+					value={ repsInput }
+					onChange={(e) => setRepsInput(e.target.value)}
+				/>
+			</div>
+			<Submit onClick={addRecord}>確認</Submit>
+		</div>
 	);
 };
 
@@ -196,16 +247,14 @@ function Calendar(props) {
 </select>*/
 
 export default function Record() {
-	const [weight, setWeight] = useState();
-	const [set, setSet] = useState();
-	const [unit, setUnit] = useState();
 	const [date, setDate] = useState();
 	const [startDate, setStartDate] = useState();
 	const [day, setDay] = useState('free');
 	const [days, setDays] = useState([]);
 	const [record, setRecord] = useState([]);
-	const [equip, setEquip] = useState();
-	const [defaultSets, setDefaultSets] = useState('請輸入');
+	const [equip, setEquip] = useState(0);
+	const [defaultWeight, setDefaultWeight] = useState('');
+	const [defaultSets, setDefaultSets] = useState('');
 	const [defaultReps, setDefaultReps] = useState('');
 
 	useEffect(() => {
@@ -248,6 +297,7 @@ export default function Record() {
 	}, [date])
 
 	useEffect(() => {
+		setEquip(0)
 		if (date === undefined)
 			return
 		axios.get("http://localhost:8000/getRecord/" + date + "/" + day, {
@@ -264,14 +314,31 @@ export default function Record() {
 		.catch( (error) => console.log(error))
 	}, [date, day])
 
-	// Add record to database
-	function addRecord() {
-		console.log(equip)
-		console.log(record[equip - 1])
-		console.log(weight)
-		console.log(set)
-		console.log(unit)
-	}
+	useEffect(() => {
+		if (equip === 0)
+			return
+		if (record[equip - 1].status === 'finished') {
+			setDefaultWeight(record[equip - 1].weight)
+			setDefaultSets(record[equip - 1].sets)
+			setDefaultReps(record[equip - 1].reps)
+		} else if (record[equip - 1].status === 'unfinished') {
+			setDefaultWeight('')
+			setDefaultSets(record[equip - 1].sets)
+			setDefaultReps(record[equip - 1].reps)
+		} else {
+			setDefaultWeight('')
+			setDefaultSets('')
+			setDefaultReps('')
+		}
+		 console.log(equip)
+		console.log(record[equip - 1].weight)
+		console.log(record[equip - 1].sets)
+		console.log(record[equip - 1].reps)
+		//setDefaultReps(record[equip - 1].reps)
+		//console.log(defaultReps) 
+	}, [equip, record]) 
+
+	
 
 	return (
 	<Base>
@@ -281,7 +348,7 @@ export default function Record() {
 			<div style={{ display: 'flex', alignItems: 'center' }}>
 				<div style={{ display: 'block', alignItems: 'center' }}>
 					<StyledCalendar>
-						<Calendar setDate={setDate} setStartDate={setStartDate}/>
+						<Calendar setDate={setDate} setStartDate={setStartDate} setDefaultSets={setDefaultSets} setDefaultReps={setDefaultReps}/>
 					</StyledCalendar>
 				</div>
 				<div style={{ display: 'flex' }}>
@@ -302,33 +369,7 @@ export default function Record() {
 								</select>
 							</div>
 						</div>
-						<div className="form__field">
-							<div className="form__field-name">重量</div>
-							<input
-								className="form__field-input"
-								value={ weight }
-								onChange={(e) => setWeight(e.target.value)}
-							/>
-						</div>
-						<div className="form__field" key={defaultSets || 'sets'}>
-							<div className="form__field-name">組數</div>
-							<input
-								className="form__field-input"
-								defaultValue={ defaultSets || ''}
-								value={ set }
-								onChange={(e) => setSet(e.target.value)}
-							/>
-						</div>
-						<div className="form__field" key={defaultReps || 'reps'}>
-							<div className="form__field-name">單位</div>
-							<input
-								className="form__field-input"
-								defaultValue={ defaultReps || ''}
-								value={ unit }
-								onChange={(e) => setUnit(e.target.value)}
-							/>
-						</div>
-						<Submit onClick={addRecord}>確認</Submit>
+						<RecordInput equip={equip} record={record}/>
 					</div>
 				</div>
 			</div>
@@ -336,3 +377,45 @@ export default function Record() {
 	</Base>
 	);
 }
+
+/* <div className="form">
+						<div style={{ display: 'flex', alignItems: 'center' }}>
+							<div className='planTitle'>今日計畫</div>
+							<div className="day">
+								<select className="day-selector" defaultValue="free" onChange={(e) => setDay(e.target.value)}>
+									{days?.map(day => <option key={day} value={day}>Day {day}</option>)}
+									<option value="free">Free</option>
+								</select>
+							</div>
+						</div>
+						<div className="form__field" key={"weight:" + defaultWeight}>
+							<div className="form__field-name">重量</div>
+							<input
+								className="form__field-input"
+								defaultValue={ defaultWeight }
+								value={ weight }
+								onChange={(e) => setWeight(e.target.value)}
+							/>
+						</div>
+						<div className="form__field">
+							<div className="form__field-name">組數</div>
+							<input
+								className="form__field-input"
+								key='sets'
+								defaultValue='1'
+								value={ set }
+								onChange={(e) => setSet(e.target.value)}
+							/>
+						</div>
+						<div className="form__field" >
+							<div className="form__field-name">單位</div>
+							<input
+								className="form__field-input"
+								key={"reps:" + defaultReps}
+								defaultValue={ defaultReps || '1'}
+								value={ unit }
+								onChange={(e) => setUnit(e.target.value)}
+							/>
+						</div>
+						<Submit onClick={addRecord}>確認</Submit>
+					</div> */
