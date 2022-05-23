@@ -15,7 +15,6 @@ const Background = styled.img `
     width: 100%;
     height: 100%;
 
-    content: ' ';
     display: block;
     position: absolute;
         left: 0;
@@ -87,15 +86,21 @@ const Submit = styled.button `
     padding: 2px;
     margin: 50px 0 20px;
 
-    background: #35D11B;
-    border: 3px solid #35D11B;
+    background: #000000;
+    border: none;
     border-radius: 8px;
 
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
+    color: #ffffff;
 
     cursor: pointer;
+
+    &:hover {
+        background: #35D11B;
+        color: #000000;
+    }
 `
 
 export default function Home() {

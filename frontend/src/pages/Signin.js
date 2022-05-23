@@ -14,11 +14,11 @@ const Background = styled.img `
 	width: 100%;
 	height: 100%;
 
-	content: ' ';
 	display: block;
 	position: absolute;
 		left: 0;
 		top: 0;
+		z-index: -1;
 
     opacity: 0.6;
     background-image: url("./images/cover_1.png");
@@ -28,12 +28,15 @@ const Background = styled.img `
 `
 
 const Content = styled.div `
-	position: relative;
+	width: 50%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 `
 
 const Title = styled.div `
-	width: 1000px;
-	height: 266px;
 
 	padding: 150px 0 50px;
 	margin: auto;
@@ -41,8 +44,7 @@ const Title = styled.div `
 	font-family: 'Caramel';
 	font-style: normal;
 	font-weight: 400;
-	font-size: 200px;
-	line-height: 240px;
+	font-size: 180px;
 	text-align: center;
 
 	color: #0053B4;
@@ -50,27 +52,30 @@ const Title = styled.div `
 `
 
 const SignInBox = styled.div `
-	width: 730px;
-	height: 745px;
-
-	padding: 80px 250px 80px 250px;
-	margin: auto;
+	width: 100%;
+	padding: 80px 250px;
 
 	background-color: #ffffff;
 	border-radius: 100px;
+	box-shadow: 10px 10px 5px 10px rgba(0, 0, 0, 0.2);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 `
 
 const InputBar = styled.input `
-	width: 700px;
+	width: 100%;
 	height: 100px;
 
 	margin: 0 0 40px;
-	padding: 10px;
+	padding: 30px 20px;
 
 	border: solid 5px #979797;
-		border-radius: 20px;
+	border-radius: 20px;
 
-	font-size: 60px;
+	font-size: 40px;
 `
 
 const InputText = styled.div `
@@ -88,10 +93,7 @@ const InputText = styled.div `
 `
 
 const Submit = styled.button `
-	width: 730px;
-	height: 100px;
-
-	margin: 20px 0 40px;
+	padding: 10px 30px;
 
 	border: none;
 	border-radius: 20px;
@@ -99,9 +101,17 @@ const Submit = styled.button `
 	
 	font-family: 'Caramel';
 	font-style: normal;
-	font-size: 60px;
+	font-size: 40px;
 	color: #ffffff;
 	text-align: center;
+
+	cursor: pointer;
+
+	&:hover {
+		background-color: #c7e0fc;
+		color: #0053B4;
+		box-shadow: 2px 2px 1px 2px rgba(0, 0, 0, 0.2);
+	}
 `
 
 export default function SignIn() {
@@ -124,14 +134,20 @@ export default function SignIn() {
 	<Base>
 		<Background src="/images/cover_1.png" />
 		<Content>
-			<Title>Worm Gym</Title>
-			<SignInBox>
-				<InputText>會員帳號</InputText><br/>
-				<InputBar id="username"/>
-				<InputText>會員密碼</InputText><br/>
-				<InputBar id="password"/>
-				<Submit onClick={()=> handleSignIn(document.getElementById('username').value, document.getElementById('password').value)}>確認</Submit>
-			</SignInBox>
+			<div>
+				<Title>Worm Gym</Title>
+				<SignInBox>
+					<div>
+						<InputText>會員帳號</InputText><br/>
+						<InputBar id="username"/>
+					</div>
+					<div>
+						<InputText>會員密碼</InputText><br/>
+						<InputBar id="password" type="password"/>
+					</div>
+					<Submit onClick={()=> handleSignIn(document.getElementById('username').value, document.getElementById('password').value)}>確認</Submit>
+				</SignInBox>
+			</div>
 		</Content>
 	</Base>
   )
