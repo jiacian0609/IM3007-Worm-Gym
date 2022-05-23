@@ -293,7 +293,7 @@ describe("GET /finish-rate", () => {
 });
 
 
-// get inbody_record api
+// inbody_record api
 describe("GET /inbody_record", () => {
     let inbody = undefined;
     it("Return an array", (done) => {
@@ -364,7 +364,7 @@ describe("GET /inbody_record", () => {
 
 
 // menu api
-describe("GET /menu", () => {
+describe("GET /menu/:date", () => {
     let menu = undefined;
     it("Return an array", (done) => {
         // login to get token
@@ -440,5 +440,143 @@ describe("GET /menu", () => {
             }
         }
         done();
+    });
+});
+
+
+// getRecord api
+const months = {
+	Jan: '01',
+	Feb: '02',
+	Mar: '03',
+	Apr: '04',
+	May: '05',
+	Jun: '06',
+	Jul: '07',
+	Aug: '08',
+	Sep: '09',
+	Oct: '10',
+	Nov: '11',
+	Dec: '12',
+}
+
+function convertTZ(date, tzString) {
+    return (new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}))).toString();   
+}
+
+function nowDate() {
+	const now = convertTZ(new Date(), "Asia/Jakarta")
+	var year = now.toString().split(" ")[3]
+	var month = months[now.toString().split(" ")[1]]
+	var date = now.toString().split(" ")[2]
+	return (year + '-' + month + '-' + date)
+}
+
+describe("GET /getRecord/:date", () => {
+    describe("Case 1: date of today", () => {
+        let response = undefined;
+        it("Return an object", (done) => {
+            // login to get token
+            chai.request(server)
+            .post('/login').send({username: 'userONE', password: '11111111'})
+            .end((err, res1) => {
+                // token
+                const token = res1.body.JWT;
+
+                chai.request(server)
+                    .get('/getRecord/' + nowDate())
+                    .set({'Authorization': token})
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+
+                        response = res.body;
+                        done();
+                    });
+            });
+        });
+
+        it("Contain day property", (done) => {
+            response.should.have.property('day');
+            expect(response.day).to.equal('free');
+            done();
+        });
+
+        it("Contain records of each equipment", (done) => {
+            response.should.have.property('records');
+            expect(response.records.length).to.equal(20);
+            for (let i = 0; i < 20; i++) {
+                expect(response.records[i].weight).to.equal(0);
+                expect(response.records[i].sets).to.equal(0);
+                expect(response.records[i].reps).to.equal(0);
+                expect(response.records[i].status).to.equal('optional');
+            }
+            done();
+        });
+    });
+
+    describe("Case 2: date of a previos day", () => {
+        let response = undefined;
+        it("Return an object", (done) => {
+            // login to get token
+            chai.request(server)
+            .post('/login').send({username: 'userONE', password: '11111111'})
+            .end((err, res1) => {
+                // token
+                const token = res1.body.JWT;
+
+                chai.request(server)
+                    .get('/getRecord/2022-03-01')
+                    .set({'Authorization': token})
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+
+                        response = res.body;
+                        done();
+                    });
+            });
+        });
+
+        it("Contain day property", (done) => {
+            response.should.have.property('day');
+            expect(response.day).to.equal('1');
+            done();
+        });
+
+        it("Contain previous records & status", (done) => {
+            response.should.have.property('records');
+            expect(response.records.length).to.equal(20);
+            const finish_id = [3, 8, 14, 5, 15, 7];
+            for (let i = 0; i < 20; i++) {
+                if (finish_id.indexOf(response.records[i].equip_id) !== -1) {
+                    expect(response.records[i].status).to.equal('finished');
+                } else {
+                    expect(response.records[i].weight).to.equal(0);
+                    expect(response.records[i].sets).to.equal(0);
+                    expect(response.records[i].reps).to.equal(0);
+                    expect(response.records[i].status).to.equal('optional');
+                }
+            }
+            expect(response.records[2].weight).to.equal('X');
+            expect(response.records[2].sets).to.equal('1 組');
+            expect(response.records[2].reps).to.equal('20 分鐘');
+            expect(response.records[4].weight).to.equal('15 kg');
+            expect(response.records[4].sets).to.equal('3 組');
+            expect(response.records[4].reps).to.equal('8 下');
+            expect(response.records[6].weight).to.equal('20 kg');
+            expect(response.records[6].sets).to.equal('3 組');
+            expect(response.records[6].reps).to.equal('20 下');
+            expect(response.records[7].weight).to.equal('20 kg');
+            expect(response.records[7].sets).to.equal('3 組');
+            expect(response.records[7].reps).to.equal('8 下');
+            expect(response.records[13].weight).to.equal('40 kg');
+            expect(response.records[13].sets).to.equal('3 組');
+            expect(response.records[13].reps).to.equal('8 下');
+            expect(response.records[14].weight).to.equal('15 kg');
+            expect(response.records[14].sets).to.equal('3 組');
+            expect(response.records[14].reps).to.equal('8 下');
+            done();
+        });
     });
 });
