@@ -51,7 +51,8 @@ router.post('/', async (req, res) => {
 			if (p_item.length > 0) {
 				p_item = p_item[0];
 				p_item.reps = p_item.reps.split(" ")[0];  // remove unit
-				if (reps.split(" ")[0] >= p_item.reps && sets >= p_item.sets) {
+				p_item.sets = p_item.sets.split(" ")[0];  // remove unit
+				if (reps.split(" ")[0] >= p_item.reps && sets.split(" ")[0] >= p_item.sets) {
 					await pool.query(`UPDATE "WormGym".fitness_program SET finish=true
 									  WHERE user_id = $1 AND "date" = $2 AND "Day" = $3 AND equip_id = $4`, [user_id, sd, parseInt(day), equip_id]);
 				}
