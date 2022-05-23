@@ -105,7 +105,7 @@ const months = {
 }
 
 function convertTZ(date, tzString) {
-    return (new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}))).toString();   
+	return (new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}))).toString();   
 }
 
 function nowDate() {
@@ -161,9 +161,9 @@ function Calendar(props) {
 	);
 };
 
-function RecordInput(props) {
+function RecordInfo(props) {
 	// Check whether the data is fetched
-	if (props.equip === undefined || props.equip === 0 || props.record === [])
+	if (props.equip === undefined || props.equip === 0 || props.record.records === [])
 		return (
 			<div></div>
 		)
@@ -210,39 +210,46 @@ function RecordInput(props) {
 		})
 		.catch( (error) => console.log(error))
 	}
-
-	if (props.record[props.equip - 1].status === 'finished') {
+	console.log(props.record.day)
+	if (props.record.records[props.equip - 1].status === 'finished') {
 		return (
-			<div>
+			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+				<div style={{ alignItems: 'center' }}>
+					<div className='planTitle'>今日計畫</div>
+					<div>日期：{props.date}</div>
+					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:''}</div>
+					<div>器材：{props.record.records[props.equip - 1].name}</div>
+					<div>狀態：完成訓練</div>
+				</div>
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
-						key={props.record[props.equip - 1].weight}
+						key={props.record.records[props.equip - 1].weight}
 						className="form__field-input"
-						defaultValue={props.record[props.equip - 1].weight}
+						defaultValue={props.record.records[props.equip - 1].weight}
 						disabled={true}
 					/>
 				</div>
 				<div className="form__field">
 					<div className="form__field-name">組數</div>
 					<input
-						key={props.record[props.equip - 1].sets}
+						key={props.record.records[props.equip - 1].sets}
 						className="form__field-input"
-						defaultValue={props.record[props.equip - 1].sets}
+						defaultValue={props.record.records[props.equip - 1].sets}
 						disabled={true}
 					/>
 				</div>
 				<div className="form__field" >
 					<div className="form__field-name">單位</div>
 					<input
-						key={props.record[props.equip - 1].reps}
+						key={props.record.records[props.equip - 1].reps}
 						className="form__field-input"
-						defaultValue={props.record[props.equip - 1].reps}
+						defaultValue={props.record.records[props.equip - 1].reps}
 						disabled={true}
 					/>
 				</div>
 			</div>
-		);
+		); /*
 	} else if (props.record[props.equip - 1].status === 'unfinished') {
 		return (
 			<div>
@@ -304,7 +311,7 @@ function RecordInput(props) {
 				</div>
 				<Submit onClick={addRecord}>確認</Submit>
 			</div>
-		);
+		);*/
 	}
 };
 
@@ -357,20 +364,20 @@ export default function Record() {
 			//console.log(record)
 		})
 		.catch( (error) => console.log(error))
-	}, [date, day])
+	}, [date, day])*/
 
 	useEffect(() => {
 		if (equip === 0)
 			return
-		if (record[equip - 1].status === 'finished') {
-		} else if (record[equip - 1].status === 'unfinished') {
+		if (record.records[equip - 1].status === 'finished') {
+		} else if (record.records[equip - 1].status === 'unfinished') {
 			setWeightInput('')
 		} else {
 			setWeightInput('')
 			setSetsInput('')
 			setRepsInput('')
 		}
-	}, [equip, record]) */
+	}, [equip, record])
 
 	return (
 	<Base>
@@ -391,7 +398,15 @@ export default function Record() {
 						<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
-					<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+					<RecordInfo date={date} equip={equip} record={record}/>
+				</div>
+			</div>
+		</Content>
+	</Base>
+	);
+}
+
+/* <div className="form" style={{ height: '520px', padding: '400px 40px'}}>
 						<div style={{ display: 'flex', alignItems: 'center'}}>
 							<div className='planTitle'>今日計畫</div>
 							<div className="day">
@@ -401,10 +416,4 @@ export default function Record() {
 							</div>
 						</div>
 						<RecordInput date={date} day={day} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
-					</div>
-				</div>
-			</div>
-		</Content>
-	</Base>
-	);
-}
+					</div> */
