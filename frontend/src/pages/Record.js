@@ -162,6 +162,7 @@ function Calendar(props) {
 };
 
 function RecordInfo(props) {
+	const isToday = (props.today === props.date)
 	// Check whether the data is fetched
 	if (props.equip === undefined || props.equip === 0 || props.record.records === [])
 		return (
@@ -174,17 +175,17 @@ function RecordInfo(props) {
 		var weightInput = null
 		var setsInput = null
 		var repsInput = null
-		if (props.record[props.equip - 1].status === 'finished') {
+		if (props.record.records[props.equip - 1].status === 'finished') {
 			console.log(props.equip)
-			weightInput = props.record[props.equip - 1].weight
-			setsInput = props.record[props.equip - 1].sets
-			repsInput = props.record[props.equip - 1].reps
-		} else if (props.record[props.equip - 1].status === 'unfinished') {
+			weightInput = props.record.records[props.equip - 1].weight
+			setsInput = props.record.records[props.equip - 1].sets
+			repsInput = props.record.records[props.equip - 1].reps
+		} else if (props.record.records[props.equip - 1].status === 'unfinished') {
 			console.log(props.equip)
 			weightInput = props.weightInput
-			setsInput = props.record[props.equip - 1].sets
-			repsInput = props.record[props.equip - 1].reps
-		} else if (props.record[props.equip - 1].status === 'optional') {
+			setsInput = props.record.records[props.equip - 1].sets
+			repsInput = props.record.records[props.equip - 1].reps
+		} else if (props.record.records[props.equip - 1].status === 'optional') {
 			console.log(props.equip)
 			weightInput = props.weightInput
 			setsInput = props.setsInput
@@ -198,7 +199,7 @@ function RecordInfo(props) {
 			"reps": repsInput,
 			"sets": setsInput,
 			"date": props.date,
-			"day": props.day
+			"day": props.record.day
 		}, {
 			headers: {
 			  'Authorization': `${localStorage.getItem('JWT')}`
@@ -210,14 +211,14 @@ function RecordInfo(props) {
 		})
 		.catch( (error) => console.log(error))
 	}
-	console.log(props.record.day)
+
 	if (props.record.records[props.equip - 1].status === 'finished') {
 		return (
 			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
 				<div style={{ alignItems: 'center' }}>
 					<div className='planTitle'>今日計畫</div>
 					<div>日期：{props.date}</div>
-					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:''}</div>
+					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
 					<div>器材：{props.record.records[props.equip - 1].name}</div>
 					<div>狀態：完成訓練</div>
 				</div>
@@ -249,10 +250,17 @@ function RecordInfo(props) {
 					/>
 				</div>
 			</div>
-		); /*
-	} else if (props.record[props.equip - 1].status === 'unfinished') {
+		); 
+	} else if (props.record.records[props.equip - 1].status === 'unfinished') {
 		return (
-			<div>
+			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+				<div style={{ alignItems: 'center' }}>
+					<div className='planTitle'>今日計畫</div>
+					<div>日期：{props.date}</div>
+					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+					<div>器材：{props.record.records[props.equip - 1].name}</div>
+					<div>狀態：尚未完成訓練</div>
+				</div>
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
@@ -264,27 +272,34 @@ function RecordInfo(props) {
 				<div className="form__field">
 					<div className="form__field-name">組數</div>
 					<input
-						key={props.record[props.equip - 1].sets}
+						key={props.record.records[props.equip - 1].sets}
 						className="form__field-input"
-						defaultValue={props.record[props.equip - 1].sets}
+						defaultValue={props.record.records[props.equip - 1].sets}
 						disabled={true}
 					/>
 				</div>
 				<div className="form__field" >
 					<div className="form__field-name">單位</div>
 					<input
-						key={props.record[props.equip - 1].reps}
+						key={props.record.records[props.equip - 1].reps}
 						className="form__field-input"
-						defaultValue={props.record[props.equip - 1].reps}
+						defaultValue={props.record.records[props.equip - 1].reps}
 						disabled={true}
 					/>
 				</div>
 				<Submit onClick={addRecord}>確認</Submit>
 			</div>
 		);
-	} else if (props.record[props.equip - 1].status === 'optional') {
+	} else if (props.record.records[props.equip - 1].status === 'optional' && isToday) {
 		return (
-			<div>
+			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+				<div style={{ alignItems: 'center' }}>
+					<div className='planTitle'>今日計畫</div>
+					<div>日期：{props.date}</div>
+					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+					<div>器材：{props.record.records[props.equip - 1].name}</div>
+					<div>狀態：無訓練紀錄</div>
+				</div>
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
@@ -296,6 +311,7 @@ function RecordInfo(props) {
 				<div className="form__field">
 					<div className="form__field-name">組數</div>
 					<input
+						key={props.record.records[props.equip - 1].sets}
 						className="form__field-input"
 						value={ props.setsInput }
 						onChange={(e) => props.setSetsInput(e.target.value)}
@@ -304,6 +320,7 @@ function RecordInfo(props) {
 				<div className="form__field" >
 					<div className="form__field-name">單位</div>
 					<input
+						key={props.record.records[props.equip - 1].reps}
 						className="form__field-input"
 						value={ props.repsInput }
 						onChange={(e) => props.setRepsInput(e.target.value)}
@@ -311,16 +328,25 @@ function RecordInfo(props) {
 				</div>
 				<Submit onClick={addRecord}>確認</Submit>
 			</div>
-		);*/
+		);
+	} else if (props.record.records[props.equip - 1].status === 'optional' && !isToday) {
+		return (
+			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+				<div style={{ alignItems: 'center' }}>
+					<div className='planTitle'>今日計畫</div>
+					<div>日期：{props.date}</div>
+					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+					<div>器材：{props.record.records[props.equip - 1].name}</div>
+					<div>狀態：無訓練紀錄</div>
+				</div>
+			</div>
+		);
 	}
 };
 
 export default function Record() {
 	const today = nowDate()
 	const [date, setDate] = useState(nowDate());
-	//const [startDate, setStartDate] = useState();
-	const [day, setDay] = useState('free');
-	//const [days, setDays] = useState([]);
 	const [record, setRecord] = useState({day: null, records: []});
 	const [equip, setEquip] = useState(0);
 	const [weightInput, setWeightInput] = useState('');
@@ -347,24 +373,6 @@ export default function Record() {
 		})
 		.catch( (error) => console.log(error))
 	}, [date])
-
-/* 	useEffect(() => {
-		setEquip(0)
-		if (date === undefined)
-			return
-		axios.get("http://localhost:8000/getRecord/" + date + "/" + day, {
-			headers: {
-			  'Authorization': `${localStorage.getItem('JWT')}`
-			}
-		})
-		.then( (response) => {
-			console.log(date + "/" + day)
-			console.log("response:", response.data)
-			setRecord(response.data)
-			//console.log(record)
-		})
-		.catch( (error) => console.log(error))
-	}, [date, day])*/
 
 	useEffect(() => {
 		if (equip === 0)
@@ -398,7 +406,7 @@ export default function Record() {
 						<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
-					<RecordInfo date={date} equip={equip} record={record}/>
+					<RecordInfo date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
 				</div>
 			</div>
 		</Content>
@@ -406,14 +414,15 @@ export default function Record() {
 	);
 }
 
-/* <div className="form" style={{ height: '520px', padding: '400px 40px'}}>
-						<div style={{ display: 'flex', alignItems: 'center'}}>
-							<div className='planTitle'>今日計畫</div>
-							<div className="day">
-								<div className="day-selector" >
-									這裡要放free/day
-								</div>
-							</div>
-						</div>
-						<RecordInput date={date} day={day} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
-					</div> */
+/* 
+<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+	<div style={{ display: 'flex', alignItems: 'center'}}>
+		<div className='planTitle'>今日計畫</div>
+			<div className="day">
+			<div className="day-selector" >
+				這裡要放free/day
+			</div>
+		</div>
+	</div>
+	<RecordInput date={date} day={day} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
+</div> */
