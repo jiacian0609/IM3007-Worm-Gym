@@ -126,7 +126,11 @@ export default function SignIn() {
             window.location.href = "/home"
 		})
 		.catch( (error) => {
-			window.alert(error.response.data)
+			if(error.response.data === 'Username does not exist.')
+				window.alert('會員帳號不存在！')
+			else if(error.response.data === 'Password is wrong :(')
+				window.alert('會員密碼錯誤！')
+			else window.alert(error.response.data)
 		})
 	}
 
