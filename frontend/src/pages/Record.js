@@ -254,7 +254,7 @@ function RecordForm(props) {
 		.catch( (error) => console.log(error))
 	}
 
-	if (!isToday && props.record.records[props.equip - 1].status !== 'optional') {
+	if (props.record.records[props.equip - 1].status === 'finished') {
 		return (
 			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
 				<div className="form__field">
@@ -286,7 +286,7 @@ function RecordForm(props) {
 				</div>
 			</div>
 		); 
-	} else {
+	} else if (props.record.records[props.equip - 1].status === 'unfinished') {
 		return (
 			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
 				<div className="form__field">
@@ -313,6 +313,38 @@ function RecordForm(props) {
 						className="form__field-input"
 						defaultValue={props.record.records[props.equip - 1].reps}
 						disabled={true}
+					/>
+				</div>
+				<Submit onClick={addRecord}>確認</Submit>
+			</div>
+		);
+	} else if (props.record.records[props.equip - 1].status === 'optional' && isToday) {
+		return (
+			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+				<div className="form__field">
+					<div className="form__field-name">重量</div>
+					<input
+						className="form__field-input"
+						value={ props.weightInput }
+						onChange={(e) => props.setWeightInput(e.target.value)}
+					/>
+				</div>
+				<div className="form__field">
+					<div className="form__field-name">組數</div>
+					<input
+						key={props.record.records[props.equip - 1].sets}
+						className="form__field-input"
+						value={ props.setsInput }
+						onChange={(e) => props.setSetsInput(e.target.value)}
+					/>
+				</div>
+				<div className="form__field" >
+					<div className="form__field-name">單位</div>
+					<input
+						key={props.record.records[props.equip - 1].reps}
+						className="form__field-input"
+						value={ props.repsInput }
+						onChange={(e) => props.setRepsInput(e.target.value)}
 					/>
 				</div>
 				<Submit onClick={addRecord}>確認</Submit>
@@ -393,16 +425,3 @@ export default function Record() {
 	</Base>
 	);
 }
-
-/* 
-<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
-	<div style={{ display: 'flex', alignItems: 'center'}}>
-		<div className='planTitle'>今日計畫</div>
-			<div className="day">
-			<div className="day-selector" >
-				這裡要放free/day
-			</div>
-		</div>
-	</div>
-	<RecordInput date={date} day={day} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
-</div> */
