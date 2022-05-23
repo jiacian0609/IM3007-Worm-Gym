@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import DatePicker from 'sassy-datepicker';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -165,9 +164,52 @@ function RecordInfo(props) {
 	const isToday = (props.today === props.date)
 	// Check whether the data is fetched
 	if (props.equip === undefined || props.equip === 0 || props.record.records === [])
+		return null;
+
+	if (props.record.records[props.equip - 1].status === 'finished') {
 		return (
-			<div></div>
-		)
+			<div className='recordInfo'>
+				<div>日期：{props.date}</div>
+				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>器材：{props.record.records[props.equip - 1].name}</div>
+				<div>狀態：完成訓練</div>
+			</div>
+		); 
+	} else if (props.record.records[props.equip - 1].status === 'unfinished') {
+		return (
+			<div className='recordInfo'>
+				<div>日期：{props.date}</div>
+				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>器材：{props.record.records[props.equip - 1].name}</div>
+				<div>狀態：尚未完成訓練</div>
+			</div>
+		);
+	} else if (props.record.records[props.equip - 1].status === 'optional' && isToday) {
+		return (
+			<div className='recordInfo'>
+				<div>日期：{props.date}</div>
+				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>器材：{props.record.records[props.equip - 1].name}</div>
+				<div>狀態：無訓練紀錄</div>
+			</div>
+		);
+	} else if (props.record.records[props.equip - 1].status === 'optional' && !isToday) {
+		return (
+			<div className='recordInfo'>
+				<div>日期：{props.date}</div>
+				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>器材：{props.record.records[props.equip - 1].name}</div>
+				<div>狀態：無訓練紀錄</div>
+			</div>
+		);
+	}
+};
+
+function RecordForm(props) {
+	const isToday = (props.today === props.date)
+	// Check whether the data is fetched
+	if (props.equip === undefined || props.equip === 0 || props.record.records === [])
+		return null;
 
 	// Add record to database
 	function addRecord() {
@@ -212,16 +254,9 @@ function RecordInfo(props) {
 		.catch( (error) => console.log(error))
 	}
 
-	if (props.record.records[props.equip - 1].status === 'finished') {
+	if (!isToday && props.record.records[props.equip - 1].status !== 'optional') {
 		return (
 			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
-				<div style={{ alignItems: 'center' }}>
-					<div className='planTitle'>今日計畫</div>
-					<div>日期：{props.date}</div>
-					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
-					<div>器材：{props.record.records[props.equip - 1].name}</div>
-					<div>狀態：完成訓練</div>
-				</div>
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
@@ -251,16 +286,9 @@ function RecordInfo(props) {
 				</div>
 			</div>
 		); 
-	} else if (props.record.records[props.equip - 1].status === 'unfinished') {
+	} else {
 		return (
 			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
-				<div style={{ alignItems: 'center' }}>
-					<div className='planTitle'>今日計畫</div>
-					<div>日期：{props.date}</div>
-					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
-					<div>器材：{props.record.records[props.equip - 1].name}</div>
-					<div>狀態：尚未完成訓練</div>
-				</div>
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
@@ -288,57 +316,6 @@ function RecordInfo(props) {
 					/>
 				</div>
 				<Submit onClick={addRecord}>確認</Submit>
-			</div>
-		);
-	} else if (props.record.records[props.equip - 1].status === 'optional' && isToday) {
-		return (
-			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
-				<div style={{ alignItems: 'center' }}>
-					<div className='planTitle'>今日計畫</div>
-					<div>日期：{props.date}</div>
-					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
-					<div>器材：{props.record.records[props.equip - 1].name}</div>
-					<div>狀態：無訓練紀錄</div>
-				</div>
-				<div className="form__field">
-					<div className="form__field-name">重量</div>
-					<input
-						className="form__field-input"
-						value={ props.weightInput }
-						onChange={(e) => props.setWeightInput(e.target.value)}
-					/>
-				</div>
-				<div className="form__field">
-					<div className="form__field-name">組數</div>
-					<input
-						key={props.record.records[props.equip - 1].sets}
-						className="form__field-input"
-						value={ props.setsInput }
-						onChange={(e) => props.setSetsInput(e.target.value)}
-					/>
-				</div>
-				<div className="form__field" >
-					<div className="form__field-name">單位</div>
-					<input
-						key={props.record.records[props.equip - 1].reps}
-						className="form__field-input"
-						value={ props.repsInput }
-						onChange={(e) => props.setRepsInput(e.target.value)}
-					/>
-				</div>
-				<Submit onClick={addRecord}>確認</Submit>
-			</div>
-		);
-	} else if (props.record.records[props.equip - 1].status === 'optional' && !isToday) {
-		return (
-			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
-				<div style={{ alignItems: 'center' }}>
-					<div className='planTitle'>今日計畫</div>
-					<div>日期：{props.date}</div>
-					<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
-					<div>器材：{props.record.records[props.equip - 1].name}</div>
-					<div>狀態：無訓練紀錄</div>
-				</div>
 			</div>
 		);
 	}
@@ -406,7 +383,10 @@ export default function Record() {
 						<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
-					<RecordInfo date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
+					<div style={{ display: 'block', padding: '350px 0 350px 50px' }}>
+						<RecordInfo date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
+						<RecordForm date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
+					</div>
 				</div>
 			</div>
 		</Content>

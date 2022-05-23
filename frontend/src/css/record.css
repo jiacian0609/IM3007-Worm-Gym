@@ -3,6 +3,11 @@
 	text-align: left;
 }
 
+.recordInfo {
+	font-size: 40px;
+	text-align: left;
+}
+
 .day {
 	height: 70px;
 	width: 100px;
@@ -30,7 +35,7 @@
 }
 
 .form__field {
-	width: 500px;
+	width: 450px;
 
 	margin: 20px 0;
    
