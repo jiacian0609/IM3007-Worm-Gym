@@ -1,0 +1,23 @@
+@font-face {
+  font-family: PingFangTC;
+  src: url('../../public/fonts/PingFang-TC-Regular-2.otf') format('opentype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: PingFangTC;
+  src: url('../../public/fonts/PingFang-TC-Thin-2.otf') format('opentype');
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: NotoSansTC;
+  src: url('../../public/fonts/NotoSansTC-Regular.otf') format('opentype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: NotoSansTC;
+  src: url('../../public/fonts/NotoSansTC-Bold.otf') format('opentype');
+  font-weight: bold;
+}

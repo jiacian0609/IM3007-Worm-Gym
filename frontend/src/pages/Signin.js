@@ -6,7 +6,6 @@ const Base = styled.div `
 	width: 100%;
 	height: 100%;
 
-	overflow: hidden;
 	position: absolute;
 `
 
@@ -37,11 +36,10 @@ const Content = styled.div `
 `
 
 const Title = styled.div `
-
 	padding: 150px 0 50px;
 	margin: auto;
 
-	font-family: 'Caramel';
+	font-family: 'NotoSansTC';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 180px;
@@ -53,7 +51,7 @@ const Title = styled.div `
 
 const SignInBox = styled.div `
 	width: 100%;
-	padding: 80px 250px;
+	padding: 80px 0;
 
 	background-color: #ffffff;
 	border-radius: 100px;
@@ -75,6 +73,7 @@ const InputBar = styled.input `
 	border: solid 5px #979797;
 	border-radius: 20px;
 
+	font-family: 'NotoSansTC';
 	font-size: 40px;
 `
 
@@ -84,7 +83,7 @@ const InputText = styled.div `
 
 	margin: 0;
 
-	font-family: 'Caramel';
+	font-family: 'PingFangTC';
 	font-style: normal;
 	font-size: 60px;
 	text-align: left;
@@ -99,7 +98,7 @@ const Submit = styled.button `
 	border-radius: 20px;
 	background-color: #0053B4;
 	
-	font-family: 'Caramel';
+	font-family: 'PingFangTC';
 	font-style: normal;
 	font-size: 40px;
 	color: #ffffff;
@@ -141,13 +140,15 @@ export default function SignIn() {
 			<div>
 				<Title>Worm Gym</Title>
 				<SignInBox>
-					<div>
-						<InputText>會員帳號</InputText><br/>
-						<InputBar id="username"/>
-					</div>
-					<div>
-						<InputText>會員密碼</InputText><br/>
-						<InputBar id="password" type="password"/>
+					<div style={{ width: '60%'}}>
+						<div>
+							<InputText>會員帳號</InputText><br/>
+							<InputBar id="username"/>
+						</div>
+						<div>
+							<InputText>會員密碼</InputText><br/>
+							<InputBar id="password" type="password"/>
+						</div>
 					</div>
 					<Submit onClick={()=> handleSignIn(document.getElementById('username').value, document.getElementById('password').value)}>確認</Submit>
 				</SignInBox>
