@@ -28,25 +28,25 @@ const Background = styled.img `
 
 const Content = styled.div `
 	width: 50%;
+	height: 100%;
+
 	margin: 0 auto;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 `
 
 const Title = styled.div `
-	padding: 150px 0 50px;
-	margin: auto;
+	margin-bottom: 100px;
 
 	font-family: 'NotoSansTC';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 180px;
 	text-align: center;
+	line-height: 180px;
 
 	color: #0053B4;
-	// -webkit-text-stroke: 1px #2400FF;
 `
 
 const SignInBox = styled.div `

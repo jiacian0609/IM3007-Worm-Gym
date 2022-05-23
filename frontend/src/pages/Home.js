@@ -7,7 +7,6 @@ const Base = styled.div `
     width: 100%;
     height: 100%;
 
-    overflow: hidden;
     position: absolute;
 `
 
@@ -29,31 +28,54 @@ const Background = styled.img `
 
 const Content = styled.div `
     position: relative;
+    padding: 80px;
+
+    width: 100%;
+	height: 100%;
+
+	margin: 0 auto;
+	display: flex;
+    flex-direction: column;
+	align-items: center;
+	justify-content: center;
 `
 
 const Title = styled.div `
-    width: 1200px;
-    height: 270px;
+    margin-bottom: 130px;
 
-    margin: 100px auto 100px;
+    font-family: 'NotoSansTC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 180px;
+    text-align: center;
+    line-height: 180px;
 
-    background-image: url("/images/WormGym.png");
-    background-repeat: no-repeat;
-    background-size: contain;
+    color: #0053B4;
 `
 
 const Box = styled.button `
     width: 730px;
     height: 850px;
 
-    padding: 180px 80px 180px 80px;
     margin: 0 45px 0 45px;
 
-    background-color: ${props => props.color};
-    border: solid 5px #ffffff;
+    display: flex;
+    flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+    background-color: #90c9d1;
+    border: none;
     border-radius: 100px;
+    box-shadow: 5px 5px 4px 5px rgba(0, 0, 0, 0.2);
 
     cursor: pointer;
+
+    &:hover {
+        box-shadow: 10px 10px 5px 10px rgba(0, 0, 0, 0.2);
+        background-color: #ACE3EB;
+        border: solid 10px #ffffff;
+    }
 `
 
 const Picture = styled.div `
@@ -71,35 +93,35 @@ const Picture = styled.div `
 `
 
 const Text = styled.div `
-    font-family: 'Caramel';
+    margin-top: 50px;
+    
+    font-family: 'NotoSansTC';
     font-style: normal;
     font-weight: 400;
     font-size: 60px;
-    line-height: 240px;
     text-align: center;
 `
 
 const Submit = styled.button `
-    width: 140px;
-    height: 80px;
+    padding: 10px 30px;
+    margin-top: 80px;
 
-    padding: 2px;
-    margin: 50px 0 20px;
-
-    background: #000000;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
+    background-color: #0053B4;
 
+    font-family: 'PingFangTC';
     font-style: normal;
-    font-weight: 400;
     font-size: 40px;
     color: #ffffff;
+    text-align: center;
 
     cursor: pointer;
 
     &:hover {
-        background: #35D11B;
-        color: #000000;
+        background-color: #c7e0fc;
+        color: #0053B4;
+        box-shadow: 2px 2px 1px 2px rgba(0, 0, 0, 0.2);
     }
 `
 
@@ -120,7 +142,7 @@ export default function Home() {
     <Base>
         <Background />
         <Content>
-            <Title />
+            <Title>Worm Gym</Title>
             <div style={{display: 'flex', margin: '0 auto', width: '2450px'}}>
                 <Link to={ `/inbody` } style={{ textDecoration: 'none' }}>
                     <Box color="#8294D3">
