@@ -126,21 +126,21 @@ describe("GET /logout", () => {
 // record api
 describe("POST /record", () => {
     const req1 = {
-        equip_id: 7,
-        weight: 20,
-        reps: "20 下",
-        sets: 3,
-        date: "2022-03-05",
-        day: "free"
+        "equip_id": 7,
+        "weight": "20 kg",
+        "reps": "20 下",
+        "sets": "3 組",
+        "date": "2022-03-05",
+        "day": "free"
     };
 
     const req2 = {
-        equip_id: 8,
-        weight: 20,
-        reps: '8 下',
-        sets: 3,
-        date: '2022-04-08',
-        day: 1
+        "equip_id": 8,
+        "weight": "20 kg",
+        "reps": "8 下",
+        "sets": "3 組",
+        "date": "2022-04-08",
+        "day": 1
     };
 
     let before_r1Cnt = -1;
@@ -286,8 +286,8 @@ describe("GET /finish-rate", () => {
         expect(rates[1].month).to.equal('04');
         expect(rates[2].month).to.equal('05');
         expect(rates[0].finish_rate).to.equal('93.75%');
-        expect(rates[1].finish_rate).to.equal('77.08%');
-        expect(rates[2].finish_rate).to.equal('62.5%');
+        expect(rates[1].finish_rate).to.equal('75%');
+        expect(rates[2].finish_rate).to.equal('58.33%');
         done();
     });
 });
@@ -402,7 +402,7 @@ describe("GET /menu", () => {
             menu[i].should.have.property('reps');
             expect(menu[i].user_id).to.equal(1);
             expect(menu[i].finish).to.equal(true);
-            expect(menu[i].program_id).to.equal(452 + i);
+            expect(menu[i].program_id).to.equal(632 + i);
             expect(menu[i].date).to.equal("2022-03-01T08:00:00.000Z");
 
             if (i < 6) {
@@ -426,9 +426,9 @@ describe("GET /menu", () => {
             }
 
             if (i % 6 == 0) {
-                expect(menu[i].sets).to.equal(1);
+                expect(menu[i].sets).to.equal('1 組');
             } else {
-                expect(menu[i].sets).to.equal(3);
+                expect(menu[i].sets).to.equal('3 組');
             }
 
             if (i % 6 == 0) {
