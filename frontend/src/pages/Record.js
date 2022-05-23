@@ -170,7 +170,7 @@ function RecordInfo(props) {
 		return (
 			<div className='recordInfo'>
 				<div>日期：{props.date}</div>
-				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>訓練計畫：{props.record.day !== null ? 'Day' + props.record.day : '非訓練日'}</div>
 				<div>器材：{props.record.records[props.equip - 1].name}</div>
 				<div>狀態：完成訓練</div>
 			</div>
@@ -179,7 +179,7 @@ function RecordInfo(props) {
 		return (
 			<div className='recordInfo'>
 				<div>日期：{props.date}</div>
-				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>訓練計畫：{props.record.day !== null ? 'Day' + props.record.day : '非訓練日'}</div>
 				<div>器材：{props.record.records[props.equip - 1].name}</div>
 				<div>狀態：尚未完成訓練</div>
 			</div>
@@ -188,7 +188,7 @@ function RecordInfo(props) {
 		return (
 			<div className='recordInfo'>
 				<div>日期：{props.date}</div>
-				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>訓練計畫：{props.record.day !== null ? props.record.day : '非訓練日'}</div>
 				<div>器材：{props.record.records[props.equip - 1].name}</div>
 				<div>狀態：無訓練紀錄</div>
 			</div>
@@ -197,7 +197,7 @@ function RecordInfo(props) {
 		return (
 			<div className='recordInfo'>
 				<div>日期：{props.date}</div>
-				<div>訓練計畫：{props.record.day !== null? 'Day' + props.record.day:'非訓練日'}</div>
+				<div>訓練計畫：{props.record.day !== null ? props.record.day : '非訓練日'}</div>
 				<div>器材：{props.record.records[props.equip - 1].name}</div>
 				<div>狀態：無訓練紀錄</div>
 			</div>
@@ -207,6 +207,7 @@ function RecordInfo(props) {
 
 function RecordForm(props) {
 	const isToday = (props.today === props.date)
+
 	// Check whether the data is fetched
 	if (props.equip === undefined || props.equip === 0 || props.record.records === [])
 		return null;
@@ -256,7 +257,7 @@ function RecordForm(props) {
 
 	if (props.record.records[props.equip - 1].status === 'finished') {
 		return (
-			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+			<div className="form">
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
@@ -288,7 +289,7 @@ function RecordForm(props) {
 		); 
 	} else if (props.record.records[props.equip - 1].status === 'unfinished') {
 		return (
-			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+			<div className="form">
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
@@ -320,7 +321,7 @@ function RecordForm(props) {
 		);
 	} else if (props.record.records[props.equip - 1].status === 'optional' && isToday) {
 		return (
-			<div className="form" style={{ height: '520px', padding: '400px 40px'}}>
+			<div className="form">
 				<div className="form__field">
 					<div className="form__field-name">重量</div>
 					<input
