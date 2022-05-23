@@ -30,10 +30,6 @@ const Background = styled.img `
 	background-size: cover;
 `
 
-const Content = styled.div `
-	// position: relative;
-`
-
 const StyledCalendar = styled.div `
 	width: 800px;
 	height: 1000px;
@@ -401,7 +397,7 @@ export default function Record() {
 	<Base>
 		<Header />
 		<Background />
-		<Content>
+		<div style={{ marginTop: '170px', paddingTop: '80px' }}>
 			<div style={{ display: 'flex', alignItems: 'center' }}>
 				<div style={{ display: 'block' }}>
 					<StyledCalendar>
@@ -422,7 +418,7 @@ export default function Record() {
 					</div>
 				</div>
 			</div>
-		</Content>
+		</div>
 	</Base>
 	);
 }

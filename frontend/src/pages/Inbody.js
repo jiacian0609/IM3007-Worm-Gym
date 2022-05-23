@@ -23,36 +23,24 @@ const Background = styled.img `
         top: 0;
         z-index: -1;
 
-    opacity: 0.8;
-    background-image: url("./images/cover_4.png");
-    background-repeat: no-repeat;
+    // opacity: 0.8;
+    // background-image: url("./images/cover_4.png");
+    // background-repeat: no-repeat;
     // background-position: 50% 0;
-    background-size: cover;
+    // background-size: cover;
 `
 
-const Bar = styled.div ` 
-    width: 1025px;
+const Bar = styled.div `
+    width: 500px;
     height: 120px;
 
     margin: 0 0 0 100px;
-    padding: 50px 100px 50px 100px;
+    padding: 30px;
 
     border-radius: 50px;
     background: #ACE3EB;
     display: flex;
     align-items: center;
-`
-
-const InbodyText = styled.div `
-    margin: 0 50px 0 0;
-
-    font-family: 'Charmonman';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 122px;
-
-    color: #000000;
 `
 
 const Submit = styled.button `
@@ -122,16 +110,17 @@ export default function Inbody() {
     <Base>
       <Header />
       <Background />
-      <Bar>
-          <InbodyText>Inbody 身體數據</InbodyText>
-          <div className="month">
-              <select className="month-selector" id="month" defaultValue={ months[0] }>
-                  { months.map(items => <option value={ items } key={ items }>{ items }</option>) }
-              </select>
-          </div>
-          <Submit onClick={() => setMonth(document.getElementById("month").value)}>確認</Submit>
-      </Bar>
-      <InbodyContent uid={user_id} month={month} />
+      <div style={{ marginTop: '170px', paddingTop: '80px' }}>
+        <Bar>
+            <div className="month">
+                <select className="month-selector" id="month" defaultValue={ months[0] }>
+                    { months.map(items => <option value={ items } key={ items }>{ items }</option>) }
+                </select>
+            </div>
+            <Submit onClick={() => setMonth(document.getElementById("month").value)}>確認</Submit>
+        </Bar>
+        <InbodyContent uid={user_id} month={month} />
+      </div>
     </Base>
   )
 }

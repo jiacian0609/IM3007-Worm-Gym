@@ -188,7 +188,7 @@ export default function Menu() {
         <Base>
             <Header />
             <Background />
-            <Content>
+            <div style={{ marginTop: '170px', paddingTop: '80px' }}>
                 <Bar>
                     <MenuText>訓練菜單</MenuText>
                     <div className="month">
@@ -207,7 +207,7 @@ export default function Menu() {
                         />
                     )}
                 </Row>
-            </Content>
+            </div>
         </Base>
     )
 }

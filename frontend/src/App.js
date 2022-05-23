@@ -15,8 +15,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<SignIn />} />
                     <Route path="/home" element={<Home />} />
-                    <Route path="/menu" element={<Menu />} />
-                    <Route path="/menu/:month" element={<MonthlyMenu />} />
+                    <Route path="/menu">
+                        <Route path="" element={<Menu />} />
+                        <Route path=":month" element={<MonthlyMenu />} />
+                    </Route>
                     <Route path="/inbody" element={<Inbody />} />
                     <Route path="/record" element={<Record />} />
                 </Routes>

@@ -181,7 +181,7 @@ export default function MonthlyMenu() {
 	  <Base>
 	  	<Header />
 		<Bar />
-		<div style={{ display: 'flex', alignItems: 'center' }}>
+		<div style={{ display: 'flex', alignItems: 'center', marginTop: '170px' }}>
 			<StyledCalendar> 
 				<Calendar className='sdp' setDate={setDate}/>
 			</StyledCalendar>
