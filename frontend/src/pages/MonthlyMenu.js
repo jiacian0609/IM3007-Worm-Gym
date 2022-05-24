@@ -22,28 +22,54 @@ const months = {
   }
 
 const Base = styled.div `
-	width: 2880px;
-	height: 1594px;
-
-	overflow: hidden;
-	position: relative;
+	width: 100%;
+	height: 100%;
+	position: absolute;
 `
 
-const Bar = styled.div ` 
-	width: 1650;
-	height: 40px;
+const SelectorsWrapper = styled.div `
+	padding: 150px;
+`
 
-	padding: 50px 1015px 50px 1015px;
+const Selector = styled.select `
+    height: 100px;
+    width: 300px;
 
-	background: #242222;
+	margin-bottom: 50px;
+    padding: 10px 30px;
+	font-family: 'NotoSansTC';
+    font-size: 50px;
+
+    border: none;
+    border-radius: 50px;
+    background: #ACE3EB;
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+`
+
+const TaskWrapper = styled.button `
+  	height: 300px;
+	width: 600px;
+  	margin: 0 100px 50px 0;
+	
 	display: flex;
-`
+	align-items: center;
+	justify-content: center;
 
-const StyledCalendar = styled.div `
-	width: 700px;
-	height: 700px;
+	background-color: #90c9d1;
+    border: none;
+    border-radius: 100px;
+    box-shadow: 5px 5px 4px 5px rgba(0, 0, 0, 0.2);
 
-	margin: 100px 200px;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 10px 10px 5px 10px rgba(0, 0, 0, 0.2);
+        background-color: #ACE3EB;
+        border: solid 10px #ffffff;
+    }
 `
 
 const Img = styled.span `
@@ -52,44 +78,43 @@ const Img = styled.span `
 
 	border-radius: 50%;
 
-	background-color: #27CE24;
+	// background-color: #27CE24;
 	background-image: url("${props => props.src}");
 	background-size: 70%;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 `
 
-const Text = styled.span `
+const Texts = styled.div `
 	width: 300px;
-	height: 180px;
+`
 
-	margin: 15px 0 0 35px;
-
+const Text = styled.div `
+	font-family: 'NotoSansTC';
 	font-size: 34px;
 	text-align: left;
 `
 
-const Row = styled.div `
-	width: 1400px;
-	height: 300px;
-	margin: 20px;
-	display: flex;
+const Divider = styled.div `
+	width: 100%;
+	height: 10px;
+	margin: 15px 0;
+	border-radius: 50px;
+	background-color: #003778;
 `
 
-const Day = styled.button `
-	width: 140px;
-	height: 80px;
+const Row = styled.div `
+	margin: 20px;
+	display: flex;
+	justify-content: space-around;
+`
 
-	padding: 2px;
-	margin: 20px 0;
-
-	background: #35D11B;
-	border: 3px solid #35D11B;
-	border-radius: 8px;
-
-	font-style: normal;
-	font-weight: 400;
-	font-size: 40px;
+const Rows = styled.div `
+  	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 `
 
 function Task(items) {
@@ -101,15 +126,15 @@ function Task(items) {
         {id: 17, name: '啞鈴反握手腕彎舉'}, {id: 18, name: '舉槓臥推'}, {id: 19, name: '捲腹'}, {id: 20, name: '引體向上'}];
 
 	return (
-		<div style={{ display: 'flex', margin: '50px 200px 50px 50px' }}>
+		<TaskWrapper>
 			<Img src={ '../images/gym_' + items.items.equip_id + '.png' } />
-			<Text>
-				{ equips[items.items.equip_id - 1].name }<br/>
-				--------------<br/>
-				次數：{ items.items.reps } <br/>
-				組數：{ items.items.sets } 組 
-			</Text>
-		</div>
+			<Texts>
+				<Text>{ equips[items.items.equip_id - 1].name }</Text>
+				<Divider />
+				<Text>次數：{ items.items.reps }</Text>
+				<Text>組數：{ items.items.sets } 組</Text>
+			</Texts>
+		</TaskWrapper>
 	);
 };
 
@@ -180,21 +205,29 @@ export default function MonthlyMenu() {
 	return (
 	  <Base>
 	  	<Header />
-		<Bar />
-		<div style={{ display: 'flex', alignItems: 'center', marginTop: '170px' }}>
-			<StyledCalendar> 
-				<Calendar className='sdp' setDate={setDate}/>
-			</StyledCalendar>
-			<div style={{ display: 'block', width: '140px', margin: '0 0 700px'}}>
-				{days?.map(day => <Day key={ day } onClick={() => setDay(day)}>Day {day}</Day>)}
-			</div>
-			<div style={{display: 'inline', height: '1060px'}}>
+		<div style={{ display: 'flex', paddingTop: '170px', height: '100%'}}>
+			<SelectorsWrapper>
+				<Selector
+					id="month"
+					defaultValue="2022-05"
+					onChange={e => setDay(e.target.value)}
+				>
+					{/* data?.map(items => <option value={items.year + '-' + items.month} key={items.year + items.month}>{items.year + '-' + items.month}</option>) */}
+				</Selector>
+				<Selector
+					id="day"
+					defaultValue={days[0]}
+					onChange={e => setDay(e.target.value)}
+				>
+					{days?.map(day => <option value={day} key={day}>Day {day}</option>)}
+				</Selector>
+			</SelectorsWrapper>
+			<Rows>
 				<Row>{dayData.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
 				<Row>{dayData.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
 				<Row>{dayData.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-			</div>
+			</Rows>
 		</div>
-		<Bar />
 	  </Base>
 	)
 }
