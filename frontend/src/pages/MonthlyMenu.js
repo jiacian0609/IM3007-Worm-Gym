@@ -29,6 +29,7 @@ const Base = styled.div `
 
 const Selector = styled.select `
   	width: 100%; 
+	height: 100%;
 	margin-bottom: 50px;
     padding: 10px 30px;
 	font-family: 'NotoSansTC';
