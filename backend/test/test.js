@@ -358,9 +358,9 @@ describe("GET /inbody_record", () => {
 
 
 // menu api
-describe("GET /menu/:date", () => {
+describe("GET /menu/:time", () => {
     let token = undefined;
-    describe("Case 1: yyyy-mm format", () => {
+    describe("Case 1: time = all", () => {
         let menu = undefined;
         it("Return an array", (done) => {
             // login to get token
@@ -371,7 +371,7 @@ describe("GET /menu/:date", () => {
                 token = res1.body.JWT;
                 
                 chai.request(server)
-                    .get('/menu/2022-03')
+                    .get('/menu/all')
                     .set({'Authorization': token})
                     .end((err, res) => {
                         res.should.have.status(200);
@@ -384,27 +384,28 @@ describe("GET /menu/:date", () => {
             });
         });
 
-        it("Contain the first menu of the month", (done) => {
+        it("Contain the start dates of all menus ", (done) => {
             for (let i = 0; i < menu.length; i++) {
                 menu[i].should.be.a('object');
-                menu[i].should.have.property('user_id');
-                menu[i].should.have.property('Day');
-                menu[i].should.have.property('equip_id');
-                menu[i].should.have.property('sets');
-                menu[i].should.have.property('finish');
-                menu[i].should.have.property('program_id');
                 menu[i].should.have.property('date');
-                menu[i].should.have.property('reps');
-                expect(menu[i].user_id).to.equal(1);
-                expect(menu[i].finish).to.equal(true);
-                expect(menu[i].program_id).to.equal(632 + i);
-                expect(menu[i].date).to.equal("2022-03-01T08:00:00.000Z");
             }
+            expect(menu[0].date).to.equal("2022-03-01T08:00:00.000Z");
+            expect(menu[1].date).to.equal("2022-03-08T08:00:00.000Z");
+            expect(menu[2].date).to.equal("2022-03-15T08:00:00.000Z");
+            expect(menu[3].date).to.equal("2022-03-22T08:00:00.000Z");
+            expect(menu[4].date).to.equal("2022-04-01T08:00:00.000Z");
+            expect(menu[5].date).to.equal("2022-04-08T08:00:00.000Z");
+            expect(menu[6].date).to.equal("2022-04-15T08:00:00.000Z");
+            expect(menu[7].date).to.equal("2022-04-22T08:00:00.000Z");
+            expect(menu[8].date).to.equal("2022-05-01T08:00:00.000Z");
+            expect(menu[9].date).to.equal("2022-05-08T08:00:00.000Z");
+            expect(menu[10].date).to.equal("2022-05-15T08:00:00.000Z");
+            expect(menu[11].date).to.equal("2022-05-22T08:00:00.000Z");
             done();
         });
     });
     
-    describe("Case 2: yyyy-mm-dd format", () => {
+    describe("Case 2: time = YYYY-MM-DD", () => {
         let menu = undefined;
         it("Return an array", (done) => {                
             chai.request(server)
