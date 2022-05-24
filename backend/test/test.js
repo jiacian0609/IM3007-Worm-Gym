@@ -160,6 +160,7 @@ describe("POST /record", () => {
         before_r2Cnt = before_r2.rowCount;
     });
 
+    let token = undefined;
     describe("Case 1: day = free", () => {
         it("Return a message", (done) => {
             // login to get token
@@ -167,7 +168,7 @@ describe("POST /record", () => {
                 .post('/login').send({username: 'userONE', password: '11111111'})
                 .end((err, res1) => {
                     // token
-                    const token = res1.body.JWT;
+                    token = res1.body.JWT;
 
                     chai.request(server)
                         .post('/record')
@@ -192,23 +193,16 @@ describe("POST /record", () => {
 
     describe("Case 2: day ≠ free", () => {
         it("Return a message", (done) => {
-            // login to get token
             chai.request(server)
-                .post('/login').send({username: 'userONE', password: '11111111'})
-                .end((err, res1) => {
-                    // token
-                    const token = res1.body.JWT;
-
-                    chai.request(server)
-                        .post('/record')
-                        .send(req2)
-                        .set({'Authorization': token})
-                        .end((err, res) => {
-                            res.should.have.status(200);
-                            expect(res.text).to.equal('Success');
-                            done();
-                        });
+                .post('/record')
+                .send(req2)
+                .set({'Authorization': token})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    expect(res.text).to.equal('Success');
+                    done();
                 });
+                
         });
 
         it("Store information into database", async () => {
@@ -365,18 +359,56 @@ describe("GET /inbody_record", () => {
 
 // menu api
 describe("GET /menu/:date", () => {
-    let menu = undefined;
-    it("Return an array", (done) => {
-        // login to get token
-        chai.request(server)
-        .post('/login').send({username: 'userONE', password: '11111111'})
-        .end((err, res1) => {
-            // token
-            const token = res1.body.JWT;
-            
-            const date = '2022-03-01'
+    let token = undefined;
+    describe("Case 1: yyyy-mm format", () => {
+        let menu = undefined;
+        it("Return an array", (done) => {
+            // login to get token
             chai.request(server)
-                .get('/menu/' + date)
+            .post('/login').send({username: 'userONE', password: '11111111'})
+            .end((err, res1) => {
+                // token
+                token = res1.body.JWT;
+                
+                chai.request(server)
+                    .get('/menu/2022-03')
+                    .set({'Authorization': token})
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('array');
+                        expect(res.body.length).equal(12);
+
+                        menu = res.body;
+                        done();
+                    });
+            });
+        });
+
+        it("Contain the first menu of the month", (done) => {
+            for (let i = 0; i < menu.length; i++) {
+                menu[i].should.be.a('object');
+                menu[i].should.have.property('user_id');
+                menu[i].should.have.property('Day');
+                menu[i].should.have.property('equip_id');
+                menu[i].should.have.property('sets');
+                menu[i].should.have.property('finish');
+                menu[i].should.have.property('program_id');
+                menu[i].should.have.property('date');
+                menu[i].should.have.property('reps');
+                expect(menu[i].user_id).to.equal(1);
+                expect(menu[i].finish).to.equal(true);
+                expect(menu[i].program_id).to.equal(632 + i);
+                expect(menu[i].date).to.equal("2022-03-01T08:00:00.000Z");
+            }
+            done();
+        });
+    });
+    
+    describe("Case 2: yyyy-mm-dd format", () => {
+        let menu = undefined;
+        it("Return an array", (done) => {                
+            chai.request(server)
+                .get('/menu/2022-05-22')
                 .set({'Authorization': token})
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -387,59 +419,30 @@ describe("GET /menu/:date", () => {
                     done();
                 });
         });
-    });
 
-    it("Contain the menu", (done) => {
-        for (let i = 0; i < menu.length; i++) {
-            menu[i].should.be.a('object');
-            menu[i].should.have.property('user_id');
-            menu[i].should.have.property('Day');
-            menu[i].should.have.property('equip_id');
-            menu[i].should.have.property('sets');
-            menu[i].should.have.property('finish');
-            menu[i].should.have.property('program_id');
-            menu[i].should.have.property('date');
-            menu[i].should.have.property('reps');
-            expect(menu[i].user_id).to.equal(1);
-            expect(menu[i].finish).to.equal(true);
-            expect(menu[i].program_id).to.equal(632 + i);
-            expect(menu[i].date).to.equal("2022-03-01T08:00:00.000Z");
+        it("Contain the menu of the given start date", (done) => {
+            for (let i = 0; i < menu.length; i++) {
+                menu[i].should.be.a('object');
+                menu[i].should.have.property('user_id');
+                menu[i].should.have.property('Day');
+                menu[i].should.have.property('equip_id');
+                menu[i].should.have.property('sets');
+                menu[i].should.have.property('finish');
+                menu[i].should.have.property('program_id');
+                menu[i].should.have.property('date');
+                menu[i].should.have.property('reps');
+                expect(menu[i].user_id).to.equal(1);
+                expect(menu[i].program_id).to.equal(764 + i);
+                expect(menu[i].date).to.equal("2022-05-22T08:00:00.000Z");
 
-            if (i < 6) {
-                expect(menu[i].Day).to.equal(1);
-            } else {
-                expect(menu[i].Day).to.equal(2);
+                if (i == 10 || i == 11) {
+                    expect(menu[i].finish).to.equal(false);
+                } else {
+                    expect(menu[i].finish).to.equal(true);
+                }
             }
-
-            if (i % 6 == 0) {
-                expect(menu[i].equip_id).to.equal(3);
-            } else if (i % 6 == 1) {
-                expect(menu[i].equip_id).to.equal(8);
-            } else if (i % 6 == 2) {
-                expect(menu[i].equip_id).to.equal(14);
-            } else if (i % 6 == 3) {
-                expect(menu[i].equip_id).to.equal(5);
-            } else if (i % 6 == 4) {
-                expect(menu[i].equip_id).to.equal(15);
-            } else if (i % 6 == 5) {
-                expect(menu[i].equip_id).to.equal(7);
-            }
-
-            if (i % 6 == 0) {
-                expect(menu[i].sets).to.equal('1 組');
-            } else {
-                expect(menu[i].sets).to.equal('3 組');
-            }
-
-            if (i % 6 == 0) {
-                expect(menu[i].reps).to.equal('20 分鐘');
-            } else if (i % 6 == 5) {
-                expect(menu[i].reps).to.equal('20 下');
-            } else {
-                expect(menu[i].reps).to.equal('8 下');
-            }
-        }
-        done();
+            done();
+        });
     });
 });
 
