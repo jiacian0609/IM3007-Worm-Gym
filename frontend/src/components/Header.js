@@ -35,6 +35,10 @@ const Home = styled.button `
     border: none;
 
     cursor: pointer;
+
+    &:hover{
+        background-image: url("/images/home-hover.png");
+    }
 `
 
 const Divider = styled.div `
