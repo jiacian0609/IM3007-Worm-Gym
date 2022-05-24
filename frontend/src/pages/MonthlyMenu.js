@@ -29,11 +29,13 @@ const Base = styled.div `
 
 const Selector = styled.select `
   	width: 100%; 
-	height: 100%;
+	height: 110px;
+
 	margin-bottom: 50px;
     padding: 10px 30px;
 	font-family: 'NotoSansTC';
     font-size: 50px;
+	line-height: 50px;
 
     border: none;
     border-radius: 50px;
