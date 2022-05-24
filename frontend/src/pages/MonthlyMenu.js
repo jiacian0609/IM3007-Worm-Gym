@@ -70,6 +70,12 @@ const TaskWrapper = styled.button `
         background-color: #ACE3EB;
         border: solid 10px #ffffff;
     }
+
+	${(props) => props.active && `
+		box-shadow: 10px 10px 5px 10px rgba(0, 0, 0, 0.2);
+		background-color: #ACE3EB;
+		border: solid 10px #ffffff;
+    `}
 `
 
 const Img = styled.span `
@@ -126,7 +132,7 @@ function Task(items) {
         {id: 17, name: '啞鈴反握手腕彎舉'}, {id: 18, name: '舉槓臥推'}, {id: 19, name: '捲腹'}, {id: 20, name: '引體向上'}];
 
 	return (
-		<TaskWrapper>
+		<TaskWrapper onClick={() => items.setEquip(items.items.equip_id)} active={items.equip === items.items.equip_id}>
 			<Img src={ '../images/gym_' + items.items.equip_id + '.png' } />
 			<Texts>
 				<Text>{ equips[items.items.equip_id - 1].name }</Text>
@@ -162,11 +168,14 @@ function Calendar(props) {
 };
 
 export default function MonthlyMenu() {
+	const [equip, setEquip] = useState();
 	const [date, setDate] = useState(useParams().month)
 	const [days, setDays] = useState([])
 	const [day, setDay] = useState(1)
 	const [allData, setAllData] = useState([])
 	const [dayData, setDayData] = useState([])
+
+	console.log(dayData)
 
 	useEffect(() => {
 		//JWT authentication
@@ -223,9 +232,9 @@ export default function MonthlyMenu() {
 				</Selector>
 			</SelectorsWrapper>
 			<Rows>
-				<Row>{dayData.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-				<Row>{dayData.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
-				<Row>{dayData.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id }/>)}</Row>
+				<Row>{dayData.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>
+				<Row>{dayData.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>
+				<Row>{dayData.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>
 			</Rows>
 		</div>
 	  </Base>
