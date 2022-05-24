@@ -49,13 +49,13 @@ const Function = styled.button `
     padding: 0 20px;
 
     background-color: inherit;
-    border: none;
+    border: solid 3px #fff;
 
     font-family: 'NotoSansTC';
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
-    text-align: left;
+    text-align: center;
     line-height: 40px;
 
     color: #8c8c8c;

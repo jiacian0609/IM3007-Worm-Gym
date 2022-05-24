@@ -6,18 +6,14 @@ import '../css/menu.css';
 import Header from '../components/Header';
 
 const Base = styled.div `
-    width: 2880px;
-    height: 1594px;
-
-    // padding: 0 150px 0 150px;
-
-    overflow: hidden;
-    position: relative;
+    width: 100%;
+    height: 100%;
+    position: absolute;
 `
 
 const Background = styled.img `
-    width: 2880px;
-    height: 1594px;
+    width: 100%;
+    height: 100%;
 
     content: ' ';
     display: block;
@@ -33,46 +29,18 @@ const Background = styled.img `
     background-size: cover;
 `
 
-const Content = styled.div `
-    position: relative;
-`
+const MonthSelector = styled.select `
+    height: 100px;
+    width: 300px;
 
-const Bar = styled.div ` 
-    width: 1650;
-    height: 120px;
+    padding: 10px 30px;
+    font-size: 50px;
 
-    padding: 50px 1015px 50px 1015px;
-
-    background: #242222;
+    border: none;
+    border-radius: 50px;
+    background: #fff;
     display: flex;
-`
-
-const MenuText = styled.div `
-    margin: 0 50px 0 0;
-
-    font-family: 'Charmonman';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 122px;
-
-    color: #FFFFFF;
-`
-
-const Submit = styled.button `
-    width: 140px;
-    height: 80px;
-
-    padding: 2px;
-    margin: 20px 0 20px;
-
-    background: #35D11B;
-    border: 3px solid #35D11B;
-    border-radius: 8px;
-
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
+    align-items: center;
 
     cursor: pointer;
 `
@@ -94,15 +62,22 @@ const Box = styled.button `
     padding: 170px 80px 170px 80px;
     margin: 0 70px 0 70px;
 
-    background: rgba(0, 235, 250, 0.65);
-    border: solid 20px rgba(252, 255, 121, 0.58);
+    background-color: rgba(144, 201, 209, 0.5);
+    border: none;
     border-radius: 100px;
+    box-shadow: 5px 5px 4px 5px rgba(0, 0, 0, 0.2);
 
     cursor: pointer;
+
+    &:hover {
+        box-shadow: 10px 10px 5px 10px rgba(0, 0, 0, 0.2);
+        background-color: #ACE3EB;
+        border: solid 10px #ffffff;
+    }
 `
 
 const Year = styled.div `
-    font-family: 'Charmonman';
+    font-family: 'NotoSansTC';
     font-style: normal;
     font-weight: 400;
     font-size: 80px;
@@ -112,7 +87,7 @@ const Year = styled.div `
 `
 
 const Month = styled.div `
-    font-family: 'Charmonman';
+    font-family: 'NotoSansTC';
     font-style: normal;
     font-weight: 400;
     font-size: 160px;
@@ -122,7 +97,7 @@ const Month = styled.div `
 `
 
 const RateText = styled.span `
-    font-family: 'Charmonman';
+    font-family: 'NotoSansTC';
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
@@ -188,16 +163,14 @@ export default function Menu() {
         <Base>
             <Header />
             <Background />
-            <div style={{ marginTop: '170px', paddingTop: '80px' }}>
-                <Bar>
-                    <MenuText>訓練菜單</MenuText>
-                    <div className="month">
-                        <select className="month-selector" id="month" defaultValue="2022-05">
-                            {data?.map(items => <option value={items.year + '-' + items.month} key={items.year + items.month}>{items.year + '-' + items.month}</option>)}
-                        </select>
-                    </div>
-                    <Submit onClick={() => selectMonth(document.getElementById("month").value)}>確認</Submit>
-                </Bar>
+            <div style={{ marginTop: '170px', paddingTop: '80px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <MonthSelector
+                    id="month"
+                    defaultValue="2022-05"
+                    onChange={e => selectMonth(e.target.value)}
+                >
+                    {data?.map(items => <option value={items.year + '-' + items.month} key={items.year + items.month}>{items.year + '-' + items.month}</option>)}
+                </MonthSelector>
                 <Row>
                     {data?.map(items => 
                         <MonthButton

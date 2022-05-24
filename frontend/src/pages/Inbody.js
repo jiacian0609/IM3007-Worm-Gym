@@ -44,6 +44,8 @@ const MonthSelector = styled.select `
   background: #ACE3EB;
   display: flex;
   align-items: center;
+
+  cursor: pointer;
 `
 
 const StyledInbodyContent = styled.div `
