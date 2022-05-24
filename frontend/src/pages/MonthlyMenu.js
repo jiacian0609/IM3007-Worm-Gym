@@ -123,6 +123,50 @@ const Rows = styled.div `
 	justify-content: center;
 `
 
+const EquipInfoWrapper = styled.div `
+	margin: 150px 20px;
+	padding: 50px; 
+	border: solid 5px #003778;
+	border-radius: 80px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`
+
+const EquipImg = styled.img `
+	height: 300px;
+`
+
+const EquipContentWrapper = styled.div `
+	padding-top: 50px;
+	width: 500px;
+`
+
+const EquipContentRow = styled.div `
+	margin-bottom: 30px;
+	display: flex;
+	align-items: center;
+`
+
+const EquipContentTitle = styled.div `
+	width: 185px;
+	margin-right: 20px;
+	font-family: 'PingFangTC';
+	font-size: 45px;
+	font-style: bold;
+	line-height: 55px;
+	color: #003778;
+	border-bottom: solid 5px #003778;
+`
+
+const EquipContentText = styled.div `
+	font-family: 'PingFangTC';
+	font-size: 38px;
+	// margin-bottom: 40px;
+	border-bottom: solid 6px #fff;
+`
+
 function Task(items) {
 	//console.log(items)
 	const equips = [{id: 1, name: '橢圓機'}, {id: 2, name: '跑步機'}, {id: 3, name: '飛輪車'}, {id: 4, name: '雙槓抬腿機'},
@@ -143,6 +187,51 @@ function Task(items) {
 		</TaskWrapper>
 	);
 };
+
+function EquipInfo(props) {
+	const equipInfoContent = [
+		{id: 1, name: '橢圓機', part: '心肺功能', info: '橢圓機可以使用到所有的肌肉，並有效地消耗卡路里，並有效地燃燒多餘的脂肪。'}, 
+		{id: 2, name: '跑步機', part: '', info: '跑步為一個很好的鍛煉方法之一。可瘦身、可提高心肺功能、增強身體各部位的肌肉組織、提高身體免疫力。'},
+		{id: 3, name: '飛輪車', part: '心肺功能', info: '與一般健身車不同的是，騎乘飛輪車時許多動作除了依賴腿部肌肉的踩踏外，是要建立在強壯的核心肌群來平衡。'},
+		{id: 4, name: '雙槓抬腿機', part: '下腹肌群', info: '這個動作能幫助我們提高腹部力量，並且加深腹部肌肉線條的分離程度，讓你的腹肌更加完美。'},
+		{id: 5, name: '蝴蝶夾胸機', part: '胸部肌群', info: '蝴蝶夾胸主要鍛鍊胸溝分離度，雕刻胸部線條，胸肌的紋路是橫著的，夾胸是很符合胸肌生長紋路的。'},
+		{id: 6, name: '直立式腳踏車', part: '心肺功能', info: '直立式健身車模擬一般騎腳踏車的感覺，操作方便、上手簡單，非常適合一般減重和缺乏運動的朋友。'},
+		{id: 7, name: '臥式腳踏車', part: '心肺功能', info: '臥式健身車因為有靠背支撐腰部，對腰部和臀部的負擔較小，讓腰痛、沒有體力的人和年長者也能長時間運動。'},
+		{id: 8, name: '划船機', part: '背部肌群', info: '划船機訓練是個全身性、高效率的燃脂運動，能促進身體的協調性。'},
+		{id: 9, name: '滾輪', part: '腹肌肌群', info: '滾輪運動是屬於複合式訓練的一種，可有效鍛練、雕塑肌肉線條，有助強化身體多處肌群，尤其上半身核心肌群。'},
+		{id: 10, name: '夾胸器', part: '胸部肌群', info: ''},
+		{id: 11, name: '啞鈴彎舉', part: '二頭肌', info: '小口訣：身體自然下放，不聳肩；行程越完整，二頭長越大；手臂保持在身體兩側，肩膀沒煩惱。'},
+		{id: 12, name: '負重深蹲', part: '大腿肌群', info: '肌力訓練的主要內容，能練到全身最多的肌肉，能讓你安全地做到最大範圍的漸進式超負荷。練得越好，體格外觀和肌力就會越強。'},
+		{id: 13, name: '側腹旋', part: '腹部肌群', info: '有效訓練側腹肌，側腹肌重要功能就是抗旋轉—維持軀幹的穩定；這對人類的直立活動模式而言，非常重要。'},
+		{id: 14, name: '腿推機', part: '大腿與臀部肌群', info: '對於難以下蹲的人來說是很好的選擇，可有效率的訓練大腿肌肉群及強化膝關節和髖關節的活動度。'},
+		{id: 15, name: '滑輪下拉機', part: '背部肌群', info: '背闊肌負責肩部的內收和伸展，並幫助手臂向身體內外拉，滑輪下拉是完美的練背動作，幫助背闊肌更寬並建立V形背部。'},
+		{id: 16, name: '啞鈴肩推', part: '肩膀、上胸、三頭肌', info: '啞鈴肩推是訓練肩膀三角肌相當熱門的訓練動作，坐姿能比站姿有更高的穩定性，可以更專注的訓練三角肌。'},
+		{id: 17, name: '啞鈴反握手腕彎舉', part: '前臂肌群', info: '小臂肌肉不發達，會其他肌肉的鍛鍊，增強前臂的力量能幫你舉起更大的負重，同時，發達的前臂能讓你穿t恤時顯得更好看。'},
+		{id: 18, name: '舉槓臥推', part: '胸部肌群', info: '訓練出緊實的胸肌，也能讓手臂肌肉和背部肌肉變得更強壯，輕鬆地舉起東西，還能使上半身肌肉更協調、改善骨骼健康。'},
+		{id: 19, name: '捲腹', part: '腹肌肌群', info: '比起仰臥起坐，捲腹訓練更集中在腹部肌肉上，可以避免脊椎與脖子施力錯誤受傷，而且捲腹動作變化多元。'},
+		{id: 20, name: '引體向上', part: '背部肌群、二頭肌', info: '引體向上最主要用到的是闊背肌！當肩胛向內收的時候，闊背肌就會呈現三角形，最理想的體態就會慢慢練出來！'}
+	];
+
+	// console.log('/images/equip/' + props.equip_id + '.jpg')
+	if (props.equip_id === undefined) return null;
+	else return (
+		<EquipInfoWrapper>
+			<EquipImg src={`/images/equip/${props.equip_id}.jpg`} />
+			<EquipContentWrapper>
+				<EquipContentRow>
+					<EquipContentTitle>器材名稱</EquipContentTitle>
+					<EquipContentText>{equipInfoContent[props.equip_id - 1].name}</EquipContentText>
+				</EquipContentRow>
+				<EquipContentRow>
+					<EquipContentTitle>訓練部位</EquipContentTitle>
+					<EquipContentText>{equipInfoContent[props.equip_id - 1].part}</EquipContentText>
+				</EquipContentRow>
+				<EquipContentTitle style={{ marginBottom: '20px'}}>器材簡介</EquipContentTitle>
+				<EquipContentText>{equipInfoContent[props.equip_id - 1].info}</EquipContentText>
+			</EquipContentWrapper>
+		</EquipInfoWrapper>
+	)
+}
 
 // https://github.com/sassy-labs/datepicker?ref=reactjsexample.com
 // https://reactjsexample.com/beautiful-minimal-and-accessible-date-picker-for-react/
@@ -175,7 +264,7 @@ export default function MonthlyMenu() {
 	const [allData, setAllData] = useState([])
 	const [dayData, setDayData] = useState([])
 
-	console.log(dayData)
+	// console.log(dayData)
 
 	useEffect(() => {
 		//JWT authentication
@@ -236,6 +325,7 @@ export default function MonthlyMenu() {
 				<Row>{dayData.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>
 				<Row>{dayData.slice(4, 6)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>
 			</Rows>
+			<EquipInfo equip_id={equip} />
 		</div>
 	  </Base>
 	)
