@@ -27,10 +27,6 @@ const Base = styled.div `
 	position: absolute;
 `
 
-const SelectorsWrapper = styled.div `
-	padding: 150px;
-`
-
 const Selector = styled.select `
     height: 100px;
     width: 350px;
@@ -124,7 +120,6 @@ const Rows = styled.div `
 `
 
 const EquipInfoWrapper = styled.div `
-	margin: 150px 20px;
 	padding: 50px; 
 	border: solid 5px #003778;
 	border-radius: 80px;
@@ -213,7 +208,7 @@ function EquipInfo(props) {
 	];
 
 	// console.log('/images/equip/' + props.equip_id + '.jpg')
-	if (props.equip_id === undefined) return null;
+	if (props.equip_id === undefined) return <div style={{ width: '610px' }}/>;
 	else return (
 		<EquipInfoWrapper>
 			<EquipImg src={`/images/equip/${props.equip_id}.jpg`} />
@@ -322,8 +317,8 @@ export default function MonthlyMenu() {
 	return (
 	  <Base>
 	  	<Header />
-		<div style={{ display: 'flex', paddingTop: '170px', height: '100%'}}>
-			<SelectorsWrapper>
+		<div style={{ display: 'flex', paddingTop: '170px', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
+			<div style={{ marginRight: '100px' }}>
 				<Selector
 					id="month"
 					value={date}
@@ -341,7 +336,7 @@ export default function MonthlyMenu() {
 				>
 					{days?.map(day => <option value={day} key={day}>Day {day}</option>)}
 				</Selector>
-			</SelectorsWrapper>
+			</div>
 			<Rows>
 				<Row>{dayData.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>
 				<Row>{dayData.slice(2, 4)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>
