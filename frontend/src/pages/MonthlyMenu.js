@@ -33,7 +33,7 @@ const SelectorsWrapper = styled.div `
 
 const Selector = styled.select `
     height: 100px;
-    width: 300px;
+    width: 350px;
 
 	margin-bottom: 50px;
     padding: 10px 30px;
@@ -296,7 +296,7 @@ export default function MonthlyMenu() {
 			}
 		})
 		.then( (response) => {
-			console.log(response.data)
+			// console.log(response.data)
 			setAllData(response.data)
 			setDayData(response.data.slice(0, 6))
 			setDay(1)
@@ -324,7 +324,7 @@ export default function MonthlyMenu() {
 			<SelectorsWrapper>
 				<Selector
 					id="month"
-					defaultValue={date}
+					defaultValue={dates[0]}
 					onChange={e => window.location.href = "./" + e.target.value}
 				>
 					{dates?.map(date => <option value={date} key={date}>{date}</option>)}

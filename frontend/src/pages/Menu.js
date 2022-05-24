@@ -28,29 +28,14 @@ const Background = styled.img `
     background-size: cover;
 `
 
-const MonthSelector = styled.select `
-    height: 100px;
-    width: 300px;
+const Row = styled.div `
+// height: '100%', marginTop: '170px', paddingTop: '80px', display: 'flex', flexDirection: 'column', alignItems: 'center'
+    height: 100%;
+    width: 100%;
+    padding-top: 170px;
 
-    padding: 10px 30px;
-    font-size: 50px;
-
-    border: none;
-    border-radius: 50px;
-    background: #fff;
     display: flex;
     align-items: center;
-
-    cursor: pointer;
-`
-
-const Row = styled.div `
-    width: auto;
-    height: 850px;
-
-    padding: 115px 0 115px;
-
-    display: flex;
     justify-content: center;
 `
 
@@ -162,24 +147,15 @@ export default function Menu() {
         <Base>
             <Header />
             <Background />
-            <div style={{ marginTop: '170px', paddingTop: '80px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <MonthSelector
-                    id="month"
-                    defaultValue="2022-05"
-                    onChange={e => selectMonth(e.target.value)}
-                >
-                    {data?.map(items => <option value={items.year + '-' + items.month + '-01'} key={items.year + items.month}>{items.year + '-' + items.month}</option>)}
-                </MonthSelector>
-                <Row>
-                    {data?.map(items => 
-                        <MonthButton
-                            data={items}
-                            selectMonth={selectMonth}
-                            key={items.year + items.month}
-                        />
-                    )}
-                </Row>
-            </div>
+            <Row>
+                {data?.map(items => 
+                    <MonthButton
+                        data={items}
+                        selectMonth={selectMonth}
+                        key={items.year + items.month}
+                    />
+                )}
+            </Row>
         </Base>
     )
 }
