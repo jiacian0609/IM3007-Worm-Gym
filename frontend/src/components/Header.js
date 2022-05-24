@@ -100,7 +100,11 @@ export default function Header() {
         <div style={{ position: 'fixed', top: '0', width: '100%'}}>
             <Wrapper>
                 <div style={{display: 'flex'}}>
-                <Title>Worm Gym</Title>
+                <Title>
+                    <Link to="/home" style={{textDecoration: 'none', color: 'inherit'}}>
+                        Worm Gym
+                    </Link>
+                </Title>
                 <Function active={path === '/inbody'}>
                     <Link to="/inbody" style={{textDecoration: 'none', color: 'inherit'}}>
                         INBODY 身體數據
