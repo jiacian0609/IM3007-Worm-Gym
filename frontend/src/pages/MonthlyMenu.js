@@ -265,6 +265,8 @@ export default function MonthlyMenu() {
 	const [allData, setAllData] = useState([])
 	const [dayData, setDayData] = useState([])
 
+	// console.log(date)
+
 	useEffect(() => {
 		//JWT authentication
 		if (window.localStorage.getItem('JWT') == null) {
@@ -324,7 +326,7 @@ export default function MonthlyMenu() {
 			<SelectorsWrapper>
 				<Selector
 					id="month"
-					defaultValue={dates[0]}
+					value={date}
 					onChange={e => window.location.href = "./" + e.target.value}
 				>
 					{dates?.map(date => <option value={date} key={date}>{date}</option>)}
