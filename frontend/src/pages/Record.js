@@ -23,18 +23,18 @@ const Background = styled.img `
 		top: 0;
 		z-index: -1;
 
-	opacity: 0.4;
-	background-image: url("/images/cover_5.png");
-	background-repeat: no-repeat;
-	background-position: 50% ;
-	background-size: cover;
+	// opacity: 0.4;
+	// background-image: url("/images/cover_5.png");
+	// background-repeat: no-repeat;
+	// background-position: 50% ;
+	// background-size: cover;
 `
 
 const StyledCalendar = styled.div `
 	width: 800px;
-	height: 1000px;
+	height: 100%;
 
-	margin: 50px 250px 50px 200px;
+	margin: 50px 60px 50px 200px;
 	// background-color: #e2e2e2;
 `
 
@@ -56,6 +56,7 @@ const Text = styled.div `
 	width: 300px;
 	height: 40px;
 	magin: 20px 0 0 0;
+	font-family: 'PingFangTC';
 	font-size: 34px;
 	text-align: center;
 `
@@ -69,19 +70,25 @@ const Row = styled.div `
 `
 
 const Submit = styled.button `
-	width: 140px;
-	height: 80px;
+	padding: 10px 30px;
 
-	padding: 2px;
-	margin: 20px 150px 20px;
+	border: none;
+	border-radius: 20px;
+	background-color: #0053B4;
 
-	background: #35D11B;
-	border: 3px solid #35D11B;
-	border-radius: 8px;
-
+	font-family: 'PingFangTC';
 	font-style: normal;
-	font-weight: 400;
 	font-size: 40px;
+	color: #ffffff;
+	text-align: center;
+
+	cursor: pointer;
+
+	&:hover {
+		background-color: #c7e0fc;
+		color: #0053B4;
+		box-shadow: 2px 2px 1px 2px rgba(0, 0, 0, 0.2);
+	}
 `
 
 const months = {
@@ -404,7 +411,7 @@ export default function Record() {
 						<Calendar setDate={setDate}/>
 					</StyledCalendar>
 				</div>
-				<div style={{ display: 'flex' }}>
+				<div style={{ display: 'flex', alignItems: 'center'}}>
 					<div style={{ display: 'block' }}>
 						<Row>{record.records.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.records.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
@@ -412,7 +419,7 @@ export default function Record() {
 						<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
-					<div style={{ display: 'block', padding: '350px 0 350px 50px' }}>
+					<div style={{ display: 'block', marginLeft: '100px', padding: '50px', border: 'solid 5px #0053B4', borderRadius: '40px'}}>
 						<RecordInfo date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
 						<RecordForm date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
 					</div>

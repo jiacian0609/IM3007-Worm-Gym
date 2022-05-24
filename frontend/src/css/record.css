@@ -30,19 +30,18 @@
 .form {
 	justify-content: center;
 	align-items: center;
-	display: inline;
+	display: flex;
+	flex-direction: column;
 }
 
 .form__field {
-	width: 450px;
-
-	margin: 20px 0;
+	margin: 10px 0;
    
 	line-height: 50px;
 	font-size: 40px;
 
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 }
 
 .form__field-name {
@@ -64,7 +63,7 @@
 
 .sdp {
 	width: 90%;
-	height: 650px;
+	height: 720px;
 	font-size: 45px;
 	padding-top: 30px;
 }
