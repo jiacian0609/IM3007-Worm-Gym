@@ -54,7 +54,6 @@ const Img = styled.div `
 
 const Text = styled.div `
 	width: 300px;
-	height: 40px;
 	magin: 20px 0 0 0;
 	font-family: 'PingFangTC';
 	font-size: 34px;
@@ -63,8 +62,7 @@ const Text = styled.div `
 
 const Row = styled.div `
 	width: 1100px;
-	height: 190px;
-	margin: 40px 0;
+	margin: 15px 0;
 	display: flex;
 	justify-content: space-around;
 `
@@ -419,23 +417,21 @@ export default function Record() {
 	<Base>
 		<Header />
 		<Background />
-		<div style={{ marginTop: '170px', paddingTop: '80px' }}>
-			<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+		<div style={{ height: '100%', paddingTop: '170px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+			<div style={{ display: 'block' }}>
+				<StyledCalendar>
+					<Calendar setDate={setDate}/>
+				</StyledCalendar>
+			</div>
+			<div style={{ display: 'flex', alignItems: 'center'}}>
 				<div style={{ display: 'block' }}>
-					<StyledCalendar>
-						<Calendar setDate={setDate}/>
-					</StyledCalendar>
+					<Row>{record.records.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+					<Row>{record.records.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+					<Row>{record.records.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+					<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
+					<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 				</div>
-				<div style={{ display: 'flex', alignItems: 'center'}}>
-					<div style={{ display: 'block' }}>
-						<Row>{record.records.slice(0, 4)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.records.slice(4, 8)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.records.slice(8, 12)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-						<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
-					</div>
-					<RecordField date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
-				</div>
+				<RecordField date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
 			</div>
 		</div>
 	</Base>
