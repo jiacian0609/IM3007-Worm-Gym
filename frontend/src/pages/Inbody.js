@@ -1,64 +1,49 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Table, Tag, Space } from 'antd';
 
-import "../css/inbody.css";
 import Header from '../components/Header';
 import jwt_decode from "jwt-decode";
 
 const Base = styled.div `
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 `
 
 const Background = styled.img `
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    content: ' ';
-    display: block;
-    position: absolute;
-        left: 0;
-        top: 0;
-        z-index: -1;
+  content: ' ';
+  display: block;
+  position: absolute;
+      left: 0;
+      top: 0;
+      z-index: -1;
 
-    // opacity: 0.8;
-    // background-image: url("./images/cover_4.png");
-    // background-repeat: no-repeat;
-    // background-position: 50% 0;
-    // background-size: cover;
+  // opacity: 0.8;
+  // background-image: url("./images/cover_4.png");
+  // background-repeat: no-repeat;
+  // background-position: 50% 0;
+  // background-size: cover;
 `
 
-const Bar = styled.div `
-    width: 500px;
-    height: 120px;
+const MonthSelector = styled.select `
+  height: 100px;
+  width: 300px;
+  
+  position: fixed;
+    left: 150px;
+    top: 300px;
 
-    margin: 0 0 0 100px;
-    padding: 30px;
+  padding: 10px 30px;
+  font-size: 50px;
 
-    border-radius: 50px;
-    background: #ACE3EB;
-    display: flex;
-    align-items: center;
-`
-
-const Submit = styled.button `
-    width: 140px;
-    height: 80px;
-
-    padding: 2px;
-    margin: 20px 0 20px;
-
-    background: #35D11B;
-    border: 3px solid #35D11B;
-    border-radius: 8px;
-
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-
-    cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  background: #ACE3EB;
+  display: flex;
+  align-items: center;
 `
 
 const StyledInbodyContent = styled.div `
@@ -103,22 +88,20 @@ export default function Inbody() {
     months = ['No Record'];
 
   const [month, setMonth] = useState(months[0]);
-  useEffect(() => {
-  }, [month]);
+  useEffect(() => {}, [month]);
 
   return (
     <Base>
       <Header />
       <Background />
       <div style={{ marginTop: '170px', paddingTop: '80px' }}>
-        <Bar>
-            <div className="month">
-                <select className="month-selector" id="month" defaultValue={ months[0] }>
-                    { months.map(items => <option value={ items } key={ items }>{ items }</option>) }
-                </select>
-            </div>
-            <Submit onClick={() => setMonth(document.getElementById("month").value)}>確認</Submit>
-        </Bar>
+        <MonthSelector
+          id="month"
+          defaultValue={ months[0] }
+          onChange={e => setMonth(e.target.value)}
+        >
+          { months.map(items => <option value={ items } key={ items }>{ items }</option>) }
+        </MonthSelector>
         <InbodyContent uid={user_id} month={month} />
       </div>
     </Base>
