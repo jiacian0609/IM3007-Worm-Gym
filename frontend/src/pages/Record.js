@@ -34,7 +34,7 @@ const StyledCalendar = styled.div `
 	width: 800px;
 	height: 100%;
 
-	margin: 50px 60px 50px 200px;
+	margin-right: 60px;
 	// background-color: #e2e2e2;
 `
 
@@ -363,7 +363,7 @@ function RecordForm(props) {
 
 function RecordField({date, today, equip, record, weightInput, setWeightInput, setsInput, setSetsInput, repsInput, setRepsInput}) {
 	if (equip === undefined || equip === 0 || record.records === [])
-		return null;
+		return <div style={{ width: '610px'}} />;
 	else return (
 		<div style={{ display: 'block', marginLeft: '100px', padding: '50px', border: 'solid 5px #0053B4', borderRadius: '40px'}}>
 			<RecordInfo date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
@@ -420,7 +420,7 @@ export default function Record() {
 		<Header />
 		<Background />
 		<div style={{ marginTop: '170px', paddingTop: '80px' }}>
-			<div style={{ display: 'flex', alignItems: 'center' }}>
+			<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 				<div style={{ display: 'block' }}>
 					<StyledCalendar>
 						<Calendar setDate={setDate}/>
