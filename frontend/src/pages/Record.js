@@ -398,6 +398,7 @@ export default function Record() {
 		.then( (response) => {
 			console.log("response:", response.data)
 			setRecord(response.data)
+			setEquip(0)
 		})
 		.catch( (error) => console.log(error))
 	}, [date])
