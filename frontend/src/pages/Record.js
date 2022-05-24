@@ -170,10 +170,14 @@ function RecordInfo(props) {
 		return null;
 
 	if (props.record.records[props.equip - 1].status === 'finished') {
+		let day = '';
+		if (props.record.day === 'free') day = props.record.day;
+		else if (props.record.day === null) day = '非訓練日'
+		else day = 'Day ' + props.record.day;
 		return (
 			<div className='recordInfo'>
 				<div>日期：{props.date}</div>
-				<div>訓練計畫：{props.record.day !== null ? 'Day' + props.record.day : '非訓練日'}</div>
+				<div>訓練計畫：{ day }</div>
 				<div>器材：{props.record.records[props.equip - 1].name}</div>
 				<div>狀態：完成訓練</div>
 			</div>
@@ -400,6 +404,17 @@ export default function Record() {
 		}
 	}, [equip, record])
 
+	function RecordField() {
+		if (equip === undefined || equip === 0 || record.records === [])
+			return null;
+		else return (
+			<div style={{ display: 'block', marginLeft: '100px', padding: '50px', border: 'solid 5px #0053B4', borderRadius: '40px'}}>
+				<RecordInfo date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
+				<RecordForm date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
+			</div>
+		)
+	}
+
 	return (
 	<Base>
 		<Header />
@@ -419,10 +434,7 @@ export default function Record() {
 						<Row>{record.records.slice(12, 16)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 						<Row>{record.records.slice(16, 20)?.map(item => <Task item={ item } key={ item.equip_id } setEquip={ setEquip }/>)}</Row>
 					</div>
-					<div style={{ display: 'block', marginLeft: '100px', padding: '50px', border: 'solid 5px #0053B4', borderRadius: '40px'}}>
-						<RecordInfo date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
-						<RecordForm date={date} today={today} equip={equip} record={record} weightInput={weightInput} setWeightInput={setWeightInput} setsInput={setsInput} setSetsInput={setSetsInput} repsInput={repsInput} setRepsInput={setRepsInput}/>
-					</div>
+					<RecordField />
 				</div>
 			</div>
 		</div>
