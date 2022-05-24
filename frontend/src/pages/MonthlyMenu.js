@@ -257,14 +257,13 @@ function Calendar(props) {
 };
 
 export default function MonthlyMenu() {
+	const date = useParams().month
 	const [equip, setEquip] = useState();
-	const [date, setDate] = useState(useParams().month)
-	const [days, setDays] = useState([])
+	const [dates, setDates] = useState([])
 	const [day, setDay] = useState(1)
+	const [days, setDays] = useState([])
 	const [allData, setAllData] = useState([])
 	const [dayData, setDayData] = useState([])
-
-	// console.log(dayData)
 
 	useEffect(() => {
 		//JWT authentication
@@ -275,16 +274,34 @@ export default function MonthlyMenu() {
 	}, [])
 
 	useEffect(() => {
+		axios.get("http://localhost:8000/menu/all", {
+			headers: {
+			  'Authorization': `${localStorage.getItem('JWT')}`
+			}
+		})
+		.then( (response) => {
+			var newDates = []
+			for (let index = 0; index < response.data.length; index++) {
+				newDates.push(response.data[index].date.slice(0, 10))
+			}
+			setDates(newDates)
+		})
+		.catch( (error) => console.log(error))
+	}, [])
+
+	useEffect(() => {
 		axios.get("http://localhost:8000/menu/" + date, {
 			headers: {
 			  'Authorization': `${localStorage.getItem('JWT')}`
 			}
 		})
 		.then( (response) => {
+			console.log(response.data)
 			setAllData(response.data)
 			setDayData(response.data.slice(0, 6))
 			setDay(1)
 			setDays([])
+			// Get the number of training days
 			var newDays = []
 			for (let index = 0; index < response.data.length; index+=6) {
 				newDays.push(response.data[index].Day)
@@ -307,15 +324,18 @@ export default function MonthlyMenu() {
 			<SelectorsWrapper>
 				<Selector
 					id="month"
-					defaultValue="2022-05"
-					onChange={e => setDay(e.target.value)}
+					defaultValue={date}
+					onChange={e => window.location.href = "./" + e.target.value}
 				>
-					{/* data?.map(items => <option value={items.year + '-' + items.month} key={items.year + items.month}>{items.year + '-' + items.month}</option>) */}
+					{dates?.map(date => <option value={date} key={date}>{date}</option>)}
 				</Selector>
 				<Selector
 					id="day"
 					defaultValue={days[0]}
-					onChange={e => setDay(e.target.value)}
+					onChange={e => {
+						setDay(e.target.value)
+						setEquip()
+					}}
 				>
 					{days?.map(day => <option value={day} key={day}>Day {day}</option>)}
 				</Selector>

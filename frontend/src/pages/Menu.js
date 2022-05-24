@@ -120,7 +120,7 @@ const RateNum = styled.span `
 function MonthButton(data) {
     // console.log(data.data);
     return (
-        <Box onClick={() => data.selectMonth(data.data.year + '-' + data.data.month)}>
+        <Box onClick={() => data.selectMonth(data.data.year + '-' + data.data.month + '-01')}>
             <Year>{ data.data.year }</Year>
             <Month>{ data.data.month }</Month>
             <RateText>達成率：</RateText>
@@ -168,7 +168,7 @@ export default function Menu() {
                     defaultValue="2022-05"
                     onChange={e => selectMonth(e.target.value)}
                 >
-                    {data?.map(items => <option value={items.year + '-' + items.month} key={items.year + items.month}>{items.year + '-' + items.month}</option>)}
+                    {data?.map(items => <option value={items.year + '-' + items.month + '-01'} key={items.year + items.month}>{items.year + '-' + items.month}</option>)}
                 </MonthSelector>
                 <Row>
                     {data?.map(items => 
