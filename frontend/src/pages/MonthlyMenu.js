@@ -182,7 +182,7 @@ function Task(items) {
 				<Text>{ equips[items.items.equip_id - 1].name }</Text>
 				<Divider />
 				<Text>次數：{ items.items.reps }</Text>
-				<Text>組數：{ items.items.sets } 組</Text>
+				<Text>組數：{ items.items.sets }</Text>
 			</Texts>
 		</TaskWrapper>
 	);
