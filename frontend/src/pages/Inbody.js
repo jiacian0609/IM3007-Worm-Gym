@@ -48,11 +48,27 @@ const MonthSelector = styled.select `
   cursor: pointer;
 `
 
+const Desc = styled.div `
+  width: 615px;
+
+  padding: 50px;
+
+  position: fixed;
+    left: 150px;
+    top: 500px;
+
+  background-color: #f3f3f3;
+  border-radius: 30px;
+
+  font-family: 'PingFangTc';
+  font-size: 45px;
+`
+
 const StyledInbodyContent = styled.div `
   height: 3000px;
   width: 1800px;
 
-  margin: 30px auto;
+  margin: 30px 0 0 600px;
 
   background-image: url(${props => props.src});
   background-size: contain;
@@ -96,7 +112,7 @@ export default function Inbody() {
     <Base>
       <Header />
       <Background />
-      <div style={{ marginTop: '170px', paddingTop: '80px' }}>
+      <div style={{ marginTop: '170px', paddingTop: '80px', display: 'flex', justifyContent: 'center' }}>
         <MonthSelector
           id="month"
           defaultValue={ months[0] }
@@ -104,6 +120,7 @@ export default function Inbody() {
         >
           { months.map(items => <option value={ items } key={ items }>{ items }</option>) }
         </MonthSelector>
+        <Desc>透過InBody數據了解身體體脂率、肌肉量、基礎代謝率，全方位解析身體組成。選擇月份查看身體組成變化，以檢視自己的健身成效吧！</Desc>
         <InbodyContent uid={user_id} month={month} />
       </div>
     </Base>
