@@ -28,7 +28,7 @@ const Base = styled.div `
 `
 
 const Selector = styled.select `
-  	width: 100%; 
+  	width: 50%; 
 	height: 110px;
 
 	margin-bottom: 50px;
@@ -44,6 +44,18 @@ const Selector = styled.select `
     align-items: center;
 
     cursor: pointer;
+`
+
+const Desc = styled.div `
+  width: 615px;
+
+  padding: 50px;
+
+  background-color: #f3f3f3;
+  border-radius: 30px;
+
+  font-family: 'PingFangTc';
+  font-size: 45px;
 `
 
 const TaskWrapper = styled.button `
@@ -319,7 +331,7 @@ export default function MonthlyMenu() {
 	  <Base>
 	  	<Header />
 		<div style={{ display: 'flex', paddingTop: '170px', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
-			<div style={{ marginRight: '100px' }}>
+			<div style={{ marginRight: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 				<Selector
 					id="month"
 					value={date}
@@ -337,6 +349,7 @@ export default function MonthlyMenu() {
 				>
 					{days?.map(day => <option value={day} key={day}>Day {day}</option>)}
 				</Selector>
+				<Desc>在這裡可以查看由專業教練依照你的身體組成以及訓練目標調配出的最適訓練計畫，協助你有系統地進行健身運動，快來將它們一一完成吧！</Desc>
 			</div>
 			<Rows>
 				<Row>{dayData.slice(0, 2)?.map(items => <Task items={ items } key={ items.program_id } equip={equip} setEquip={setEquip}/>)}</Row>

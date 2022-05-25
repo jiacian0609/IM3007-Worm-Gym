@@ -38,6 +38,19 @@ const StyledCalendar = styled.div `
 	// background-color: #e2e2e2;
 `
 
+const Desc = styled.div `
+	width: 730px;
+
+	margin-bottom: 80px;
+	padding: 40px;
+
+	background-color: #f3f3f3;
+	border-radius: 30px;
+
+	font-family: 'PingFangTc';
+	font-size: 40px;
+`
+
 const Img = styled.div `
 	width: 150px;
 	height: 150px;
@@ -420,6 +433,7 @@ export default function Record() {
 		<Background />
 		<div style={{ height: '100%', paddingTop: '170px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 			<div style={{ display: 'block' }}>
+				<Desc>「每一步雖小，但只要持續往前走，總有一天會到終點！」檢視過往的健身紀錄，並留下每次的健身痕跡，一步一步接近自己的理想體態！</Desc>
 				<StyledCalendar>
 					<Calendar setDate={setDate}/>
 				</StyledCalendar>

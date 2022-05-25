@@ -120,7 +120,7 @@ export default function Inbody() {
         >
           { months.map(items => <option value={ items } key={ items }>{ items }</option>) }
         </MonthSelector>
-        <Desc>透過InBody數據了解身體體脂率、肌肉量、基礎代謝率，全方位解析身體組成。選擇月份查看身體組成變化，以檢視自己的健身成效吧！</Desc>
+        <Desc>透過 Inbody 數據了解身體體脂率、肌肉量、基礎代謝率，全方位解析身體組成。選擇月份查看身體組成變化，以檢視自己的健身成效吧！</Desc>
         <InbodyContent uid={user_id} month={month} />
       </div>
     </Base>
