@@ -28,7 +28,7 @@ const Base = styled.div `
 `
 
 const Selector = styled.select `
-  	width: 50%; 
+  	width: 400px; 
 	height: 110px;
 
 	margin-bottom: 50px;
