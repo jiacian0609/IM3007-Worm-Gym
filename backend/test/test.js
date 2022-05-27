@@ -9,7 +9,7 @@ const pool = require('../db');
 
 chai.use(chaiHttp);
 
-
+/*
 // signup api
 describe("POST /signup", () => {
     const req = {
@@ -53,12 +53,12 @@ describe("POST /signup", () => {
             [req.username, req.password, req.email]);
     });
 });
-
+*/
 
 // login api
 describe("POST /login", () => {
     describe("Case 1: username doesn't exist", () => {
-        it("Return a message", (done) => {
+        it("Return error message", (done) => {
             const req1 = {
                 username: "username",
                 password: "password"
@@ -74,7 +74,7 @@ describe("POST /login", () => {
     });
     
     describe("Case 2: wrong password", () => {
-        it("Return a message", (done) => {
+        it("Return error message", (done) => {
             const req2 = {
                 username: "userONE",
                 password: "password"
@@ -90,7 +90,7 @@ describe("POST /login", () => {
     });
     
     describe("Case 3: successfully log in", () => {
-        it("Return a message & JWT token", (done) => {
+        it("Return success message & JWT token", (done) => {
             const req3 = {
                 username: "userONE",
                 password: "11111111"
@@ -112,7 +112,7 @@ describe("POST /login", () => {
 
 // logout api
 describe("GET /logout", () => {
-    it("Return a message", (done) => {
+    it("Return success message", (done) => {
         chai.request(server).get('/logout')
         .end((err, res) => {
             res.should.have.status(200);
@@ -162,7 +162,7 @@ describe("POST /record", () => {
 
     let token = undefined;
     describe("Case 1: day = free", () => {
-        it("Return a message", (done) => {
+        it("Return success message", (done) => {
             // login to get token
             chai.request(server)
                 .post('/login').send({username: 'userONE', password: '11111111'})
@@ -192,7 +192,7 @@ describe("POST /record", () => {
     });
 
     describe("Case 2: day ≠ free", () => {
-        it("Return a message", (done) => {
+        it("Return success message", (done) => {
             chai.request(server)
                 .post('/record')
                 .send(req2)
