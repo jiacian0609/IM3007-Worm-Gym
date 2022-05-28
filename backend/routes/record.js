@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
 			
 			if (input_date >= pd && input_date <= pd_end) {
 				sd = pd;
+				sd = sd.toISOString().substring(0, 10);
 				//console.log(sd);
 				break;
 			}
