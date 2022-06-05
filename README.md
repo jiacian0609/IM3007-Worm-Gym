@@ -2,11 +2,11 @@
 # Worm-Gym 健身記錄系統
 
 ## Database
-1. Open pgAdmin and login as user `postgres`.  
-2. Create a database named `wormGym`.  
-3. Right click on the database, select `Restore`.  
-4. Select `wormGym_custom.sql` as the restoring file.  
-5. Create another database named `wormGym_test` and restore with the same file.  
+1. 打開 pgAdmin 並以使用者 `postgres` 身分登入。
+2. 建一個資料庫叫做 `wormGym` 。
+3. 右鍵點選建立的資料庫，並且選擇 `Restore` 。
+4. 選擇 `wormGym_custom.sql` 作為 `Restore` 的檔案。
+5. 建立另一個資料庫叫做 `wormGym_test` ，並且同  `wormGym` 資料庫 restore `wormGym_custom.sql` 檔案。
 
 ## Backend
 ### 下載所需套件
@@ -17,9 +17,8 @@ npm install
 cd backend
 npm install
 ```
-
-### 設定環境變數
-Go to `/backend/db.js` & change the password into your Postgres password.
+### 設定資料庫密碼
+打開 `db.js` 並將 `password` 改成 `postgres` 對應的密碼。
 ### 啟動後端伺服器
 ```shell=
 npm start
