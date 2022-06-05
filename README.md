@@ -5,7 +5,7 @@
 1. 打開 pgAdmin 並以使用者 `postgres` 身分登入。
 2. 建一個資料庫叫做 `wormGym` 。
 3. 右鍵點選建立的資料庫，並且選擇 `Restore` 。
-4. 選擇 `wormGym_custom.sql` 作為 `Restore` 的檔案。
+4. 選擇 `wormGym_custom.sql` 作為 restore 的檔案。
 5. 建立另一個資料庫叫做 `wormGym_test` ，並且同  `wormGym` 資料庫 restore `wormGym_custom.sql` 檔案。
 
 ## Backend
@@ -37,5 +37,7 @@ npm install
 ```
 ### 開啟瀏覽器
 執行下列指令
-`npm start`
+```shell=
+npm start
+```
 若無自動開啟瀏覽器，請手動開啟 http://localhost:3000/ ，看到登入畫面即代表成功開啟前端且前後端連接成功。
