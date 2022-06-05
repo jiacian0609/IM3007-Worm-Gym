@@ -1,15 +1,15 @@
 # IM3007-System Analysis and Design
 # Worm-Gym 健身記錄系統
 
-## Database
+## Database 資料庫
 1. 打開 pgAdmin 並以使用者 `postgres` 身分登入。
 2. 建一個資料庫並命名為 `wormGym` 。
 3. 右鍵點選建立的資料庫，並且選擇 `Restore` 。
 4. 選擇 `wormGym_custom.sql` 作為 restore 的檔案。
 5. 建立另一個資料庫叫做 `wormGym_test` ，並且同  `wormGym` 資料庫 restore `wormGym_custom.sql` 檔案。
 
-## Backend
-### 下載所需套件
+## Backend 後端
+### 安裝所需套件
 先確認電腦已安裝 `Node.js` 並且將上述資料匯入資料庫，打開終端機移動到本專案資料夾位置。
 所需套件與版本已定義在 `package.json` 裡，執行下列指令以完成下載。
 ```shell=
@@ -30,8 +30,8 @@ npm start
 node ./bin/www
 ```
 
-## Frontend
-### 下載所需套件
+## Frontend 前端
+### 安裝所需套件
 所需套件與版本已定義在 `package.json` 裡，執行下列指令已完成下載。
 ```shell=
 cd frontend
